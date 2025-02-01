@@ -8,7 +8,7 @@ permalink: /
   <h1>Hi, I'm Muhammadsaid Alizada</h1>
   <h4 style="margin-bottom: 5px; padding-right: 40%;">I'm a Computer Engineering student at NYU Abu Dhabi with a passion for cybersecurity, low-level programming, and problem-solving. This blog is where I document my journey—whether it's writeups for CTF challenges, showcasing personal projects, or exploring technical deep dives.<br><br>You can contact me at ma8494@nyu.edu</h5>
   <a href="{{ site.url }}/posts">
-    <button style="padding: 12px 24px; border: none; border-radius: 10px; background-color: grey; color: white; font-size: 16px; font-weight: bold; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease;" 
+    <button style="padding: 12px 24px; border: none; border-radius: 10px; background-color: #555; color: white; font-size: 16px; font-weight: bold; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease;" 
     onmouseover="this.style.backgroundColor='darkgrey'; this.style.transform='scale(1.05)';" 
     onmouseout="this.style.backgroundColor='grey'; this.style.transform='scale(1)';" 
     onmousedown="this.style.transform='scale(0.95)';" 
@@ -25,7 +25,14 @@ permalink: /
       </h2>
       <p> Posted on {{ post.date | date_to_string }}</p>
       {{ post.content | strip_html | truncatewords: 20 }}
-      <a href="{{ post.url | prepend: site.url }}" style="display: inline-block; background-color: #555; color: white; padding: 8px 12px; text-decoration: none; border-radius: 3px; font-size: 14px;">Read More</a>
+      <button style="padding: 8px 8px; border: none; border-radius: 10px; background-color: #555; color: white; font-size: 16px; font-weight: bold; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease;" 
+      onmouseover="this.style.backgroundColor='darkgrey'; this.style.transform='scale(1.05)';" 
+      onmouseout="this.style.backgroundColor='grey'; this.style.transform='scale(1)';" 
+      onmousedown="this.style.transform='scale(0.95)';" 
+      onmouseup="this.style.transform='scale(1.05)';">
+      <a href="{{ post.url | prepend: site.url }}" style="text-decoration: none;">Read More</a>
+    </button>
+      
       <hr style="border: none; border-top: 6px dotted #b5e754;"> 
       {% endif %}
       {% endfor %}

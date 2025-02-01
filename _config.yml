@@ -3,19 +3,13 @@ title: Muhammadsaid Alizada
 email: ma8494@nyu.edu
 description: >- # this means to ignore newlines until "baseurl:"
   A simple blog built with Jekyll.
-baseurl: "MuhammadsaidAlizada" # Change if your site is in a subdirectory (e.g., "/blog")
+baseurl: "" # Change if your site is in a subdirectory (e.g., "/blog")
 url: "https://yourwebsite.com" # Your site URL
 
 # Author settings
 author:
   name: "Muhammadsaid Alizada"
   email: "ma8494@nyu.edu"
-
-# Build settings
-plugins:
-  - jekyll-feed
-  - jekyll-seo-tag
-  - jekyll-sitemap
 
 # Navigation (if needed)
 nav:

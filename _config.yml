@@ -4,7 +4,7 @@ email: ma8494@nyu.edu
 description: >- # this means to ignore newlines until "baseurl:"
   A simple blog built with Jekyll.
 baseurl: "" # Change if your site is in a subdirectory (e.g., "/blog")
-url: "https://yourwebsite.com" # Your site URL
+url: "https://msaidalizada.github.io/MuhammadsaidAlizada" # Your site URL
 
 # Author settings
 author:

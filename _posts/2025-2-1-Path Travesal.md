@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Path Traversal - Web Sec academy labs"
-pinned: False
+pinned: True
 ---
 This post will run through the labs on web sec academy by Portswigger related to Path traversal.
 

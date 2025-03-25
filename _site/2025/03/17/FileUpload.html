@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Logic Goat - Logic Gate Simulation</title>
+    <title>File upload - Web Sec academy labs</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
@@ -73,36 +73,29 @@
 
     <div class="post-container">
         <article class="post">
-            <h1 class="post-title">Logic Goat - Logic Gate Simulation</h1>
-            <p class="post-date">Posted on 15 Aug 2024</p>
+            <h1 class="post-title">File upload - Web Sec academy labs</h1>
+            <p class="post-date">Posted on 17 Mar 2025</p>
             <hr class="post-divider">
             <div class="post-content">
-                <p>This post is showcase of a project I have made on python using the pygame library. The project is called ‘Logic Goat’ and allows users to create logic circuits and test them.</p>
-<div style="text-align: center;">
-    <img src="http://localhost:4000/assets/logicGoat/1.png" alt="ls command output" style="width: 500px;" />
-</div>
-<p>How to use:</p>
-<ul>
-    <li>Gates can be added from the side bar or using the numbers 1-9</li>
-    <li>Gates can be deleted by clicking on them then pressing backspace</li>
-    <li>Gates connected through dragging the mouse between connection nodes</li>
-    <li>Connections removed through right clicking connection node</li>
-    <li>File saved using the button on sidebar</li>
-</ul>
-<div style="text-align: center;">
-    <img src="http://localhost:4000/assets/logicGoat/2.png" alt="ls command output" style="width: 500px;" />
-</div>
-<p>These examples can be found in the examples folder:</p>
-<ul>
-    <li>Full adder (shown below)</li>
-    <li>Half adder</li>
-    <li>SR Flip Flop</li>
-    <li>Multiplexer 2x1</li>
-</ul>
-<div style="text-align: center;">
-    <img src="http://localhost:4000/assets/logicGoat/3.png" alt="ls command output" style="width: 500px;" />
-</div>
-<p>This project can be found on my github on this link: <a href="https://github.com/MSaidAlizada/LogicGateSim">https://github.com/MSaidAlizada/LogicGateSim</a></p>
+                <p>This post will run through the labs on web sec academy by Portswigger related to File upload vulnerabilities.</p>
+
+<h3 id="lab-remote-code-execution-via-web-shell-upload"><u>Lab: Remote code execution via web shell upload</u></h3>
+<p>In this lab we are able to upload files as our avatar in account page and it has no restriction on what type of files we can add so we can give it some php code to return us the contents of the file we are looking for.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php echo file_get_contents('/home/carlos/secret'); ?&gt;
+</code></pre></div></div>
+<p>By uploading the code above and sending a request for it we are able to get the server to execute the code and return the results.</p>
+
+<h3 id="lab-web-shell-upload-via-content-type-restriction-bypass"><u>Lab: Web shell upload via Content-Type restriction bypass</u></h3>
+<p>Other times the application may restrict file upload on file types however if this being check the HTTP request this can be bypassed through changing the Content-Type header to something allowed. In this case we change it from text/php to image/jpeg. We can use the same file since we are trying to access the same secret file.</p>
+
+<h3 id="lab-web-shell-upload-via-path-traversal"><u>Lab: Web shell upload via path traversal</u></h3>
+<p>Another line of defense is to stop the server from executing any uploaded scripts so as a precaution some only run those that explicity state it in their MIME type. A directory to which user-supplied files are uploaded will likely have much stricter controls than other locations on the filesystem that are assumed to be out of reach for end users. If you can find a way to upload a script to a different directory that’s not supposed to contain user-supplied files, the server may execute your script after all. In this lab we try to upload our script to a different directory by changing the supplied file name from “exploit.php” to “../exploit.php” however we see it doesn’t change where the file gets uploaded which means the server is probably stripping the path traversal. We can bypass this by obfuscating it through url encoding it to “..%2fexploit.php” which does allow us to store our file in a different directory where we can execute the script.</p>
+
+<h3 id="lab-web-shell-upload-via-extension-blacklist-bypass"><u>Lab: Web shell upload via extension blacklist bypass</u></h3>
+<p>Other ways to prevent uploading malicious scripts is through blacklisting certain file types like .php however sometimes lesser known alternatives might not be blacklisted like .php5 or .shtml.</p>
+
+<h3 id="lab-web-shell-upload-via-obfuscated-file-extension"><u>Lab: Web shell upload via obfuscated file extension</u></h3>
+<h3 id="lab-remote-code-execution-via-polyglot-web-shell-upload"><u>Lab: Remote code execution via polyglot web shell upload</u></h3>
 
             </div>
         </article>

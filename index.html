@@ -2,40 +2,116 @@
 layout: default
 permalink: /
 ---
+{% include nav.html %}
+<main class="home-page">
+  <section class="intro">
+    <h1>Hi, I'm Muhammadsaid Alizada</h1>
+    <p class="bio">
+      I'm a Computer Engineering student at NYU Abu Dhabi with a passion for cybersecurity, low-level programming, and problem-solving. This blog is where I document my journey—whether it's writeups for CTF challenges, showcasing personal projects, or exploring technical deep dives.<br><br>You can contact me at ma8494@nyu.edu
+    </p>
+    <a href="{{ site.url }}/posts" class="button">See all posts</a>
+  </section>
 
-<div>
-  {% include nav.html %}
-  <h1>Hi, I'm Muhammadsaid Alizada</h1>
-  <h4 style="margin-bottom: 5px; padding-right: 40%;">I'm a Computer Engineering student at NYU Abu Dhabi with a passion for cybersecurity, low-level programming, and problem-solving. This blog is where I document my journey—whether it's writeups for CTF challenges, showcasing personal projects, or exploring technical deep dives.<br><br>You can contact me at ma8494@nyu.edu</h5>
-  <a href="{{ site.url }}/posts">
-    <button style="padding: 12px 24px; border: none; border-radius: 10px; background-color: #555; color: white; font-size: 16px; font-weight: bold; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease;" 
-    onmouseover="this.style.backgroundColor='darkgrey'; this.style.transform='scale(1.05)';" 
-    onmouseout="this.style.backgroundColor='grey'; this.style.transform='scale(1)';" 
-    onmousedown="this.style.transform='scale(0.95)';" 
-    onmouseup="this.style.transform='scale(1.05)';">
-    See all posts
-  </button>
-  </a>
-    <div style="margin-right: 10%;margin-left: 10%;background-color: #1b1b1b; padding: 50px; padding-bottom: 100px; padding-top: 10px; border-radius: 25px">
-      <h1>Pinned Posts:</h2> 
+  <section class="pinned-posts">
+    <h2>Pinned Posts:</h2>
+    <div class="pinned-posts-grid">
       {% for post in site.posts %}
-      {% if post.pinned %}
-      <h2>
-        <a href="{{ post.url | prepend: site.eurl }}">{{ post.title }}</a>
-      </h2>
-      <p> Posted on {{ post.date | date_to_string }}</p>
-      {{ post.content | strip_html | truncatewords: 20 }}
-      <button style="padding: 8px 8px; border: none; border-radius: 10px; background-color: #555; color: white; font-size: 16px; font-weight: bold; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease;" 
-      onmouseover="this.style.backgroundColor='darkgrey'; this.style.transform='scale(1.05)';" 
-      onmouseout="this.style.backgroundColor='grey'; this.style.transform='scale(1)';" 
-      onmousedown="this.style.transform='scale(0.95)';" 
-      onmouseup="this.style.transform='scale(1.05)';">
-      <a href="{{ post.url | prepend: site.url }}" style="text-decoration: none;">Read More</a>
-    </button>
-      
-      <hr style="border: none; border-top: 6px dotted #b5e754;"> 
-      {% endif %}
+        {% if post.pinned %}
+          <article class="pinned-post">
+            <h3>
+              <a href="{{ post.url }}">{{ post.title }}</a>
+            </h3>
+            <p class="post-date">Posted on {{ post.date | date_to_string }}</p>
+            {{ post.content | strip_html | truncatewords: 20 }}
+            <a href="{{ post.url }}" class="button read-more">Read More</a>
+            <hr class="post-divider">
+          </article>
+        {% endif %}
       {% endfor %}
-
     </div>
-</div>
+  </section>
+</main>
+{% include foot.html %}
+
+<style>
+  .home-page {
+    padding: 20px;
+  }
+
+  .intro {
+    margin-bottom: 40px;
+  }
+
+  .bio {
+    max-width: 800px;
+    line-height: 1.6;
+  }
+
+  .button {
+    display: inline-block;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    background-color: #555;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-decoration: none;
+  }
+
+  .button:hover {
+    background-color: darkgrey;
+    transform: scale(1.05);
+  }
+
+  .button:active {
+    transform: scale(0.95);
+  }
+
+  .pinned-posts {
+    background-color: #1b1b1b;
+    padding: 50px;
+    padding-bottom: 100px;
+    padding-top: 10px;
+    border-radius: 25px;
+    margin: 20px 10%;
+  }
+
+  .pinned-posts-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column layout for now */
+    gap: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .pinned-posts-grid {
+      grid-template-columns: 1fr 1fr; /* Two columns on larger screens */
+    }
+  }
+
+  .pinned-post {
+    margin-bottom: 30px;
+  }
+
+  .pinned-post h3 {
+    margin-bottom: 5px;
+  }
+
+  .post-date {
+    font-size: 0.9em;
+    color: #999;
+  }
+
+  .post-divider {
+    border: none;
+    border-top: 6px dotted #b5e754;
+    margin-top: 20px;
+  }
+
+  .read-more {
+    padding: 8px 8px;
+    font-size: 14px;
+  }
+</style>

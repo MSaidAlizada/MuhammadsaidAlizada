@@ -2,41 +2,82 @@
 ---
 <!DOCTYPE html>
 <html lang="en">
-
-  <head>
-
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{{page.title}}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <title>{{ page.title }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
     <style>
-      body {
-        color: white; /* Makes all text white */
-        font-family: 'Source Code Pro';
-        background-image: url('{{site.url}}/assets/background.png');
-        background-size: 600px 50px;
-      }
-      a {
-        color: white; /* Ensures all links are white */
-      }
+        body.post-page {
+            color: white;
+            font-family: 'Fira Code';
+            background-image: url('/assets/background.png');
+            background-size: 600px 30px;
+            background-color: #1b1b1b;
+        }
+
+        body.post-page a {
+            color: white;
+        }
+
+        .post-container {
+            margin-top: 10px;
+            margin-right: 10%;
+            margin-left: 10%;
+            background-color: #1b1b1b;
+            padding: 50px;
+            padding-bottom: 100px;
+            padding-top: 10px;
+            border-radius: 25px;
+        }
+
+        .post-title {
+            color: white;
+        }
+
+        .post-date {
+            font-size: 0.9em;
+            color: #999;
+        }
+
+        .post-divider {
+            border: none;
+            border-top: 6px dotted #b5e754;
+        }
+
+        .post-content {
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .post-container {
+                margin: 10px 5%;
+                padding: 30px;
+            }
+        }
     </style>
-  </head>
+</head>
 
-  <body style="background-color: #1b1b1b;">
-
+<body class="post-page">
     {% include nav.html %}
-    <div style="margin-top: 10px; margin-right: 10%;margin-left: 10%;background-color: #1b1b1b; padding: 50px; padding-bottom: 100px; padding-top: 10px; border-radius: 25px">
-        <div>
-          <h1 style="color: white;">{{page.title}}</h1>
-          <p>Posted on {{ page.date | date_to_string }}</p>
-          <hr style="border: none; border-top: 6px dotted #b5e754;"> 
-          {{content}}
-          </div>
-        </div>
+
+    <div class="post-container">
+        <article class="post">
+            <h1 class="post-title">{{ page.title }}</h1>
+            <p class="post-date">Posted on {{ page.date | date_to_string }}</p>
+            <hr class="post-divider">
+            <div class="post-content">
+                {{ content }}
+            </div>
+        </article>
     </div>
-  </body>
+
+    {% include foot.html %}
+</body>
 </html>

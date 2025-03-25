@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SSRF - Web Sec academy labs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+    <style>
+        body.post-page {
+            color: white;
+            font-family: 'Fira Code';
+            background-image: url('/assets/background.png');
+            background-size: 600px 30px;
+            background-color: #1b1b1b;
+        }
+
+        body.post-page a {
+            color: white;
+        }
+
+        .post-container {
+            margin-top: 10px;
+            margin-right: 10%;
+            margin-left: 10%;
+            background-color: #1b1b1b;
+            padding: 50px;
+            padding-bottom: 100px;
+            padding-top: 10px;
+            border-radius: 25px;
+        }
+
+        .post-title {
+            color: white;
+        }
+
+        .post-date {
+            font-size: 0.9em;
+            color: #999;
+        }
+
+        .post-divider {
+            border: none;
+            border-top: 6px dotted #b5e754;
+        }
+
+        .post-content {
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .post-container {
+                margin: 10px 5%;
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body class="post-page">
+    <div style="background-color: #333; display: flex; justify-content: space-between; align-items: center; padding: 10px 20px;">
+  <a href="http://localhost:4000/" style="color: white; font-size: 18px; font-weight: bold; text-decoration: none;">MUHAMMADSAID ALIZADA</a>
+  <a href="https://github.com/MSaidAlizada" style="color: white; font-size: 16px; text-decoration: none; padding: 8px 15px; border-radius: 5px; transition: background 0.3s;">
+      GitHub
+  </a>
+</div>
+
+
+    <div class="post-container">
+        <article class="post">
+            <h1 class="post-title">SSRF - Web Sec academy labs</h1>
+            <p class="post-date">Posted on 01 Mar 2025</p>
+            <hr class="post-divider">
+            <div class="post-content">
+                <p>This post will run through the labs on web sec academy by Portswigger related to SSRF.</p>
+
+<p>Server-side request forgery is a web security vulnerability that allows an attacker to cause the server-side application to make requests to an unintended location.</p>
+
+<h3 id="lab-basic-ssrf-against-the-local-server"><u>Lab: Basic SSRF against the local server</u></h3>
+<p>In an SSRF attack against the server, the attacker causes the application to make an HTTP request back to the server that is hosting the application, via its loopback network interface. By having the local machine send the request we can bypass access controls since the local machine is usually trusted.</p>
+
+<p>For example in this lab there is a stock check feature where it makes an API call which is sent in the HTTP request. We can modify where it makes the API call to “http://localhost/admin” which gives us access to the admin panel where we see we can delete the user carlos through this call “/admin/delete?username=carlos”. Now by changing the API call to that we can delete carlos.</p>
+
+<h3 id="lab-basic-ssrf-against-another-back-end-system"><u>Lab: Basic SSRF against another back-end system</u></h3>
+<p>This lab is similar to the last but this time we are told the admin panel can be searched for in the range 192.168.0.X in the port 8080. So we can use burp intruder to go through all X from 1 to 255 to see which gives us a status code of 200.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stockApi=http://192.168.0.~:8080/admin
+</code></pre></div></div>
+<p>I found it to be at 39 and so by sending the request with this API url we can delete carlos: http://192.168.0.39:8080/admin/delete?username=carlos</p>
+
+<h3 id="lab-ssrf-with-blacklist-based-input-filter"><u>Lab: SSRF with blacklist-based input filter</u></h3>
+<p>In this lab there is a filter on the url we send for example it catches if we use localhost or admin within the url. To bypass this we can first use 127.1 instead of 127.0.0.1 and localhost and then we can also obfuscate the word admin through url encoding. However one url encoding is not enough to bypass the filter so we will double encode admin and then we have bypassed the filter.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://127.1/&lt;@urlencode_all&gt;&lt;@urlencode_all&gt;admin&lt;/@urlencode_all&gt;&lt;/@urlencode_all&gt;/delete?username=carlos
+</code></pre></div></div>
+
+<h3 id="lab-ssrf-with-filter-bypass-via-open-redirection-vulnerability"><u>Lab: SSRF with filter bypass via open redirection vulnerability</u></h3>
+<p>Other applications only allows urls which match whitelisted values which can be bypassed through inconsistent url parsing. If the API used to make the back-end HTTP request supports redirections, you can construct a URL that satisfies the filter and results in a redirected request to the desired back-end target. For example:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST /product/stock HTTP/1.0
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 118
+
+stockApi=http://weliketoshop.net/product/nextProduct?currentProductId=6&amp;path=http://192.168.0.68/admin
+</code></pre></div></div>
+<p>In this lab since the stock check feature takes a path we can give it our own url since it would just append it to the already existing url. Instead we have to find an open redirect which we find in the next product feature since it takes path as parameter. By giving the url to the next product feature with the redirect set to the admin panel, to stock check we can get access to the admin panel and delete the user carlos.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stockApi=/product/nextProduct%3fcurrentProductId%3d2%26path%3dhttp%3a//192.168.0.12%3a8080/admin/delete?username=carlos
+</code></pre></div></div>
+
+            </div>
+        </article>
+    </div>
+
+    <footer class="site-footer">
+    <div class="footer-content">
+        <p>© 2025 Muhammadsaid Alizada. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="http://localhost:4000/posts">Posts</a>
+            <a href="mailto:ma8494@nyu.edu">Contact</a>
+            </div>
+    </div>
+</footer>
+
+<style>
+.site-footer {
+    background-color: #333; /* Or your preferred dark background */
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    margin-top: 50px; /* Add some space between content and footer */
+}
+
+.footer-content {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.footer-links {
+    margin-top: 10px;
+}
+
+.footer-links a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+</style>
+</body>
+</html>

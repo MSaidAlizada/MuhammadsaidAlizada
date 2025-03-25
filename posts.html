@@ -1,24 +1,124 @@
 ---
 layout: default
-permalink: /posts
+title: Blog Posts
 ---
 {% include nav.html %}
-<div style="margin-top: 10px; background-color: #1b1b1b; padding: 50px; padding-bottom: 100px; padding-top: 10px; border-radius: 25px">
-    <h1>All Posts:</h2> 
-    {% for post in site.posts %}
-    <h2>
-      <a href="{{ post.url | prepend: site.url }}">{{ post.title }}</a>
-    </h2>
-    <p> Posted on {{ post.date | date_to_string }}</p>
-    {{ post.content | strip_html | truncatewords: 20 }}
-    <button style="padding: 8px 8px; border: none; border-radius: 10px; background-color: #555; color: white; font-size: 16px; font-weight: bold; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease;" 
-      onmouseover="this.style.backgroundColor='darkgrey'; this.style.transform='scale(1.05)';" 
-      onmouseout="this.style.backgroundColor='grey'; this.style.transform='scale(1)';" 
-      onmousedown="this.style.transform='scale(0.95)';" 
-      onmouseup="this.style.transform='scale(1.05)';">
-      <a href="{{ post.url | prepend: site.url }}" style="text-decoration: none;">Read More</a>
-    </button>
-    <hr style="border: none; border-top: 6px dotted #b5e754;"> 
-    {% endfor %}
 
+<div class="content-container">
+  <div class="content-header">
+    <h1>All Posts</h1>
+    <div class="search-filter-container">
+      <input type="text" id="post-search" placeholder="Search posts...">
+      <select id="post-filter">
+        <option value="">All Categories</option>
+        {% assign categories = site.categories | sort %}
+        {% for category in categories %}
+          <option value="{{ category | first | slugify }}">{{ category | first }}</option>
+        {% endfor %}
+      </select>
+    </div>
   </div>
+
+  <ul id="post-list">
+    {% for post in site.posts %}
+      <li class="post-item" data-categories="{% for category in post.categories %}{{ category | slugify }} {% endfor %}">
+        <a href="{{ post.url }}">
+          <h2>{{ post.title }}</h2>
+          <p>{{ post.content | strip_html | truncatewords: 20 }}</p>
+          <small>Published on: {{ post.date | date: "%Y-%m-%d" }}</small>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% include foot.html %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('post-search');
+    const filterSelect = document.getElementById('post-filter');
+    const postList = document.getElementById('post-list');
+    const postItems = document.querySelectorAll('.post-item');
+
+    function filterPosts() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const selectedCategory = filterSelect.value;
+
+      postItems.forEach(item => {
+        const title = item.querySelector('h2').textContent.toLowerCase();
+        const content = item.querySelector('p').textContent.toLowerCase();
+        const categories = item.dataset.categories.split(' ');
+        let showItem = true;
+
+        if (searchTerm && !title.includes(searchTerm) && !content.includes(searchTerm)) {
+          showItem = false;
+        }
+
+        if (selectedCategory && !categories.includes(selectedCategory)) {
+          showItem = false;
+        }
+
+        item.style.display = showItem ? 'block' : 'none';
+      });
+    }
+
+    searchInput.addEventListener('input', filterPosts);
+    filterSelect.addEventListener('change', filterPosts);
+  });
+</script>
+
+<style>
+  .content-container {
+    background-color: #1b1b1b;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 960px;
+    border-radius: 8px;
+  }
+
+  .content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .search-filter-container {
+    display: flex;
+    gap: 10px;
+  }
+
+  .search-filter-container input,
+  .search-filter-container select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  #post-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .post-item {
+    border: 1px solid #eee;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.post-item:hover {
+    background-color: rgba(255, 255, 255, 0.7); /* Transparent white */
+}
+
+  .post-item a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .post-item h2 {
+    margin-top: 0;
+  }
+</style>

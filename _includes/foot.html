@@ -1,0 +1,38 @@
+<footer class="site-footer">
+    <div class="footer-content">
+        <p>© {{ site.time | date: "%Y" }} Muhammadsaid Alizada. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="{{ site.url }}/posts">Posts</a>
+            <a href="mailto:ma8494@nyu.edu">Contact</a>
+            </div>
+    </div>
+</footer>
+
+<style>
+.site-footer {
+    background-color: #333; /* Or your preferred dark background */
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    margin-top: 50px; /* Add some space between content and footer */
+}
+
+.footer-content {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.footer-links {
+    margin-top: 10px;
+}
+
+.footer-links a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+</style>

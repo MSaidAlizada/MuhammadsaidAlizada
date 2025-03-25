@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
-  <head>
-
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,22 +8,61 @@
     <meta name="author" content="">
 
     <title>SQL Injections - Web Sec academy labs</title>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
     <style>
-      body {
-        color: white; /* Makes all text white */
-        font-family: 'Source Code Pro';
-        background-image: url('http://localhost:4000/assets/background.png');
-        background-size: 600px 50px;
-      }
-      a {
-        color: white; /* Ensures all links are white */
-      }
+        body.post-page {
+            color: white;
+            font-family: 'Fira Code';
+            background-image: url('/assets/background.png');
+            background-size: 600px 30px;
+            background-color: #1b1b1b;
+        }
+
+        body.post-page a {
+            color: white;
+        }
+
+        .post-container {
+            margin-top: 10px;
+            margin-right: 10%;
+            margin-left: 10%;
+            background-color: #1b1b1b;
+            padding: 50px;
+            padding-bottom: 100px;
+            padding-top: 10px;
+            border-radius: 25px;
+        }
+
+        .post-title {
+            color: white;
+        }
+
+        .post-date {
+            font-size: 0.9em;
+            color: #999;
+        }
+
+        .post-divider {
+            border: none;
+            border-top: 6px dotted #b5e754;
+        }
+
+        .post-content {
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .post-container {
+                margin: 10px 5%;
+                padding: 30px;
+            }
+        }
     </style>
-  </head>
+</head>
 
-  <body style="background-color: #1b1b1b;">
-
+<body class="post-page">
     <div style="background-color: #333; display: flex; justify-content: space-between; align-items: center; padding: 10px 20px;">
   <a href="http://localhost:4000/" style="color: white; font-size: 18px; font-weight: bold; text-decoration: none;">MUHAMMADSAID ALIZADA</a>
   <a href="https://github.com/MSaidAlizada" style="color: white; font-size: 16px; text-decoration: none; padding: 8px 15px; border-radius: 5px; transition: background 0.3s;">
@@ -33,12 +70,14 @@
   </a>
 </div>
 
-    <div style="margin-top: 10px; margin-right: 10%;margin-left: 10%;background-color: #1b1b1b; padding: 50px; padding-bottom: 100px; padding-top: 10px; border-radius: 25px">
-        <div>
-          <h1 style="color: white;">SQL Injections - Web Sec academy labs</h1>
-          <p>Posted on 10 Feb 2025</p>
-          <hr style="border: none; border-top: 6px dotted #b5e754;"> 
-          <p>This post will run through the labs on web sec academy by Portswigger related to SQL injections.</p>
+
+    <div class="post-container">
+        <article class="post">
+            <h1 class="post-title">SQL Injections - Web Sec academy labs</h1>
+            <p class="post-date">Posted on 10 Feb 2025</p>
+            <hr class="post-divider">
+            <div class="post-content">
+                <p>This post will run through the labs on web sec academy by Portswigger related to SQL injections.</p>
 
 <p>SQL injection (SQLi) is a web security vulnerability that allows an attacker to interfere with the queries that an application makes to its database. This can allow an attacker to view data that they are not normally able to retrieve. For example in this URL:</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://insecure-website.com/products?category=Gifts
@@ -195,8 +234,47 @@ For our lab we are told it is an Oracle database so the injection would look lik
 <p>And we get the password:<br />
 5vtyfcc04drr2rgnrjs7</p>
 
-          </div>
-        </div>
+            </div>
+        </article>
     </div>
-  </body>
+
+    <footer class="site-footer">
+    <div class="footer-content">
+        <p>© 2025 Muhammadsaid Alizada. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="http://localhost:4000/posts">Posts</a>
+            <a href="mailto:ma8494@nyu.edu">Contact</a>
+            </div>
+    </div>
+</footer>
+
+<style>
+.site-footer {
+    background-color: #333; /* Or your preferred dark background */
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    margin-top: 50px; /* Add some space between content and footer */
+}
+
+.footer-content {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.footer-links {
+    margin-top: 10px;
+}
+
+.footer-links a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+</style>
+</body>
 </html>

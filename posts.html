@@ -22,7 +22,7 @@ title: Blog Posts
   <ul id="post-list">
     {% for post in site.posts %}
       <li class="post-item" data-categories="{% for category in post.categories %}{{ category | slugify }} {% endfor %}">
-        <a href="{{ post.url }}">
+        <a href="{{ post.url | prepend: site.url }}">
           <h2>{{ post.title }}</h2>
           <p>{{ post.content | strip_html | truncatewords: 20 }}</p>
           <small>Published on: {{ post.date | date: "%Y-%m-%d" }}</small>

@@ -15,7 +15,7 @@
         body.post-page {
             color: white;
             font-family: 'Fira Code';
-            background-image: url('/assets/background.png');
+            background-image: url('http://localhost:4000/assets/background.png');
             background-size: 600px 30px;
             background-color: #1b1b1b;
         }
@@ -92,10 +92,36 @@
 <p>Another line of defense is to stop the server from executing any uploaded scripts so as a precaution some only run those that explicity state it in their MIME type. A directory to which user-supplied files are uploaded will likely have much stricter controls than other locations on the filesystem that are assumed to be out of reach for end users. If you can find a way to upload a script to a different directory that’s not supposed to contain user-supplied files, the server may execute your script after all. In this lab we try to upload our script to a different directory by changing the supplied file name from “exploit.php” to “../exploit.php” however we see it doesn’t change where the file gets uploaded which means the server is probably stripping the path traversal. We can bypass this by obfuscating it through url encoding it to “..%2fexploit.php” which does allow us to store our file in a different directory where we can execute the script.</p>
 
 <h3 id="lab-web-shell-upload-via-extension-blacklist-bypass"><u>Lab: Web shell upload via extension blacklist bypass</u></h3>
-<p>Other ways to prevent uploading malicious scripts is through blacklisting certain file types like .php however sometimes lesser known alternatives might not be blacklisted like .php5 or .shtml.</p>
+<p>Other ways to prevent uploading malicious scripts is through blacklisting certain file types like .php however sometimes lesser known alternatives might not be blacklisted like .php5 or .shtml. However the server may not run our script if it is not configured to do so, however many server allow you to create configuration files for directories that override the general configuration. In this case the lab uses apache which through uploading .htaccess file we can override the configuration.</p>
+
+<p>So first for this lab we will just upload our previous exploit.php file to capture the request it sends. Once captured we can modify to upload a .htaccess file with the following contents:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>AddType application/x-httpd-php .smh
+</code></pre></div></div>
+<p>This tells the server to treath files with .smh extension as php scripts which allows us to bypass the extension blacklist and have our file executed by uploading it as “exploit.smh”.</p>
 
 <h3 id="lab-web-shell-upload-via-obfuscated-file-extension"><u>Lab: Web shell upload via obfuscated file extension</u></h3>
+<p>Sometimes applications will require certain file types for the upload however this can be bypassed through obfuscation. There are several methods to get past this like:</p>
+<ul>
+  <li>Depending on the algorithm used to parse the filename, the following file may be interpreted as either a PHP file or JPG image: exploit.php.jpg</li>
+  <li>Add trailing characters</li>
+  <li>URL encoding (or double URL encoding) for dots, forward slashes, and backward slashes</li>
+  <li>Add semicolons or URL-encoded null byte characters before the file extension</li>
+</ul>
+
+<p>In this case since it requires us to have a jpg or png file type for the upload we will use a nullbyte after .php to have this file name “exploit.php%00.jpg”. Once uploading this we get the result:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The file avatars/exploit.php has been uploaded.
+</code></pre></div></div>
+<p>As we can the obfuscation worked and now the php file is uploaded.</p>
+
 <h3 id="lab-remote-code-execution-via-polyglot-web-shell-upload"><u>Lab: Remote code execution via polyglot web shell upload</u></h3>
+<p>Instead of implicitly trusting the Content-Type specified in a request, more secure servers try to verify that the contents of the file actually match what is expected. Similarly, certain file types may always contain a specific sequence of bytes in their header or footer. These can be used like a fingerprint or signature to determine whether the contents match the expected type. For example, JPEG files always begin with the bytes FF D8 FF.</p>
+
+<p>This is a much more robust way of validating the file type, but even this isn’t foolproof. Using special tools, such as ExifTool, it can be trivial to create a polyglot JPEG file containing malicious code within its metadata. So in this lab we will use exiftool to change the metadata of a png file to include our php script. We can add our php script to the Comment metadata using the following command:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>exiftool a.png -Comment=" &lt;?php echo file_get_contents('/home/carlos/secret'); ?&gt; "
+</code></pre></div></div>
+<p>Now renaming a.png to a.php we can upload it and it will bypass the checks since it has image metadata and when we view the response when requesting our avatar we see too many characters mixed and it is not possible to distinguish our file we are trying to get. To fix this we can concatenate a start and end string to our file as such:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>exiftool a.png -Comment=" &lt;?php echo 'START' . file_get_contents('/home/carlos/secret') . 'END'; ?&gt; "
+</code></pre></div></div>
 
             </div>
         </article>

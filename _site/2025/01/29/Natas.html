@@ -1,83 +1,268 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+
+  <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>OverTheWire's Natas Wargame writeup (Incomplete)</title>
+    <title>Muhammadsaid Alizada</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
     <style>
-        body.post-page {
-            color: white;
-            font-family: 'Fira Code';
-            background-image: url('http://localhost:4000/assets/background.png');
-            background-size: 600px 30px;
-            background-color: #1b1b1b;
-        }
-
-        body.post-page a {
-            color: white;
-        }
-
-        .post-container {
-            margin-top: 10px;
-            margin-right: 10%;
-            margin-left: 10%;
-            background-color: #1b1b1b;
-            padding: 50px;
-            padding-bottom: 100px;
-            padding-top: 10px;
-            border-radius: 25px;
-        }
-
-        .post-title {
-            color: white;
-        }
-
-        .post-date {
-            font-size: 0.9em;
-            color: #999;
-        }
-
-        .post-divider {
-            border: none;
-            border-top: 6px dotted #b5e754;
-        }
-
-        .post-content {
-            line-height: 1.6;
-        }
-
-        @media (max-width: 768px) {
-            .post-container {
-                margin: 10px 5%;
-                padding: 30px;
-            }
-        }
+      a {
+        color: white; /* Ensures all links are white */
+      }
     </style>
+    
+  </head>
+
+<body style="background-color: white;">
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OverTheWire's Natas Wargame writeup (Incomplete)</title>
+    <style>
+      :root {
+        --text-color: #333;
+        --accent-color: #2962FF;
+        --background-color: #fff;
+        --card-color: #f8f9fa;
+        --border-color: #e0e0e0;
+        --meta-color: #666;
+      }
+      
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--background-color);
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      header {
+        margin-bottom: 2.5em;
+      }
+
+      h1 {
+        font-size: 2.2em;
+        margin-bottom: 0.3em;
+        font-weight: 600;
+      }
+
+      .contact-info {
+        margin: 0.8em 0;
+        color: var(--meta-color);
+      }
+
+      .contact-info a {
+        color: var(--accent-color);
+        text-decoration: none;
+      }
+
+      .contact-info a:hover {
+        text-decoration: underline;
+      }
+
+      .contact-info span {
+        margin: 0 8px;
+        color: var(--border-color);
+      }
+
+      nav {
+        margin: 1.8em 0;
+      }
+
+      nav a {
+        margin-right: 20px;
+        text-decoration: none;
+        color: var(--text-color);
+        font-weight: 500;
+        position: relative;
+      }
+
+      nav a:hover {
+        color: var(--accent-color);
+      }
+
+      nav a:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -4px;
+        left: 0;
+        background-color: var(--accent-color);
+        transition: width 0.3s ease;
+      }
+
+      nav a:hover:after {
+        width: 100%;
+      }
+
+      .header-divider {
+        border: 0;
+        height: 1px;
+        background: var(--border-color);
+        margin: 1.5em 0;
+      }
+
+      .post-container {
+        background: var(--card-color);
+        border-radius: 8px;
+        padding: 2.5em;
+        margin-bottom: 3em;
+        border: 1px solid var(--border-color);
+      }
+
+      .post-title {
+        margin-top: 0;
+        font-size: 1.8em;
+      }
+
+      .post-meta {
+        color: var(--meta-color);
+        font-size: 0.9em;
+        margin-bottom: 1.5em;
+      }
+
+      .post-divider {
+        border: none;
+        height: 1px;
+        background: var(--border-color);
+        margin: 2em 0;
+      }
+
+      .post-content {
+        line-height: 1.7;
+      }
+
+      .post-content a {
+        color: var(--accent-color);
+        text-decoration: none;
+      }
+
+      .post-content a:hover {
+        text-decoration: underline;
+      }
+
+      .post-content code {
+        font-family: 'Fira Code', monospace;
+        background: rgba(0,0,0,0.05);
+        padding: 0.2em 0.4em;
+        border-radius: 3px;
+        font-size: 0.9em;
+        border: 1px solid rgba(0,0,0,0.1);
+      }
+
+      .post-content pre {
+        background: rgba(0,0,0,0.05);
+        padding: 1em;
+        border-radius: 5px;
+        overflow-x: auto;
+        border: 1px solid rgba(0,0,0,0.1);
+      }
+
+      .post-content pre code {
+        background: none;
+        padding: 0;
+        border: none;
+      }
+
+      .back-link {
+        color: var(--accent-color);
+        text-decoration: none;
+        font-weight: 500;
+        display: inline-block;
+        margin-top: 1em;
+      }
+
+      .back-link:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 30px 15px;
+        }
+        
+        .post-container {
+          padding: 1.5em;
+        }
+        
+        nav a {
+          margin-right: 15px;
+        }
+      }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
 </head>
 
-<body class="post-page">
-    <div style="background-color: #333; display: flex; justify-content: space-between; align-items: center; padding: 10px 20px;">
-  <a href="http://localhost:4000/" style="color: white; font-size: 18px; font-weight: bold; text-decoration: none;">MUHAMMADSAID ALIZADA</a>
-  <a href="https://github.com/MSaidAlizada" style="color: white; font-size: 16px; text-decoration: none; padding: 8px 15px; border-radius: 5px; transition: background 0.3s;">
-      GitHub
-  </a>
-</div>
+<body>
+  <div class="container">
+    <header>
+  <div class="header-name-container">
+    <img src="/assets/i.jpeg" alt="Muhammadsaid Alizada" class="profile-photo">
+    <h1>Muhammadsaid Alizada</h1>
+  </div>
+  
+  <div class="contact-info">
+    <a href="mailto:ma8494@nyu.edu">ma8494@nyu.edu</a>
+    <span>|</span>
+    <a href="https://github.com/MSaidAlizada" target="_blank">GitHub</a>
+    <span>|</span>
+    <a href="www.linkedin.com/in/muhammadsaid-alizada" target="_blank">LinkedIn</a>
+  </div>
+  
+  <nav>
+    <a href="http://localhost:4000/">home</a>
+    <a href="http://localhost:4000/posts">posts</a>
+    <a href="http://localhost:4000/assets/CV.pdf">cv</a>
+    <a href="/contact">contact</a>
+  </nav>
+  
+  <hr class="header-divider">
+</header>
 
+<style>
+  .header-name-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.5em;
+  }
+
+  .profile-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    object-fit: cover;
+    border: 2px solid var(--border-color);
+  }
+
+</style>
 
     <div class="post-container">
-        <article class="post">
-            <h1 class="post-title">OverTheWire's Natas Wargame writeup (Incomplete)</h1>
-            <p class="post-date">Posted on 29 Jan 2025</p>
-            <hr class="post-divider">
-            <div class="post-content">
-                <p>This post is a write up of OverTheWire’s Natas Wargame which can be found in the following link:<br />
+      <article class="post">
+        <h1 class="post-title">OverTheWire's Natas Wargame writeup (Incomplete)</h1>
+        <p class="post-meta">Posted on January 29, 2025</p>
+        
+        <div class="post-content">
+          <p>This post is a write up of OverTheWire’s Natas Wargame which can be found in the following link:<br />
 <a href="https://overthewire.org/wargames/natas/">https://overthewire.org/wargames/natas/</a></p>
 
 <h3 id="level-0">Level 0:</h3>
@@ -222,47 +407,15 @@ Password: UJdqkK1pTu6VLt9UHWAgRZz6sVUZ3lEk
 URL:      http://natas11.natas.labs.overthewire.org
 </code></pre></div></div>
 
-            </div>
-        </article>
+        </div>
+        
+        <hr class="post-divider">
+        
+        <a href="http://localhost:4000/posts" class="back-link">← All Posts</a>
+      </article>
     </div>
-
-    <footer class="site-footer">
-    <div class="footer-content">
-        <p>© 2025 Muhammadsaid Alizada. All rights reserved.</p>
-        <div class="footer-links">
-            <a href="http://localhost:4000/posts">Posts</a>
-            <a href="mailto:ma8494@nyu.edu">Contact</a>
-            </div>
-    </div>
-</footer>
-
-<style>
-.site-footer {
-    background-color: #333; /* Or your preferred dark background */
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-    margin-top: 50px; /* Add some space between content and footer */
-}
-
-.footer-content {
-    max-width: 960px;
-    margin: 0 auto;
-}
-
-.footer-links {
-    margin-top: 10px;
-}
-
-.footer-links a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 10px;
-}
-
-.footer-links a:hover {
-    text-decoration: underline;
-}
-</style>
+  </div>
+</body>
+</html> 
 </body>
 </html>

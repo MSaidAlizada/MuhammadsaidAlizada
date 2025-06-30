@@ -2,116 +2,259 @@
 layout: default
 permalink: /
 ---
-{% include nav.html %}
-<main class="home-page">
-  <section class="intro">
-    <h1>Hi, I'm Muhammadsaid Alizada</h1>
-    <p class="bio">
-      I'm a Computer Engineering student at NYU Abu Dhabi with a passion for cybersecurity, low-level programming, and problem-solving. This blog is where I document my journey—whether it's writeups for CTF challenges, showcasing personal projects, or exploring technical deep dives.<br><br>You can contact me at ma8494@nyu.edu
-    </p>
-    <a href="{{ site.url }}/posts" class="button">See all posts</a>
-  </section>
 
-  <section class="pinned-posts">
-    <h2>Pinned Posts:</h2>
-    <div class="pinned-posts-grid">
-      {% for post in site.posts %}
-        {% if post.pinned %}
-          <article class="pinned-post">
-            <h3>
-              <a href="{{ post.url | prepend: site.url }}">{{ post.title }}</a>
-            </h3>
-            <p class="post-date">Posted on {{ post.date | date_to_string }}</p>
-            {{ post.content | strip_html | truncatewords: 20 }}
-            <a href="{{ post.url | prepend: site.url }}" class="button read-more">Read More</a>
-            <hr class="post-divider">
-          </article>
-        {% endif %}
-      {% endfor %}
-    </div>
-  </section>
-</main>
-{% include foot.html %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ site.title }}</title>
+    <style>
+      :root {
+        --text-color: #333;
+        --accent-color: #2962FF;
+        --background-color: #fff;
+        --card-color: #f8f9fa;
+        --border-color: #e0e0e0;
+        --dark-gray: #666;
+      }
+      
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--background-color);
+        margin: 0;
+        padding: 0;
+      }
 
-<style>
-  .home-page {
-    padding: 20px;
-  }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
 
-  .intro {
-    margin-bottom: 40px;
-  }
+      header {
+        margin-bottom: 2.5em;
+      }
 
-  .bio {
-    max-width: 800px;
-    line-height: 1.6;
-  }
+      .header-name-container {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 0.5em;
+      }
 
-  .button {
-    display: inline-block;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 10px;
-    background-color: #555;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    text-decoration: none;
-  }
+      h1 {
+        font-size: 2.2em;
+        margin-bottom: 0.3em;
+        font-weight: 600;
+      }
 
-  .button:hover {
-    background-color: darkgrey;
-    transform: scale(1.05);
-  }
+      .profile-photo {
+        width: 60px;
+        height: 60px;
+        border-radius: 4px;
+        object-fit: cover;
+        border: 2px solid var(--border-color);
+      }
 
-  .button:active {
-    transform: scale(0.95);
-  }
+      .contact-info {
+        margin: 0.8em 0;
+        color: var(--dark-gray);
+      }
 
-  .pinned-posts {
-    background-color: #1b1b1b;
-    padding: 50px;
-    padding-bottom: 100px;
-    padding-top: 10px;
-    border-radius: 25px;
-    margin: 20px 10%;
-  }
+      .contact-info a {
+        color: var(--accent-color);
+        text-decoration: none;
+      }
 
-  .pinned-posts-grid {
-    display: grid;
-    grid-template-columns: 1fr; /* Single column layout for now */
-    gap: 20px;
-  }
+      .contact-info a:hover {
+        text-decoration: underline;
+      }
 
-  @media (min-width: 768px) {
-    .pinned-posts-grid {
-      grid-template-columns: 1fr 1fr; /* Two columns on larger screens */
-    }
-  }
+      .contact-info span {
+        margin: 0 8px;
+        color: var(--border-color);
+      }
 
-  .pinned-post {
-    margin-bottom: 30px;
-  }
+      nav {
+        margin: 1.8em 0;
+      }
 
-  .pinned-post h3 {
-    margin-bottom: 5px;
-  }
+      nav a {
+        margin-right: 20px;
+        text-decoration: none;
+        color: var(--text-color);
+        font-weight: 500;
+        position: relative;
+      }
 
-  .post-date {
-    font-size: 0.9em;
-    color: #999;
-  }
+      nav a:hover {
+        color: var(--accent-color);
+      }
 
-  .post-divider {
-    border: none;
-    border-top: 6px dotted #b5e754;
-    margin-top: 20px;
-  }
+      nav a:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -4px;
+        left: 0;
+        background-color: var(--accent-color);
+        transition: width 0.3s ease;
+      }
 
-  .read-more {
-    padding: 8px 8px;
-    font-size: 14px;
-  }
-</style>
+      nav a:hover:after {
+        width: 100%;
+      }
+
+      .header-divider {
+        border: 0;
+        height: 1px;
+        background: var(--border-color);
+        margin: 1.5em 0;
+      }
+
+      h2 {
+        font-size: 1.6em;
+        margin: 1.8em 0 1em;
+        font-weight: 600;
+      }
+
+      .bio {
+        font-size: 1.1em;
+        line-height: 1.7;
+        margin-bottom: 2em;
+      }
+
+      .pinned-posts-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin: 1.5em 0;
+      }
+
+      .post-card {
+        padding: 1.5em;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        transition: all 0.2s ease;
+      }
+
+      .post-card:hover {
+        border-color: var(--accent-color);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      }
+
+      .post-card h3 {
+        margin: 0 0 0.5em;
+        font-size: 1.2em;
+      }
+
+      .post-card h3 a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .post-card h3 a:hover {
+        color: var(--accent-color);
+      }
+
+      .post-meta {
+        color: var(--dark-gray);
+        font-size: 0.9em;
+        margin-bottom: 0.8em;
+      }
+
+      .post-excerpt {
+        margin: 0.8em 0;
+        line-height: 1.6;
+      }
+
+      .read-more {
+        color: var(--accent-color);
+        text-decoration: none;
+        font-weight: 500;
+        display: inline-block;
+        margin-top: 0.5em;
+      }
+
+      .read-more:hover {
+        text-decoration: underline;
+      }
+
+      .all-posts-link {
+        display: inline-block;
+        margin-top: 1.5em;
+        color: var(--accent-color);
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .all-posts-link:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 30px 15px;
+        }
+        
+        .header-name-container {
+          gap: 15px;
+        }
+        
+        .profile-photo {
+          width: 50px;
+          height: 50px;
+        }
+        
+        nav a {
+          margin-right: 15px;
+        }
+      }
+
+      @media (min-width: 700px) {
+        .pinned-posts-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+    </style>
+</head>
+
+<body>
+  <div class="container">
+    {% include nav.html %}
+    <main class="home-page">
+      <section class="about">
+        <h2>Hi, I'm Muhammadsaid</h2>
+        <p class="bio">
+          I'm a Computer Engineering student at NYU Abu Dhabi with a passion for <strong>cybersecurity</strong>, <strong>low-level programming</strong>, and <strong>problem-solving</strong>. This blog is where I document my journey—whether it's writeups for CTF challenges, showcasing personal projects, or exploring technical deep dives.
+        </p>
+      </section>
+
+      <section class="pinned-posts">
+        <h2>Pinned Posts</h2>
+        <div class="pinned-posts-grid">
+          {% for post in site.posts %}
+            {% if post.pinned %}
+              <article class="post-card">
+                <h3>
+                  <a href="{{ post.url | prepend: site.url }}">{{ post.title }}</a>
+                </h3>
+                <p class="post-meta">{{ post.date | date: "%B %-d, %Y" }}</p>
+                <div class="post-excerpt">
+                  {{ post.excerpt | strip_html | truncatewords: 25 }}
+                </div>
+                <a href="{{ post.url | prepend: site.url }}" class="read-more">Read more →</a>
+              </article>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <a href="{{ site.url }}/posts" class="all-posts-link">View all posts</a>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

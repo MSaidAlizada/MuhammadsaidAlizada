@@ -1,6 +1,41 @@
-<div style="background-color: #333; display: flex; justify-content: space-between; align-items: center; padding: 10px 20px;">
-  <a href="{{ site.url }}/" style="color: white; font-size: 18px; font-weight: bold; text-decoration: none;">MUHAMMADSAID ALIZADA</a>
-  <a href="https://github.com/MSaidAlizada" style="color: white; font-size: 16px; text-decoration: none; padding: 8px 15px; border-radius: 5px; transition: background 0.3s;">
-      GitHub
-  </a>
-</div>
+<header>
+  <div class="header-name-container">
+    <img src="/assets/i.jpeg" alt="Muhammadsaid Alizada" class="profile-photo">
+    <h1>Muhammadsaid Alizada</h1>
+  </div>
+  
+  <div class="contact-info">
+    <a href="mailto:ma8494@nyu.edu">ma8494@nyu.edu</a>
+    <span>|</span>
+    <a href="https://github.com/MSaidAlizada" target="_blank">GitHub</a>
+    <span>|</span>
+    <a href="www.linkedin.com/in/muhammadsaid-alizada" target="_blank">LinkedIn</a>
+  </div>
+  
+  <nav>
+    <a href="{{ site.url }}/">home</a>
+    <a href="{{ site.url }}/posts">posts</a>
+    <a href="{{ site.url }}/assets/CV.pdf">cv</a>
+    <a href="/contact">contact</a>
+  </nav>
+  
+  <hr class="header-divider">
+</header>
+
+<style>
+  .header-name-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.5em;
+  }
+
+  .profile-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    object-fit: cover;
+    border: 2px solid var(--border-color);
+  }
+
+</style>

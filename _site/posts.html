@@ -13,12 +13,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
     <style>
-      body {
-        color: white; /* Makes all text white */
-        font-family: 'Fira Code';
-        background-image: url('http://localhost:4000/assets/background.png');
-        background-size: 600px 30px;
-      }
       a {
         color: white; /* Ensures all links are white */
       }
@@ -26,231 +20,412 @@
     
   </head>
 
-<body style="background-color: #1b1b1b;">
-    <div style="background-color: #333; display: flex; justify-content: space-between; align-items: center; padding: 10px 20px;">
-  <a href="http://localhost:4000/" style="color: white; font-size: 18px; font-weight: bold; text-decoration: none;">MUHAMMADSAID ALIZADA</a>
-  <a href="https://github.com/MSaidAlizada" style="color: white; font-size: 16px; text-decoration: none; padding: 8px 15px; border-radius: 5px; transition: background 0.3s;">
-      GitHub
-  </a>
-</div>
+<body style="background-color: white;">
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blog Posts</title>
+    <style>
+      :root {
+        --text-color: #333;
+        --accent-color: #2962FF;
+        --background-color: #fff;
+        --card-color: #f8f9fa;
+        --border-color: #e0e0e0;
+        --meta-color: #666;
+      }
+      
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--background-color);
+        margin: 0;
+        padding: 0;
+      }
 
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
 
-<div class="content-container">
-  <div class="content-header">
-    <h1>All Posts</h1>
-    <div class="search-filter-container">
-      <input type="text" id="post-search" placeholder="Search posts...">
-      <select id="post-filter">
-        <option value="">All Categories</option>
+      header {
+        margin-bottom: 2.5em;
+      }
+
+      h1 {
+        font-size: 2.2em;
+        margin-bottom: 0.3em;
+        font-weight: 600;
+      }
+
+      .contact-info {
+        margin: 0.8em 0;
+        color: var(--meta-color);
+      }
+
+      .contact-info a {
+        color: var(--accent-color);
+        text-decoration: none;
+      }
+
+      .contact-info a:hover {
+        text-decoration: underline;
+      }
+
+      .contact-info span {
+        margin: 0 8px;
+        color: var(--border-color);
+      }
+
+      nav {
+        margin: 1.8em 0;
+      }
+
+      nav a {
+        margin-right: 20px;
+        text-decoration: none;
+        color: var(--text-color);
+        font-weight: 500;
+        position: relative;
+      }
+
+      nav a:hover {
+        color: var(--accent-color);
+      }
+
+      nav a:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -4px;
+        left: 0;
+        background-color: var(--accent-color);
+        transition: width 0.3s ease;
+      }
+
+      nav a:hover:after {
+        width: 100%;
+      }
+
+      .header-divider {
+        border: 0;
+        height: 1px;
+        background: var(--border-color);
+        margin: 1.5em 0;
+      }
+
+      .content-container {
+        background: var(--card-color);
+        border-radius: 8px;
+        padding: 2em;
+        margin-bottom: 3em;
+        border: 1px solid var(--border-color);
+      }
+
+      .content-header {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        margin-bottom: 2em;
+      }
+
+      @media (min-width: 600px) {
+        .content-header {
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+        }
+      }
+
+      .search-filter-container {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .search-filter-container input,
+      .search-filter-container select {
+        padding: 8px 12px;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        font-family: inherit;
+        font-size: 0.9em;
+      }
+
+      .search-filter-container input:focus,
+      .search-filter-container select:focus {
+        outline: none;
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 2px rgba(41, 98, 255, 0.1);
+      }
+
+      #post-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .post-item {
+        border: 1px solid var(--border-color);
+        margin-bottom: 1.5em;
+        padding: 1.5em;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+      }
+
+      .post-item:hover {
+        border-color: var(--accent-color);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      }
+
+      .post-item a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .post-item h2 {
+        margin-top: 0;
+        margin-bottom: 0.5em;
+        font-size: 1.3em;
+        color: var(--text-color);
+      }
+
+      .post-item p {
+        margin: 0.5em 0;
+        color: var(--text-color);
+      }
+
+      .post-item small {
+        display: block;
+        color: var(--meta-color);
+        font-size: 0.85em;
+        margin-top: 0.8em;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 30px 15px;
+        }
         
+        .content-container {
+          padding: 1.5em;
+        }
         
-      </select>
+        nav a {
+          margin-right: 15px;
+        }
+      }
+    </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+  <div class="header-name-container">
+    <img src="/assets/i.jpeg" alt="Muhammadsaid Alizada" class="profile-photo">
+    <h1>Muhammadsaid Alizada</h1>
+  </div>
+  
+  <div class="contact-info">
+    <a href="mailto:ma8494@nyu.edu">ma8494@nyu.edu</a>
+    <span>|</span>
+    <a href="https://github.com/MSaidAlizada" target="_blank">GitHub</a>
+    <span>|</span>
+    <a href="www.linkedin.com/in/muhammadsaid-alizada" target="_blank">LinkedIn</a>
+  </div>
+  
+  <nav>
+    <a href="http://localhost:4000/">home</a>
+    <a href="http://localhost:4000/posts">posts</a>
+    <a href="http://localhost:4000/assets/CV.pdf">cv</a>
+    <a href="/contact">contact</a>
+  </nav>
+  
+  <hr class="header-divider">
+</header>
+
+<style>
+  .header-name-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.5em;
+  }
+
+  .profile-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    object-fit: cover;
+    border: 2px solid var(--border-color);
+  }
+
+</style>
+    <div class="content-container">
+      <div class="content-header">
+        <h1>All Posts</h1>
+        <div class="search-filter-container">
+          <input type="text" id="post-search" placeholder="Search posts...">
+          <select id="post-filter">
+            <option value="">All Categories</option>
+            
+            
+          </select>
+        </div>
+      </div>
+
+      <ul id="post-list">
+        
+          <li class="post-item" data-categories="">
+            <a href="http://localhost:4000/2025/05/24/XML.html">
+              <h2>XML external entity - Web Sec academy labs</h2>
+              <p>This post will run through the labs on web sec academy by Portswigger related to XML external entity.
+</p>
+              <small>Published on: May 24, 2025</small>
+            </a>
+          </li>
+        
+          <li class="post-item" data-categories="">
+            <a href="http://localhost:4000/2025/04/29/APITesting.html">
+              <h2>API testing - Web Sec academy labs</h2>
+              <p>This post will run through the labs on web sec academy by Portswigger related to API testing.
+</p>
+              <small>Published on: April 29, 2025</small>
+            </a>
+          </li>
+        
+          <li class="post-item" data-categories="">
+            <a href="http://localhost:4000/2025/04/23/picoCTF.html">
+              <h2>PicoCTF</h2>
+              <p>This post will go through several CTFs on PicoCTF.
+</p>
+              <small>Published on: April 23, 2025</small>
+            </a>
+          </li>
+        
+          <li class="post-item" data-categories="">
+            <a href="http://localhost:4000/2025/03/17/FileUpload.html">
+              <h2>File upload - Web Sec academy labs</h2>
+              <p>This post will run through the labs on web sec academy by Portswigger related to File upload vulnerabilities.
+</p>
+              <small>Published on: March 17, 2025</small>
+            </a>
+          </li>
+        
+          <li class="post-item" data-categories="">
+            <a href="http://localhost:4000/2025/03/16/XSS.html">
+              <h2>XSS - Web Sec academy labs</h2>
+              <p>This post will run through the labs on web sec academy by Portswigger related to XSS.
+</p>
+              <small>Published on: March 16, 2025</small>
+            </a>
+          </li>
+        
+          <li class="post-item" data-categories="">
+            <a href="http://localhost:4000/2025/03/01/SSRF.html">
+              <h2>SSRF - Web Sec academy labs</h2>
+              <p>This post will run through the labs on web sec academy by Portswigger related to SSRF.
+</p>
+              <small>Published on: March 1, 2025</small>
+            </a>
+          </li>
+        
+          <li class="post-item" data-categories="">
+            <a href="http://localhost:4000/2025/02/10/SQL.html">
+              <h2>SQL Injections - Web Sec academy labs</h2>
+              <p>This post will run through the labs on web sec academy by Portswigger related to SQL injections. SQL injection (SQLi) is a web security vulnerability...</p>
+              <small>Published on: February 10, 2025</small>
+            </a>
+          </li>
+        
+          <li class="post-item" data-categories="">
+            <a href="http://localhost:4000/2025/02/02/Access-Control.html">
+              <h2>Access control - Web Sec academy labs</h2>
+              <p>This post will run through the labs on web sec academy by Portswigger related to Access control. There are three types of access control: Vertical...</p>
+              <small>Published on: February 2, 2025</small>
+            </a>
+          </li>
+        
+          <li class="post-item" data-categories="">
+            <a href="http://localhost:4000/2025/02/01/Path-Travesal.html">
+              <h2>Path Traversal - Web Sec academy labs</h2>
+              <p>This post will run through the labs on web sec academy by Portswigger related to Path traversal.
+</p>
+              <small>Published on: February 1, 2025</small>
+            </a>
+          </li>
+        
+          <li class="post-item" data-categories="">
+            <a href="http://localhost:4000/2025/01/29/Natas.html">
+              <h2>OverTheWire's Natas Wargame writeup (Incomplete)</h2>
+              <p>This post is a write up of OverTheWire’s Natas Wargame which can be found in the following link:
+https://overthewire.org/wargames/natas/
+</p>
+              <small>Published on: January 29, 2025</small>
+            </a>
+          </li>
+        
+          <li class="post-item" data-categories="">
+            <a href="http://localhost:4000/2024/10/19/Bandit0-14.html">
+              <h2>OverTheWire's Bandit Levels 0-14</h2>
+              <p>Here is the link:
+https://overthewire.org/wargames/bandit/
+</p>
+              <small>Published on: October 19, 2024</small>
+            </a>
+          </li>
+        
+          <li class="post-item" data-categories="">
+            <a href="http://localhost:4000/2024/08/15/LogicGateSim.html">
+              <h2>Logic Goat - Logic Gate Simulation</h2>
+              <p>This post is showcase of a project I have made on python using the pygame library. The project is called ‘Logic Goat’ and allows users...</p>
+              <small>Published on: August 15, 2024</small>
+            </a>
+          </li>
+        
+      </ul>
     </div>
   </div>
 
-  <ul id="post-list">
-    
-      <li class="post-item" data-categories="">
-        <a href="http://localhost:4000/2025/03/17/FileUpload.html">
-          <h2>File upload - Web Sec academy labs</h2>
-          <p>This post will run through the labs on web sec academy by Portswigger related to File upload vulnerabilities. Lab: Remote...</p>
-          <small>Published on: 2025-03-17</small>
-        </a>
-      </li>
-    
-      <li class="post-item" data-categories="">
-        <a href="http://localhost:4000/2025/03/16/XSS.html">
-          <h2>XSS - Web Sec academy labs</h2>
-          <p>This post will run through the labs on web sec academy by Portswigger related to XSS. Lab: Reflected XSS into...</p>
-          <small>Published on: 2025-03-16</small>
-        </a>
-      </li>
-    
-      <li class="post-item" data-categories="">
-        <a href="http://localhost:4000/2025/03/01/SSRF.html">
-          <h2>SSRF - Web Sec academy labs</h2>
-          <p>This post will run through the labs on web sec academy by Portswigger related to SSRF. Server-side request forgery is...</p>
-          <small>Published on: 2025-03-01</small>
-        </a>
-      </li>
-    
-      <li class="post-item" data-categories="">
-        <a href="http://localhost:4000/2025/02/10/SQL.html">
-          <h2>SQL Injections - Web Sec academy labs</h2>
-          <p>This post will run through the labs on web sec academy by Portswigger related to SQL injections. SQL injection (SQLi)...</p>
-          <small>Published on: 2025-02-10</small>
-        </a>
-      </li>
-    
-      <li class="post-item" data-categories="">
-        <a href="http://localhost:4000/2025/02/02/Access-Control.html">
-          <h2>Access control - Web Sec academy labs</h2>
-          <p>This post will run through the labs on web sec academy by Portswigger related to Access control. There are three...</p>
-          <small>Published on: 2025-02-02</small>
-        </a>
-      </li>
-    
-      <li class="post-item" data-categories="">
-        <a href="http://localhost:4000/2025/02/01/Path-Travesal.html">
-          <h2>Path Traversal - Web Sec academy labs</h2>
-          <p>This post will run through the labs on web sec academy by Portswigger related to Path traversal. Lab: File path...</p>
-          <small>Published on: 2025-02-01</small>
-        </a>
-      </li>
-    
-      <li class="post-item" data-categories="">
-        <a href="http://localhost:4000/2025/01/29/Natas.html">
-          <h2>OverTheWire's Natas Wargame writeup (Incomplete)</h2>
-          <p>This post is a write up of OverTheWire’s Natas Wargame which can be found in the following link: https://overthewire.org/wargames/natas/ Level...</p>
-          <small>Published on: 2025-01-29</small>
-        </a>
-      </li>
-    
-      <li class="post-item" data-categories="">
-        <a href="http://localhost:4000/2024/10/19/Bandit0-14.html">
-          <h2>OverTheWire's Bandit Levels 0-14</h2>
-          <p>Here is the link: https://overthewire.org/wargames/bandit/ Level 0: The first level is simple all we need to is ssh into the...</p>
-          <small>Published on: 2024-10-19</small>
-        </a>
-      </li>
-    
-      <li class="post-item" data-categories="">
-        <a href="http://localhost:4000/2024/08/15/LogicGateSim.html">
-          <h2>Logic Goat - Logic Gate Simulation</h2>
-          <p>This post is showcase of a project I have made on python using the pygame library. The project is called...</p>
-          <small>Published on: 2024-08-15</small>
-        </a>
-      </li>
-    
-  </ul>
-</div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('post-search');
+      const filterSelect = document.getElementById('post-filter');
+      const postList = document.getElementById('post-list');
+      const postItems = document.querySelectorAll('.post-item');
 
-<footer class="site-footer">
-    <div class="footer-content">
-        <p>© 2025 Muhammadsaid Alizada. All rights reserved.</p>
-        <div class="footer-links">
-            <a href="http://localhost:4000/posts">Posts</a>
-            <a href="mailto:ma8494@nyu.edu">Contact</a>
-            </div>
-    </div>
-</footer>
+      function filterPosts() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const selectedCategory = filterSelect.value;
 
-<style>
-.site-footer {
-    background-color: #333; /* Or your preferred dark background */
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-    margin-top: 50px; /* Add some space between content and footer */
-}
+        postItems.forEach(item => {
+          const title = item.querySelector('h2').textContent.toLowerCase();
+          const content = item.querySelector('p').textContent.toLowerCase();
+          const categories = item.dataset.categories.split(' ');
+          let showItem = true;
 
-.footer-content {
-    max-width: 960px;
-    margin: 0 auto;
-}
+          if (searchTerm && !title.includes(searchTerm) && !content.includes(searchTerm)) {
+            showItem = false;
+          }
 
-.footer-links {
-    margin-top: 10px;
-}
+          if (selectedCategory && !categories.includes(selectedCategory)) {
+            showItem = false;
+          }
 
-.footer-links a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 10px;
-}
+          item.style.display = showItem ? 'block' : 'none';
+        });
+      }
 
-.footer-links a:hover {
-    text-decoration: underline;
-}
-</style>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('post-search');
-    const filterSelect = document.getElementById('post-filter');
-    const postList = document.getElementById('post-list');
-    const postItems = document.querySelectorAll('.post-item');
-
-    function filterPosts() {
-      const searchTerm = searchInput.value.toLowerCase();
-      const selectedCategory = filterSelect.value;
-
-      postItems.forEach(item => {
-        const title = item.querySelector('h2').textContent.toLowerCase();
-        const content = item.querySelector('p').textContent.toLowerCase();
-        const categories = item.dataset.categories.split(' ');
-        let showItem = true;
-
-        if (searchTerm && !title.includes(searchTerm) && !content.includes(searchTerm)) {
-          showItem = false;
-        }
-
-        if (selectedCategory && !categories.includes(selectedCategory)) {
-          showItem = false;
-        }
-
-        item.style.display = showItem ? 'block' : 'none';
-      });
-    }
-
-    searchInput.addEventListener('input', filterPosts);
-    filterSelect.addEventListener('change', filterPosts);
-  });
-</script>
-
-<style>
-  .content-container {
-    background-color: #1b1b1b;
-    padding: 20px;
-    margin: 20px auto;
-    max-width: 960px;
-    border-radius: 8px;
-  }
-
-  .content-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-
-  .search-filter-container {
-    display: flex;
-    gap: 10px;
-  }
-
-  .search-filter-container input,
-  .search-filter-container select {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-
-  #post-list {
-    list-style: none;
-    padding: 0;
-  }
-
-  .post-item {
-    border: 1px solid #eee;
-    margin-bottom: 10px;
-    padding: 15px;
-    border-radius: 4px;
-    transition: background-color 0.2s ease;
-}
-
-.post-item:hover {
-    background-color: rgba(255, 255, 255, 0.7); /* Transparent white */
-}
-
-  .post-item a {
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .post-item h2 {
-    margin-top: 0;
-  }
-</style> 
+      searchInput.addEventListener('input', filterPosts);
+      filterSelect.addEventListener('change', filterPosts);
+    });
+  </script>
+</body>
+</html> 
 </body>
 </html>

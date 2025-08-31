@@ -26,7 +26,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Path Traversal - Web Sec academy labs</title>
+    <title>Finding an Account Takeover Vulnerability (CVSS 9.8)</title>
     <style>
       :root {
         --text-color: #333;
@@ -258,39 +258,57 @@
 
     <div class="post-container">
       <article class="post">
-        <h1 class="post-title">Path Traversal - Web Sec academy labs</h1>
-        <p class="post-meta">Posted on February 1, 2025</p>
+        <h1 class="post-title">Finding an Account Takeover Vulnerability (CVSS 9.8)</h1>
+        <p class="post-meta">Posted on August 24, 2025</p>
         
         <div class="post-content">
-          <p>This post will run through the labs on web sec academy by Portswigger related to Path traversal.</p>
+          <p>This write-up describes my first bug bounty report, which ended up being classified as critical severity (CVSS 9.8). I found this bug on a international telecom provider’s web app within the login functionality.</p>
+<div style="text-align: center;">
+    <img src="http://localhost:4000/assets/FindAccountTakeover/result.jpeg" alt="" style="width: 500px;" />
+</div>
+<p>When I first started testing the app I focused on understanding how it identifies users and I found out it was done through using JSON Web Tokens which were stored in a cookie once logged in. The JWT contained lots of user information but but the key parameter used across the application as the unique identifier was an encrypted document ID number.</p>
 
-<h3 id="lab-file-path-traversal-simple-case"><u>Lab: File path traversal, simple case</u></h3>
-<p>We are asked to retrieve the contents of the “/etc/passwd” file. We can see the image is loaded through it’s filename so by changing this parameter and navigating through the file system using “../” we can get the contents by send a request on burp to:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://0a05003804955ada8062ef4d009200a1.web-security-academy.net/image?filename=/../../../etc/passwd
+<p>Once I understood the identification mechanism, I began testing different functionality and analyzing the requests. The login request in particular stood out:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST /apigw/mcrosrvc/cf/v4/login/ HTTP/2
+Host: selfcare.vulnerable-site.com
+Accept: application/json, text/plain, */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Content-Type: application/json
+Version: 3.26
+Channel: WEB
+Lang: ENGLISH
+Client-Secret: 1111
+Client-Key: 1111
+Client-Id: Nf1PgHpJGh
+Sessionkey: 23408e817eb1b65bae50b77db948e96770c584f62bb68a499507591cdf03efd
+Jwe-Journey-Instance: 123
+Content-Length: 166
+Origin: https://selfcare.vulnerable-site.com
+Referer: https://selfcare.vulnerable-site.com/en/consumer/login
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-origin
+Te: trailers
+{"username":"attackerAccount","email":null,"password":"attackedPassword","isToEncrypt":true,"language":"EN","isOfflineAccess":false}
 </code></pre></div></div>
+<p>On the frontend, there are two fields: one for email/username and another for the password. The frontend logic decides whether the user entered an email or a username, then fills the corresponding parameter in the request while setting the other to null.</p>
 
-<h3 id="lab-file-path-traversal-traversal-sequences-blocked-with-absolute-path-bypass"><u>Lab: File path traversal, traversal sequences blocked with absolute path bypass</u></h3>
-<p>This time the path traversal is blocked however by supplying the absolute path of the file we can still reach it using the following url:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://0a98002b0476693a8032ad880041000a.web-security-academy.net/image?filename=/etc/passwd
-</code></pre></div></div>
+<p>This caught my attention, because I wanted to see how the backend handled mixed credentials. After testing several combinations, I discovered a critical issue:</p>
+<ul>
+  <li>If an attacker provides their own username and password but supplies the victim’s email, the server generates a JWT containing information from both accounts.</li>
+  <li>Crucially, the encrypted document ID inside the JWT is taken from the victim.</li>
+  <li>This means the attacker can now use this JWT to interact with the application as if they were the victim.</li>
+</ul>
 
-<h3 id="lab-file-path-traversal-traversal-sequences-stripped-non-recursively"><u>Lab: File path traversal, traversal sequences stripped non-recursively</u></h3>
-<p>In this lab the application strips path traversal sequences from the user-supplied filename before using it. However we can bypass using nested traversal sequences “….//”.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://0a0a00d2031e790381f82a24009b0099.web-security-academy.net/image?filename=....//....//....//etc/passwd
-</code></pre></div></div>
+<p>With this JWT, I was able to:</p>
+<ul>
+  <li>Extract personal information from the victim’s account.</li>
+  <li>Change the victim’s email address.</li>
+  <li>Reset the password and take over the entire account.</li>
+</ul>
 
-<h3 id="lab-file-path-traversal-traversal-sequences-stripped-with-superfluous-url-decode"><u>Lab: File path traversal, traversal sequences stripped with superfluous URL-decode</u></h3>
-<p>We can also bypass the path traversal stripping using url encoding or even double url encoding. Thus we can bypass by double encoding this parameter:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/image?filename=../../../etc/passwd
-</code></pre></div></div>
-<h3 id="lab-file-path-traversal-validation-of-start-of-path"><u>Lab: File path traversal, validation of start of path</u></h3>
-<p>Sometimes the validation will want to make sure the file is in a certain folder so we will need to start from that folder then traverse to the file we want like the following:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://0a62006c04c196ef814f7582004c006a.web-security-academy.net/image?filename=/var/www/images/../../../etc/passwd
-</code></pre></div></div>
-<h3 id="lab-file-path-traversal-validation-of-file-extension-with-null-byte-bypass"><u>Lab: File path traversal, validation of file extension with null byte bypass</u></h3>
-<p>It could also require the parameter to be a certain file type which is where we can use a the null byte (%00) then put the file extension they want.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://0a04003b035be698805d456400b10079.web-security-academy.net/image?filename=../../../etc/passwd%00.jpg
-</code></pre></div></div>
+<p>This vulnerability demonstrated how small flaws in credential handling can escalate into a full account takeover. With just a crafted login request, an attacker could impersonate any user, access sensitive data, and completely compromise accounts. Eventhough it was marked as a duplicate, as my first bug bounty submission this was a huge learning experience and motivated me to continue hunting.</p>
 
         </div>
         

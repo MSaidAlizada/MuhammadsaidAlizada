@@ -2,6 +2,7 @@
 layout: post
 title: "Access control - Web Sec academy labs"
 pinned: False
+categories: [PortSwigger]
 ---
 This post will run through the labs on web sec academy by Portswigger related to Access control.  
 There are three types of access control:

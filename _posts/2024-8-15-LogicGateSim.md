@@ -2,6 +2,7 @@
 layout: post
 title: "Logic Goat - Logic Gate Simulation"
 pinned: True
+categories: [Projects]
 ---
 This post is showcase of a project I have made on python using the pygame library. The project is called 'Logic Goat' and allows users to create logic circuits and test them. 
 <div style="text-align: center;">

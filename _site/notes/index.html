@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Muhammadsaid Alizada</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+  </head>
+
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Notes</title>
+    <style>
+      :root {
+        --text-color: #333;
+        --accent-color: #2962FF;
+        --background-color: #fff;
+        --card-color: #f8f9fa;
+        --border-color: #e0e0e0;
+        --meta-color: #666;
+        --tag-bg: #e8eeff;
+        --hover-bg: #eef1f8;
+        --shadow-color: rgba(0,0,0,0.12);
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--background-color);
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      /* ── Nav ─────────────────────────────────────── */
+      .contact-info { margin: 0.8em 0; color: var(--meta-color); }
+      .contact-info a { color: var(--accent-color); text-decoration: none; }
+      .contact-info a:hover { text-decoration: underline; }
+      .contact-info span { margin: 0 8px; color: var(--border-color); }
+
+      nav { margin: 1.8em 0; }
+      nav a {
+        margin-right: 20px;
+        text-decoration: none;
+        color: var(--text-color);
+        font-weight: 500;
+        position: relative;
+      }
+      nav a:hover { color: var(--accent-color); }
+      nav a:after {
+        content: '';
+        position: absolute;
+        width: 0; height: 2px;
+        bottom: -4px; left: 0;
+        background-color: var(--accent-color);
+        transition: width 0.3s ease;
+      }
+      nav a:hover:after { width: 100%; }
+      .header-divider { border: 0; height: 1px; background: var(--border-color); margin: 1.5em 0; }
+
+      /* ── Page header ─────────────────────────────── */
+      .page-title { font-size: 2em; font-weight: 600; margin-bottom: 0.2em; }
+      .page-subtitle { color: var(--meta-color); margin-bottom: 1.5em; font-size: 0.95em; }
+
+      /* ── Search box ──────────────────────────────── */
+      .notes-search { position: relative; margin-bottom: 1.2em; }
+      .notes-search input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px 12px;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        background: var(--card-color);
+        color: var(--text-color);
+        font-size: 0.95em;
+        font-family: inherit;
+      }
+      .notes-search input:focus { outline: none; border-color: var(--accent-color); }
+      .search-results {
+        display: none;
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0;
+        right: 0;
+        background: var(--background-color);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        box-shadow: 0 8px 24px var(--shadow-color);
+        max-height: 60vh;
+        overflow-y: auto;
+        z-index: 50;
+      }
+      .search-results.open { display: block; }
+      .search-result {
+        display: block;
+        padding: 10px 12px;
+        text-decoration: none;
+        color: var(--text-color);
+        border-bottom: 1px solid var(--border-color);
+      }
+      .search-result:last-child { border-bottom: none; }
+      .search-result:hover { background: var(--hover-bg); }
+      .search-result-title { font-weight: 600; font-size: 0.92em; margin-bottom: 2px; }
+      .search-result-path {
+        font-size: 0.72em;
+        color: var(--meta-color);
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        margin-bottom: 4px;
+      }
+      .search-result-excerpt { font-size: 0.82em; color: var(--meta-color); line-height: 1.4; }
+      .search-result-tags { margin-top: 6px; display: flex; gap: 4px; flex-wrap: wrap; }
+      .search-result mark { background: rgba(255, 214, 0, 0.4); color: inherit; border-radius: 2px; }
+      .search-empty { padding: 14px; color: var(--meta-color); font-size: 0.88em; text-align: center; }
+
+      /* ── Tag filter ──────────────────────────────── */
+      .tag-filter-bar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 1.4em;
+      }
+      .tag-filter-label { font-size: 0.8em; color: var(--meta-color); margin-right: 4px; }
+      .tag-chip {
+        font-size: 0.78em;
+        padding: 4px 10px;
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+        background: var(--card-color);
+        color: var(--text-color);
+        cursor: pointer;
+      }
+      .tag-chip:hover { border-color: var(--accent-color); }
+      .tag-chip.active { background: var(--accent-color); border-color: var(--accent-color); color: #fff; }
+      .tag-chip-clear { color: var(--meta-color); border-style: dashed; }
+
+      /* ── Accordion folder cards ──────────────────── */
+      .topics-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .topic-card {
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        overflow: hidden;
+        transition: border-color 0.2s ease;
+      }
+      .topic-card.open { border-color: var(--accent-color); }
+
+      .topic-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1em 1.2em;
+        cursor: pointer;
+        background: var(--card-color);
+        user-select: none;
+        transition: background 0.15s ease;
+      }
+      .topic-header:hover { background: var(--hover-bg); }
+
+      .topic-header-left { display: flex; align-items: center; gap: 10px; }
+      .folder-icon { font-size: 1.2em; transition: transform 0.2s ease; }
+      .topic-card.open .folder-icon { transform: rotate(5deg); }
+      .topic-name { font-weight: 600; font-size: 1em; }
+      .note-count {
+        font-size: 0.78em;
+        color: var(--meta-color);
+        background: var(--border-color);
+        padding: 2px 8px;
+        border-radius: 10px;
+      }
+      .chevron { color: var(--meta-color); font-size: 0.8em; transition: transform 0.2s ease; }
+      .topic-card.open .chevron { transform: rotate(180deg); }
+
+      /* ── Notes inside accordion ──────────────────── */
+      .topic-notes { display: none; border-top: 1px solid var(--border-color); background: var(--background-color); }
+      .topic-card.open .topic-notes { display: block; }
+
+      .subfolder-header {
+        padding: 0.5em 1.4em 0.2em;
+        font-size: 0.78em;
+        font-weight: 700;
+        color: var(--meta-color);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        border-bottom: 1px solid var(--border-color);
+        background: var(--card-color);
+      }
+
+      .note-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.75em 1.4em;
+        border-bottom: 1px solid var(--border-color);
+        text-decoration: none;
+        color: var(--text-color);
+        transition: background 0.15s ease;
+      }
+      .note-item.sub { padding-left: 2em; }
+      .note-item:last-child { border-bottom: none; }
+      .note-item:hover { background: var(--hover-bg); color: var(--accent-color); }
+
+      .note-item-left { display: flex; align-items: center; gap: 8px; }
+      .note-icon { color: var(--meta-color); font-size: 0.9em; }
+      .note-title { font-size: 0.95em; }
+      .note-item-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+      .note-item-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+
+      .tag-pill {
+        display: inline-block;
+        font-size: 0.72em;
+        color: var(--accent-color);
+        background: var(--tag-bg);
+        padding: 1px 7px;
+        border-radius: 10px;
+        white-space: nowrap;
+      }
+
+      .pdf-badge {
+        font-size: 0.7em;
+        font-weight: 700;
+        color: #c0392b;
+        background: #fdecea;
+        border: 1px solid #f5c6c2;
+        padding: 1px 6px;
+        border-radius: 3px;
+        letter-spacing: 0.03em;
+      }
+      .note-date { font-size: 0.8em; color: var(--meta-color); }
+
+      .empty-state { padding: 2em; text-align: center; color: var(--meta-color); }
+
+      @media (max-width: 768px) {
+        .container { padding: 30px 15px; }
+        .note-date { display: none; }
+      }
+    </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+  <div class="header-name-container">
+    <img src="http://localhost:4321/assets/i.jpeg" alt="Muhammadsaid Alizada" class="profile-photo">
+    <h1>Muhammadsaid Alizada</h1>
+  </div>
+  
+  <div class="contact-info">
+    <a href="mailto:ma8494@nyu.edu">ma8494@nyu.edu</a>
+    <span>|</span>
+    <a href="https://github.com/MSaidAlizada" target="_blank">GitHub</a>
+    <span>|</span>
+    <a href="https://www.linkedin.com/in/muhammadsaid-alizada/" target="_blank">LinkedIn</a>
+  </div>
+  
+  <nav>
+    <a href="http://localhost:4321/">home</a>
+    <a href="http://localhost:4321/posts">posts</a>
+    <a href="http://localhost:4321/notes">notes</a>
+    <a href="http://localhost:4321/assets/CV.pdf">cv</a>
+    <a href="mailto:ma8494@nyu.edu">contact</a>
+  </nav>
+  
+  <hr class="header-divider">
+</header>
+
+<style>
+  .header-name-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.5em;
+  }
+
+  .profile-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    object-fit: cover;
+    border: 2px solid var(--border-color);
+  }
+
+</style>
+
+    <h1 class="page-title">Notes</h1>
+    <p class="page-subtitle">Personal study notes organized by topic. Click a folder to expand.</p>
+
+    <div class="notes-search">
+      <input type="search" id="search-input" placeholder="Search notes… (title, tags, content)" autocomplete="off">
+      <div id="search-results" class="search-results"></div>
+    </div>
+
+    
+    
+    
+
+    
+    
+    
+    
+
+    
+
+    
+      <div class="topics-grid">
+        
+          
+          
+
+          <div class="topic-card" id="topic-random">
+            <div class="topic-header" onclick="toggleTopic(this.parentElement)">
+              <div class="topic-header-left">
+                <span class="folder-icon">&#128193;</span>
+                <span class="topic-name">Random</span>
+                <span class="note-count">1</span>
+              </div>
+              <span class="chevron">&#9660;</span>
+            </div>
+
+            <div class="topic-notes">
+              
+
+              
+              
+                
+                
+                
+                  
+                  
+                  <a href="http://localhost:4321/notes/Random/addingLangsToKeyboardKOReader/" class="note-item" data-tags="">
+                    <div class="note-item-left">
+                      <span class="note-icon">&#128221;</span>
+                      <span class="note-title">Adding a New Language Keyboard to KOReader</span>
+                    </div>
+                    <div class="note-item-right">
+                      
+                        <div class="note-item-tags">
+                          
+                        </div>
+                      
+                      
+                      <span class="note-date">Jul 10, 2026</span>
+                    </div>
+                  </a>
+                
+              
+
+              
+              
+              
+                
+                
+                
+              
+
+            </div>
+          </div>
+        
+          
+          
+
+          <div class="topic-card" id="topic-research">
+            <div class="topic-header" onclick="toggleTopic(this.parentElement)">
+              <div class="topic-header-left">
+                <span class="folder-icon">&#128193;</span>
+                <span class="topic-name">Research</span>
+                <span class="note-count">4</span>
+              </div>
+              <span class="chevron">&#9660;</span>
+            </div>
+
+            <div class="topic-notes">
+              
+
+              
+              
+                
+                
+                
+              
+                
+                
+                
+                  
+                  
+                  <a href="http://localhost:4321/notes/Research/howtoreviewpapers/" class="note-item" data-tags="">
+                    <div class="note-item-left">
+                      <span class="note-icon">&#128221;</span>
+                      <span class="note-title">Notes on how to review a paper</span>
+                    </div>
+                    <div class="note-item-right">
+                      
+                        <div class="note-item-tags">
+                          
+                        </div>
+                      
+                      
+                      <span class="note-date">Aug 13, 2026</span>
+                    </div>
+                  </a>
+                
+              
+                
+                
+                
+              
+                
+                
+                
+                  
+                  
+                  <a href="http://localhost:4321/notes/Research/ZUC/" class="note-item" data-tags="">
+                    <div class="note-item-left">
+                      <span class="note-icon">&#128221;</span>
+                      <span class="note-title">ZUC</span>
+                    </div>
+                    <div class="note-item-right">
+                      
+                        <div class="note-item-tags">
+                          
+                        </div>
+                      
+                      
+                      <span class="note-date">Aug 23, 2026</span>
+                    </div>
+                  </a>
+                
+              
+
+              
+              
+              
+                
+                
+                
+                  
+                  
+                    
+                    <div class="subfolder-header">/ Naist iotmalwaredetector</div>
+                    
+                      
+                      
+                      
+                        
+                        
+                        <a href="http://localhost:4321/notes/Research/NAIST-IotMalwareDetector/DANN/" class="note-item sub" data-tags="">
+                          <div class="note-item-left">
+                            <span class="note-icon">&#128221;</span>
+                            <span class="note-title">Domain Adversial Training of Neural Networks</span>
+                          </div>
+                          <div class="note-item-right">
+                            
+                              <div class="note-item-tags">
+                                
+                              </div>
+                            
+                            
+                            <span class="note-date">Jun 23, 2025</span>
+                          </div>
+                        </a>
+                      
+                    
+                      
+                      
+                      
+                    
+                      
+                      
+                      
+                        
+                        
+                        <a href="http://localhost:4321/notes/Research/NAIST-IotMalwareDetector/main/" class="note-item sub" data-tags="">
+                          <div class="note-item-left">
+                            <span class="note-icon">&#128221;</span>
+                            <span class="note-title">Project Overview</span>
+                          </div>
+                          <div class="note-item-right">
+                            
+                              <div class="note-item-tags">
+                                
+                              </div>
+                            
+                            
+                            <span class="note-date">Jun 13, 2025</span>
+                          </div>
+                        </a>
+                      
+                    
+                      
+                      
+                      
+                    
+                  
+                
+              
+                
+                
+                
+              
+                
+                
+                
+                  
+                  
+                
+              
+                
+                
+                
+              
+
+            </div>
+          </div>
+        
+          
+          
+
+          <div class="topic-card" id="topic-vivado">
+            <div class="topic-header" onclick="toggleTopic(this.parentElement)">
+              <div class="topic-header-left">
+                <span class="folder-icon">&#128193;</span>
+                <span class="topic-name">Vivado</span>
+                <span class="note-count">1</span>
+              </div>
+              <span class="chevron">&#9660;</span>
+            </div>
+
+            <div class="topic-notes">
+              
+
+              
+              
+                
+                
+                
+                  
+                  
+                  <a href="http://localhost:4321/notes/Vivado/xdma-pcie/" class="note-item" data-tags="">
+                    <div class="note-item-left">
+                      <span class="note-icon">&#128221;</span>
+                      <span class="note-title">XDMA and PCIe</span>
+                    </div>
+                    <div class="note-item-right">
+                      
+                        <div class="note-item-tags">
+                          
+                        </div>
+                      
+                      
+                      <span class="note-date">May 13, 2025</span>
+                    </div>
+                  </a>
+                
+              
+
+              
+              
+              
+                
+                
+                
+              
+
+            </div>
+          </div>
+        
+      </div>
+    
+  </div>
+
+  <script>window.NOTES_SEARCH_INDEX_URL = "http://localhost:4321/search-index.json";</script>
+  <script src="http://localhost:4321/assets/js/notes-search.js"></script>
+  <script>
+    function toggleTopic(card) {
+      card.classList.toggle('open');
+    }
+
+    // Open the folder whose id matches the URL hash on load
+    window.addEventListener('DOMContentLoaded', function () {
+      if (window.location.hash) {
+        var target = document.querySelector(window.location.hash);
+        if (target) target.classList.add('open');
+      }
+      initTagFilter();
+    });
+
+    function initTagFilter() {
+      var chips = document.querySelectorAll('.tag-chip[data-tag]');
+      var clearBtn = document.getElementById('tag-clear');
+      if (!chips.length) return;
+
+      var active = null;
+
+      function applyFilter() {
+        var cards = document.querySelectorAll('.topic-card');
+        if (!active) {
+          document.querySelectorAll('.note-item').forEach(function (i) { i.style.display = ''; });
+          cards.forEach(function (c) { c.style.display = ''; });
+          if (clearBtn) clearBtn.style.display = 'none';
+          chips.forEach(function (c) { c.classList.remove('active'); });
+          return;
+        }
+        if (clearBtn) clearBtn.style.display = 'inline-block';
+        cards.forEach(function (card) {
+          var anyVisible = false;
+          card.querySelectorAll('.note-item').forEach(function (item) {
+            var tags = (item.getAttribute('data-tags') || '').split(',');
+            var match = tags.indexOf(active) !== -1;
+            item.style.display = match ? '' : 'none';
+            if (match) anyVisible = true;
+          });
+          card.style.display = anyVisible ? '' : 'none';
+          if (anyVisible) card.classList.add('open');
+        });
+      }
+
+      chips.forEach(function (chip) {
+        chip.addEventListener('click', function () {
+          var tag = chip.getAttribute('data-tag');
+          active = (active === tag) ? null : tag;
+          chips.forEach(function (c) { c.classList.toggle('active', c.getAttribute('data-tag') === active); });
+          applyFilter();
+        });
+      });
+      if (clearBtn) {
+        clearBtn.addEventListener('click', function () {
+          active = null;
+          applyFilter();
+        });
+      }
+    }
+  </script>
+</body>
+</html>
+
+</body>
+</html>

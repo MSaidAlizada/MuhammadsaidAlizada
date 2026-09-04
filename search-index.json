@@ -1,0 +1,23 @@
+---
+layout: null
+---
+[
+{% for note in site.notes %}
+{% assign rel = note.path | remove_first: "_notes/" %}
+{% assign parts = rel | split: "/" %}
+{% assign topic = parts[0] %}
+{% assign subfolder = "" %}
+{% if parts.size > 2 %}{% assign subfolder = parts[1] %}{% endif %}
+{% assign plain = note.content | strip_html | strip_newlines | replace: "	", " " | strip %}
+{% assign plain = plain | replace: "  ", " " | replace: "  ", " " %}
+{
+  "title": {{ note.title | jsonify }},
+  "url": {{ note.url | prepend: site.url | jsonify }},
+  "topic": {{ topic | jsonify }},
+  "subfolder": {{ subfolder | jsonify }},
+  "tags": {% if note.tags %}{{ note.tags | jsonify }}{% else %}[]{% endif %},
+  "excerpt": {{ plain | truncate: 200 | jsonify }},
+  "content": {{ plain | truncate: 6000 | jsonify }}
+}{% unless forloop.last %},{% endunless %}
+{% endfor %}
+]

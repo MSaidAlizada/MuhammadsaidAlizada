@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Muhammadsaid Alizada</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+  </head>
+
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OverTheWire's Bandit Levels 0-14</title>
+    <style>
+      :root {
+        --text-color: #333;
+        --accent-color: #2962FF;
+        --background-color: #fff;
+        --card-color: #f8f9fa;
+        --border-color: #e0e0e0;
+        --meta-color: #666;
+      }
+      
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--background-color);
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      header {
+        margin-bottom: 2.5em;
+      }
+
+      h1 {
+        font-size: 2.2em;
+        margin-bottom: 0.3em;
+        font-weight: 600;
+      }
+
+      .contact-info {
+        margin: 0.8em 0;
+        color: var(--meta-color);
+      }
+
+      .contact-info a {
+        color: var(--accent-color);
+        text-decoration: none;
+      }
+
+      .contact-info a:hover {
+        text-decoration: underline;
+      }
+
+      .contact-info span {
+        margin: 0 8px;
+        color: var(--border-color);
+      }
+
+      nav {
+        margin: 1.8em 0;
+      }
+
+      nav a {
+        margin-right: 20px;
+        text-decoration: none;
+        color: var(--text-color);
+        font-weight: 500;
+        position: relative;
+      }
+
+      nav a:hover {
+        color: var(--accent-color);
+      }
+
+      nav a:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -4px;
+        left: 0;
+        background-color: var(--accent-color);
+        transition: width 0.3s ease;
+      }
+
+      nav a:hover:after {
+        width: 100%;
+      }
+
+      .header-divider {
+        border: 0;
+        height: 1px;
+        background: var(--border-color);
+        margin: 1.5em 0;
+      }
+
+      .post-container {
+        background: var(--card-color);
+        border-radius: 8px;
+        padding: 2.5em;
+        margin-bottom: 3em;
+        border: 1px solid var(--border-color);
+      }
+
+      .post-title {
+        margin-top: 0;
+        font-size: 1.8em;
+      }
+
+      .post-meta {
+        color: var(--meta-color);
+        font-size: 0.9em;
+        margin-bottom: 1.5em;
+      }
+
+      .post-divider {
+        border: none;
+        height: 1px;
+        background: var(--border-color);
+        margin: 2em 0;
+      }
+
+      .post-content {
+        line-height: 1.7;
+      }
+
+      .post-content a {
+        color: var(--accent-color);
+        text-decoration: none;
+      }
+
+      .post-content a:hover {
+        text-decoration: underline;
+      }
+
+      .post-content code {
+        font-family: 'Fira Code', monospace;
+        background: rgba(0,0,0,0.05);
+        padding: 0.2em 0.4em;
+        border-radius: 3px;
+        font-size: 0.9em;
+        border: 1px solid rgba(0,0,0,0.1);
+      }
+
+      .post-content pre {
+        background: rgba(0,0,0,0.05);
+        padding: 1em;
+        border-radius: 5px;
+        overflow-x: auto;
+        border: 1px solid rgba(0,0,0,0.1);
+      }
+
+      .post-content pre code {
+        background: none;
+        padding: 0;
+        border: none;
+      }
+
+      .back-link {
+        color: var(--accent-color);
+        text-decoration: none;
+        font-weight: 500;
+        display: inline-block;
+        margin-top: 1em;
+      }
+
+      .back-link:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 30px 15px;
+        }
+        
+        .post-container {
+          padding: 1.5em;
+        }
+        
+        nav a {
+          margin-right: 15px;
+        }
+      }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+  <div class="header-name-container">
+    <img src="http://localhost:4321/assets/i.jpeg" alt="Muhammadsaid Alizada" class="profile-photo">
+    <h1>Muhammadsaid Alizada</h1>
+  </div>
+  
+  <div class="contact-info">
+    <a href="mailto:ma8494@nyu.edu">ma8494@nyu.edu</a>
+    <span>|</span>
+    <a href="https://github.com/MSaidAlizada" target="_blank">GitHub</a>
+    <span>|</span>
+    <a href="https://www.linkedin.com/in/muhammadsaid-alizada/" target="_blank">LinkedIn</a>
+  </div>
+  
+  <nav>
+    <a href="http://localhost:4321/">home</a>
+    <a href="http://localhost:4321/posts">posts</a>
+    <a href="http://localhost:4321/notes">notes</a>
+    <a href="http://localhost:4321/assets/CV.pdf">cv</a>
+    <a href="mailto:ma8494@nyu.edu">contact</a>
+  </nav>
+  
+  <hr class="header-divider">
+</header>
+
+<style>
+  .header-name-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.5em;
+  }
+
+  .profile-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    object-fit: cover;
+    border: 2px solid var(--border-color);
+  }
+
+</style>
+
+    <div class="post-container">
+      <article class="post">
+        <h1 class="post-title">OverTheWire's Bandit Levels 0-14</h1>
+        <p class="post-meta">Posted on October 19, 2024</p>
+        
+        <div class="post-content">
+          <p>Here is the link:
+https://overthewire.org/wargames/bandit/</p>
+
+<h3 id="level-0">Level 0:</h3>
+<p>The first level is simple all we need to is ssh into the level. It tells us to ssh into bandit.labs.overthewire.org on port 2220 with the username bandit0. Reading the man page we can the two flags we will need are -p and -l with -p for specifying the port and the -l for specifying the username. So our command is</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh bandit.labs.overthewire.org -p2220 -l bandit0  
+</code></pre></div></div>
+<p>and we enter the password bandit0. Once logging in using the ls command we see there is a readme file and with cat readme we can see the output:<br />
+Congratulations on your first steps into the bandit game!!
+Please make sure you have read the rules at https://overthewire.org/rules/
+If you are following a course, workshop, walkthrough or other educational activity,
+please inform the instructor about the rules as well and encourage them to
+contribute to the OverTheWire community so we can keep these games free!</p>
+
+<p>The password you are looking for is: ZjLjTmM6FvvyRnrb2rfNWOZOTa6ip5If</p>
+
+<h3 id="level-1">Level 1:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh bandit.labs.overthewire.org -p2220 -l bandit1  
+</code></pre></div></div>
+<p>In this level we are told the flag is stored in a file called <code class="language-plaintext highlighter-rouge">-</code> , however <code class="language-plaintext highlighter-rouge">cat -</code> will not work as this symbol instructs cat command to read from standard input. However if we put a ./ infront of it and execute <code class="language-plaintext highlighter-rouge">cat ./-</code> then this specifies that the symbol is a file name and we get the output 263JGJPfgU6LtdEvgfWU1XP5yac29mFx.</p>
+
+<h3 id="level-2">Level 2:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh bandit.labs.overthewire.org -p2220 -l bandit2  
+</code></pre></div></div>
+<p>In this level we are told the flag is stored in a file called spaces in this filename, however <code class="language-plaintext highlighter-rouge">cat spaces in this filename</code> will not work as the command will take each word as a separate arugement since arguements are separated by spaces. However if we put a qoutation around all of it and execute <code class="language-plaintext highlighter-rouge">cat 'spaces in this filename'</code> then this specifies that the whole thing is the file name and we get the output MNk8KNH3Usiio41PRUEoDFPqfxLPlSmx.</p>
+
+<h3 id="level-3">Level 3:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh bandit.labs.overthewire.org -p2220 -l bandit3
+</code></pre></div></div>
+<p>We are told that the flag is hidden in a hidden file stored in the directory called inhere. Using the cd command you can move into that directory and using ls with the flag -a we can get a list of all files including the hidden ones.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd inhere
+ls -a
+</code></pre></div></div>
+<p>This shows us there is a file called …Hiding-From-You which has the flag 2WmrDFRmJIq3IPxneAaMGhap0pFhF3NJ.</p>
+
+<h3 id="level-4">Level 4:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh bandit.labs.overthewire.org -p2220 -l bandit4
+</code></pre></div></div>
+<p>We are told the flag is in the only human readable file in the directory inhere. So using cd command we move into that directory and we can use the file command to see what each file stores. By using asterik it uses the command on all files with a similar pattern.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd inhere
+file ./-file*
+</code></pre></div></div>
+<p>And we get the output:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./-file00: data
+./-file01: data
+./-file02: data
+./-file03: data
+./-file04: data
+./-file05: data
+./-file06: data
+./-file07: ASCII text
+./-file08: data
+./-file09: data
+</code></pre></div></div>
+<p>Thus we see the flag is stored in -file07 and outputting it we get 4oQYVPkxZOOEOO5pTW81FB8j8lxXGUQw.</p>
+
+<h3 id="level-5">Level 5:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh bandit.labs.overthewire.org -p2220 -l bandit5
+</code></pre></div></div>
+<p>We are told the flag is in the file with the size 1033 bytes, human readable and not executable. For this we will use find command which can find a file in a directory given parameters. We will use the -size flag and -executable flag.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd inhere
+find ./ -size 1033c -not executable
+</code></pre></div></div>
+<p>This outputs:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./maybehere07/.file2
+</code></pre></div></div>
+<p>So outputting the file we get the flag HWasnPhtq9AVKe0dmk45nxy20cvUa6EG.</p>
+
+<h3 id="level-6">Level 6:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh bandit.labs.overthewire.org -p2220 -l bandit6
+</code></pre></div></div>
+<p>This time the file is stored somewhere on the server so we cd to the root directory. The file storing the the flag has the following restrictions: owned by user bandit7, owned by group bandit6 and 33 bytes. So again we will use the find command and the size flag but will also use to other flags, -user and -group. -user is used to specify who owns the file and -group to specify the group of the file. When we use the command we will get a list of files some of which give error permission denied but only one file doesn’t give that error which is where the flag is stored. Since we don’t want to manually search for the file within all the permission denieds we can use 2&gt;/dev/null which discards all the errors.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ../../
+find / -type f -user bandit7 -group bandit6 -size 33c 2&gt;/dev/null
+</code></pre></div></div>
+<p>This will leave only one file output /var/lib/dpkg/info/bandit7.password which has the flag morbNTDkSW6jIlUc0ymOdMaLnOlFVAaj.</p>
+
+<h3 id="level-7">Level 7:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh bandit.labs.overthewire.org -p2220 -l bandit7
+</code></pre></div></div>
+<p>We are told the flag is stored in the file data.txt in the line containing the word millionth. There is command called grep which is useful for looking for lines with a specified patterns. This time all we are looking is a word so just need to add it to the command.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>grep millionth data.txt
+</code></pre></div></div>
+<p>This returns the flag dfwvzFQi4mU0wfNbFOe9RoWskMLg7eEc.</p>
+
+<h3 id="level-8">Level 8:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh bandit.labs.overthewire.org -p2220 -l bandit8
+</code></pre></div></div>
+<p>Again flag is stored in the file data.txt but is the only line that occurs once. Since there is no pattern we can’t use grep but we can use a command uniq which can remove duplicate lines that occur consecutively. However since they must be consecutive we have to sort the file as well which we can do with the sort command.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sort data.txt | uniq -u
+</code></pre></div></div>
+<p>Which outputs 4CKMh1JI91bUIZZPXDqGanal4xvAg0JM.</p>
+
+<h3 id="level-9">Level 9:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh bandit.labs.overthewire.org -p2220 -l bandit9
+</code></pre></div></div>
+<p>Flag is stored in data.txt which this time is a data.txt and is preceded by several ‘=’. Here we could use grep to find lines with ‘=’ however since it is binary file we need to turn it into text first which we can do with strings command which strips the file and leaves only the text.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>strings data.txt | grep ===
+</code></pre></div></div>
+<p>We get the output:</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">}========== the
+3JprD========== passwordi
+~fDV3========== is
+D9========== FGUW5ilLVJrxX9kMYMmlN4MgbpfMiqey
+</span></code></pre></div></div>
+
+<h3 id="level-10">Level 10:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh bandit.labs.overthewire.org -p2220 -l bandit10
+</code></pre></div></div>
+<p>We are told the flag is in data.txt which has been encoded with base64 which we can decode using the base64 command. All we need to do is add -d flag to specifiy we are decoding.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bandit10@bandit:~$ base64 -d data.txt 
+The password is dtR173fZKb0RRsDFSGsg2RWnpNVj3qRr
+</code></pre></div></div>
+
+<h3 id="level-11">Level 11:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh bandit.labs.overthewire.org -p2220 -l bandit11
+</code></pre></div></div>
+<p>This time data.txt has been encoded with rot13 where all the letters have been rotated by 13. That means a is now n in the file. We can use the tr command to translate the letters by giving it two sets. Our first set is the rotated set of letter which is ‘N-ZA-Mn-za-m’ and our second being the regular alphabet ‘A-Za-z’.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bandit11@bandit:~$ cat data.txt | tr 'N-ZA-Mn-za-m' 'A-Za-z'
+The password is 7x16WNeHIi5YkIhWsfFIqoognUTyj9Q4
+</code></pre></div></div>
+
+<h3 id="level-12">Level 12:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh bandit.labs.overthewire.org -p2220 -l bandit12
+</code></pre></div></div>
+<p>We are told the file data.txt is a hexdump of a file that has been compressed repeatedly so if we want to get that flag we will have to reverse all of that. We are suggested to copy the data.txt to a temporary directory so that we can do all these changes.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bandit12@bandit:~$ mktemp -d
+/tmp/tmp.oOkZZAosQF
+bandit12@bandit:~$ cp data.txt /tmp/tmp.oOkZZAosQF
+bandit12@bandit:~$ cd /tmp/tmp.oOkZZAosQF
+</code></pre></div></div>
+<p>Now we can begin with reversing starting with the hexdump we can xxd command to reverse with the -r flag and storing the output in file called flag.txt.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bandit12@bandit:/tmp/tmp.oOkZZAosQF$ xxd -r data.txt &gt; flag.txt
+bandit12@bandit:/tmp/tmp.oOkZZAosQF$ file flag.txt 
+flag.txt: gzip compressed data, was "data2.bin", last modified: Thu Sep 19 07:08:15 2024, max compression, from Unix, original size modulo 2^32 574
+</code></pre></div></div>
+<p>As we can see checking the file type of flag.txt we can see it has been compressed by gzip which we can expand using gunzip but we need the file name to end with .gz.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bandit12@bandit:/tmp/tmp.oOkZZAosQF$ mv flag.txt flag.txt.gz
+bandit12@bandit:/tmp/tmp.oOkZZAosQF$ gunzip flag.txt.gz 
+bandit12@bandit:/tmp/tmp.oOkZZAosQF$ file flag.txt 
+flag.txt: bzip2 compressed data, block size = 900k
+</code></pre></div></div>
+<p>The file is still compressed but this time by bzip2 so we will use bunzip2 to expand but we have the rename the file to end with .bz2.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bandit12@bandit:/tmp/tmp.oOkZZAosQF$ mv flag.txt flag.txt.bz2
+bandit12@bandit:/tmp/tmp.oOkZZAosQF$ bunzip2 flag.txt.bz2 
+bandit12@bandit:/tmp/tmp.oOkZZAosQF$ file flag.txt 
+flag.txt: gzip compressed data, was "data4.bin", last modified: Thu Sep 19 07:08:15 2024, max compression, from Unix, original size modulo 2^32 20480
+</code></pre></div></div>
+<p>Again it is still compressed with gzip so we repeat.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bandit12@bandit:/tmp/tmp.oOkZZAosQF$ mv flag.txt flag.txt.gz
+bandit12@bandit:/tmp/tmp.oOkZZAosQF$ gunzip flag.txt.gz 
+bandit12@bandit:/tmp/tmp.oOkZZAosQF$ file flag.txt 
+flag.txt: POSIX tar archive (GNU)
+</code></pre></div></div>
+<p>This time it expanded to a tar archive which we can decompress with tar -xvf as it says on the man page.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bandit12@bandit:/tmp/tmp.oOkZZAosQF$ mv flag.txt flag.txt.tar
+bandit12@bandit:/tmp/tmp.oOkZZAosQF$ tar -xvf flag.txt.tar 
+data5.bin
+bandit12@bandit:/tmp/tmp.oOkZZAosQF$ file data5.bin 
+data5.bin: POSIX tar archive (GNU)
+</code></pre></div></div>
+<p>Expanding it we see it returns a file called data5.bin which again is a tar archive so we repeat.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bandit12@bandit:/tmp/tmp.oOkZZAosQF$ mv data5.bin data5.bin.tar
+bandit12@bandit:/tmp/tmp.oOkZZAosQF$ tar -xvf data5.bin.tar 
+data6.bin
+bandit12@bandit:/tmp/tmp.oOkZZAosQF$ file data6.bin 
+data6.bin: bzip2 compressed data, block size = 900k
+</code></pre></div></div>
+<p>This time we get data6.bin which compressed with bzip so … repeat :0.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bandit12@bandit:/tmp/tmp.oOkZZAosQF$ mv data6.bin data6.bin.bz2
+bandit12@bandit:/tmp/tmp.oOkZZAosQF$ bunzip2 data6.bin.bz2 
+bandit12@bandit:/tmp/tmp.oOkZZAosQF$ file data6.bin 
+data6.bin: POSIX tar archive (GNU)
+</code></pre></div></div>
+<p>Expanding it we see it is tar type so again repeat :(.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bandit12@bandit:/tmp/tmp.oOkZZAosQF$ mv data6.bin data6.bin.tar
+bandit12@bandit:/tmp/tmp.oOkZZAosQF$ tar -xvf data6.bin.tar 
+data8.bin
+bandit12@bandit:/tmp/tmp.oOkZZAosQF$ file data8.bin
+data8.bin: gzip compressed data, was "data9.bin", last modified: Thu Sep 19 07:08:15 2024, max compression, from Unix, original size modulo 2^32 49
+</code></pre></div></div>
+<p>Again it is gzip so expand again.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bandit12@bandit:/tmp/tmp.oOkZZAosQF$ mv data8.bin data8.bin.gz
+bandit12@bandit:/tmp/tmp.oOkZZAosQF$ gunzip data8.bin.gz 
+bandit12@bandit:/tmp/tmp.oOkZZAosQF$ file data8.bin 
+data8.bin: ASCII text
+bandit12@bandit:/tmp/tmp.oOkZZAosQF$ cat data8.bin
+The password is FO5dwFsc0cbaIiH0h8J2eUks2vdTDwAn
+</code></pre></div></div>
+<p>This time when we decompress it we get ASCII text file which is the the flag!!!.</p>
+
+<h3 id="level-13">Level 13:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh bandit.labs.overthewire.org -p2220 -l bandit13
+</code></pre></div></div>
+<p>For this level we are told that we should ssh into bandit14 which is where the password for the level is stored.
+Since we use the private key given to us we include the -i flag along with the name of the file with that stores the private key.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh bandit14@localhost -p2220 -i  sshkey.private
+bandit14@bandit:~$ cat  /etc/bandit_pass/bandit14
+MU4VWeTyJk8ROof1qqmcBPaLh7lDCPvS
+</code></pre></div></div>
+
+<h3 id="level-14">Level 14:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh bandit.labs.overthewire.org -p2220 -l bandit14
+</code></pre></div></div>
+<p>For this level we are told we get the password by submitting the current password to the port 30000 on localhost. This is a use case for nc (net cat) which allows us to send and recieve packets.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bandit14@bandit:~$ nc localhost 30000 &lt; /etc/bandit_pass/bandit14
+Correct!
+8xCjnmgoKbGLhHFAZlGE5Tmu4M2tKJQo
+</code></pre></div></div>
+<p>With the command above we send the file /etc/bandit_pass/bandit14 which is where the password is stored.</p>
+
+        </div>
+        
+        <hr class="post-divider">
+        
+        <a href="http://localhost:4321/posts" class="back-link">← All Posts</a>
+      </article>
+    </div>
+  </div>
+</body>
+</html>
+</body>
+</html>

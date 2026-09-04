@@ -12,15 +12,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
-    <style>
-      a {
-        color: white; /* Ensures all links are white */
-      }
-    </style>
-    
   </head>
 
-<body style="background-color: white;">
+<body>
     <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -227,7 +221,7 @@
   <div class="container">
     <header>
   <div class="header-name-container">
-    <img src="http://localhost:4000/assets/i.jpeg" alt="Muhammadsaid Alizada" class="profile-photo">
+    <img src="http://localhost:4321/assets/i.jpeg" alt="Muhammadsaid Alizada" class="profile-photo">
     <h1>Muhammadsaid Alizada</h1>
   </div>
   
@@ -240,9 +234,10 @@
   </div>
   
   <nav>
-    <a href="http://localhost:4000/">home</a>
-    <a href="http://localhost:4000/posts">posts</a>
-    <a href="http://localhost:4000/assets/CV.pdf">cv</a>
+    <a href="http://localhost:4321/">home</a>
+    <a href="http://localhost:4321/posts">posts</a>
+    <a href="http://localhost:4321/notes">notes</a>
+    <a href="http://localhost:4321/assets/CV.pdf">cv</a>
     <a href="mailto:ma8494@nyu.edu">contact</a>
   </nav>
   
@@ -275,137 +270,178 @@
             <option value="">All Categories</option>
             
             
+              <option value="bug-bounty">Bug Bounty</option>
+            
+              <option value="ctf">CTF</option>
+            
+              <option value="overthewire">OverTheWire</option>
+            
+              <option value="portswigger">PortSwigger</option>
+            
+              <option value="projects">Projects</option>
+            
           </select>
         </div>
       </div>
 
       <ul id="post-list">
         
-          <li class="post-item" data-categories="">
-            <a href="http://localhost:4000/2025/08/24/FindingAnAccountTakeOver.html">
+          
+        
+          
+          <li class="post-item" data-categories="bug-bounty ">
+            <a href="http://localhost:4321/bug%20bounty/2025/08/24/FindingAnAccountTakeOver.html">
               <h2>Finding an Account Takeover Vulnerability (CVSS 9.8)</h2>
               <p>This write-up describes my first bug bounty report, which ended up being classified as critical severity (CVSS 9.8). I found this bug on a international...</p>
               <small>Published on: August 24, 2025</small>
             </a>
           </li>
+          
         
-          <li class="post-item" data-categories="">
-            <a href="http://localhost:4000/2025/07/08/JuiceShop.html">
+          
+          <li class="post-item" data-categories="ctf ">
+            <a href="http://localhost:4321/ctf/2025/07/08/JuiceShop.html">
               <h2>OWASP Juice Shop</h2>
               <p>This post will be used as my notes as I try to solve challenges OWASPS’ Juice shop application, https://owasp.org/www-project-juice-shop/.
 </p>
               <small>Published on: July 8, 2025</small>
             </a>
           </li>
+          
         
-          <li class="post-item" data-categories="">
-            <a href="http://localhost:4000/2025/07/08/JWT.html">
+          
+          <li class="post-item" data-categories="portswigger ">
+            <a href="http://localhost:4321/portswigger/2025/07/08/JWT.html">
               <h2>JWT - Web Sec academy labs</h2>
               <p>This post will run through the labs on web sec academy by Portswigger related to JWT attacks.
 </p>
               <small>Published on: July 8, 2025</small>
             </a>
           </li>
+          
         
-          <li class="post-item" data-categories="">
-            <a href="http://localhost:4000/2025/07/03/CSRF.html">
+          
+          <li class="post-item" data-categories="portswigger ">
+            <a href="http://localhost:4321/portswigger/2025/07/03/CSRF.html">
               <h2>CSRF - Web Sec academy labs</h2>
               <p>This post will run through the labs on web sec academy by Portswigger related to CSRF.
 </p>
               <small>Published on: July 3, 2025</small>
             </a>
           </li>
+          
         
-          <li class="post-item" data-categories="">
-            <a href="http://localhost:4000/2025/06/30/SSTI.html">
+          
+          <li class="post-item" data-categories="portswigger ">
+            <a href="http://localhost:4321/portswigger/2025/06/30/SSTI.html">
               <h2>Server Side Template Injection - Web Sec academy labs</h2>
               <p>This post will run through the labs on web sec academy by Portswigger related to Server Side Template Injection.
 </p>
               <small>Published on: June 30, 2025</small>
             </a>
           </li>
+          
         
-          <li class="post-item" data-categories="">
-            <a href="http://localhost:4000/2025/05/24/XML.html">
+          
+          <li class="post-item" data-categories="portswigger ">
+            <a href="http://localhost:4321/portswigger/2025/05/24/XML.html">
               <h2>XML external entity - Web Sec academy labs</h2>
               <p>This post will run through the labs on web sec academy by Portswigger related to XML external entity.
 </p>
               <small>Published on: May 24, 2025</small>
             </a>
           </li>
+          
         
-          <li class="post-item" data-categories="">
-            <a href="http://localhost:4000/2025/04/29/APITesting.html">
+          
+          <li class="post-item" data-categories="portswigger ">
+            <a href="http://localhost:4321/portswigger/2025/04/29/APITesting.html">
               <h2>API testing - Web Sec academy labs</h2>
               <p>This post will run through the labs on web sec academy by Portswigger related to API testing.
 </p>
               <small>Published on: April 29, 2025</small>
             </a>
           </li>
+          
         
-          <li class="post-item" data-categories="">
-            <a href="http://localhost:4000/2025/04/23/picoCTF.html">
+          
+          <li class="post-item" data-categories="ctf ">
+            <a href="http://localhost:4321/ctf/2025/04/23/picoCTF.html">
               <h2>PicoCTF</h2>
               <p>This post will go through several CTFs on PicoCTF.
 </p>
               <small>Published on: April 23, 2025</small>
             </a>
           </li>
+          
         
-          <li class="post-item" data-categories="">
-            <a href="http://localhost:4000/2025/03/17/FileUpload.html">
+          
+          <li class="post-item" data-categories="portswigger ">
+            <a href="http://localhost:4321/portswigger/2025/03/17/FileUpload.html">
               <h2>File upload - Web Sec academy labs</h2>
               <p>This post will run through the labs on web sec academy by Portswigger related to File upload vulnerabilities.
 </p>
               <small>Published on: March 17, 2025</small>
             </a>
           </li>
+          
         
-          <li class="post-item" data-categories="">
-            <a href="http://localhost:4000/2025/03/16/XSS.html">
+          
+          <li class="post-item" data-categories="portswigger ">
+            <a href="http://localhost:4321/portswigger/2025/03/16/XSS.html">
               <h2>XSS - Web Sec academy labs</h2>
               <p>This post will run through the labs on web sec academy by Portswigger related to XSS.
 </p>
               <small>Published on: March 16, 2025</small>
             </a>
           </li>
+          
         
-          <li class="post-item" data-categories="">
-            <a href="http://localhost:4000/2025/03/01/SSRF.html">
+          
+          <li class="post-item" data-categories="portswigger ">
+            <a href="http://localhost:4321/portswigger/2025/03/01/SSRF.html">
               <h2>SSRF - Web Sec academy labs</h2>
               <p>This post will run through the labs on web sec academy by Portswigger related to SSRF.
 </p>
               <small>Published on: March 1, 2025</small>
             </a>
           </li>
+          
         
-          <li class="post-item" data-categories="">
-            <a href="http://localhost:4000/2025/02/10/SQL.html">
+          
+          <li class="post-item" data-categories="portswigger ">
+            <a href="http://localhost:4321/portswigger/2025/02/10/SQL.html">
               <h2>SQL Injections - Web Sec academy labs</h2>
               <p>This post will run through the labs on web sec academy by Portswigger related to SQL injections. SQL injection (SQLi) is a web security vulnerability...</p>
               <small>Published on: February 10, 2025</small>
             </a>
           </li>
+          
         
-          <li class="post-item" data-categories="">
-            <a href="http://localhost:4000/2025/02/02/Access-Control.html">
+          
+          <li class="post-item" data-categories="portswigger ">
+            <a href="http://localhost:4321/portswigger/2025/02/02/Access-Control.html">
               <h2>Access control - Web Sec academy labs</h2>
               <p>This post will run through the labs on web sec academy by Portswigger related to Access control. There are three types of access control: Vertical...</p>
               <small>Published on: February 2, 2025</small>
             </a>
           </li>
+          
         
-          <li class="post-item" data-categories="">
-            <a href="http://localhost:4000/2025/02/01/Path-Travesal.html">
+          
+          <li class="post-item" data-categories="portswigger ">
+            <a href="http://localhost:4321/portswigger/2025/02/01/Path-Travesal.html">
               <h2>Path Traversal - Web Sec academy labs</h2>
               <p>This post will run through the labs on web sec academy by Portswigger related to Path traversal.
 </p>
               <small>Published on: February 1, 2025</small>
             </a>
           </li>
+          
         
-          <li class="post-item" data-categories="">
-            <a href="http://localhost:4000/2025/01/29/Natas.html">
+          
+          <li class="post-item" data-categories="overthewire ctf ">
+            <a href="http://localhost:4321/overthewire/ctf/2025/01/29/Natas.html">
               <h2>OverTheWire's Natas Wargame writeup</h2>
               <p>This post is a write up of OverTheWire’s Natas Wargame which can be found in the following link:
 https://overthewire.org/wargames/natas/
@@ -413,9 +449,11 @@ https://overthewire.org/wargames/natas/
               <small>Published on: January 29, 2025</small>
             </a>
           </li>
+          
         
-          <li class="post-item" data-categories="">
-            <a href="http://localhost:4000/2024/10/19/Bandit0-14.html">
+          
+          <li class="post-item" data-categories="overthewire ctf ">
+            <a href="http://localhost:4321/overthewire/ctf/2024/10/19/Bandit0-14.html">
               <h2>OverTheWire's Bandit Levels 0-14</h2>
               <p>Here is the link:
 https://overthewire.org/wargames/bandit/
@@ -423,14 +461,17 @@ https://overthewire.org/wargames/bandit/
               <small>Published on: October 19, 2024</small>
             </a>
           </li>
+          
         
-          <li class="post-item" data-categories="">
-            <a href="http://localhost:4000/2024/08/15/LogicGateSim.html">
+          
+          <li class="post-item" data-categories="projects ">
+            <a href="http://localhost:4321/projects/2024/08/15/LogicGateSim.html">
               <h2>Logic Goat - Logic Gate Simulation</h2>
               <p>This post is showcase of a project I have made on python using the pygame library. The project is called ‘Logic Goat’ and allows users...</p>
               <small>Published on: August 15, 2024</small>
             </a>
           </li>
+          
         
       </ul>
     </div>
@@ -470,6 +511,6 @@ https://overthewire.org/wargames/bandit/
     });
   </script>
 </body>
-</html> 
+</html>
 </body>
 </html>

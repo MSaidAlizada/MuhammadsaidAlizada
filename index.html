@@ -238,7 +238,7 @@ permalink: /
         <h2>Pinned Posts</h2>
         <div class="pinned-posts-grid">
           {% for post in site.posts %}
-            {% if post.pinned %}
+            {% if post.pinned and post.show != false %}
               <article class="post-card">
                 <h3>
                   <a href="{{ post.url | prepend: site.url }}">{{ post.title }}</a>

@@ -2,6 +2,7 @@
 layout: post
 title: "OWASP Juice Shop"
 pinned: True
+categories: [CTF]
 ---
 This post will be used as my notes as I try to solve challenges OWASPS' Juice shop application, https://owasp.org/www-project-juice-shop/.  
 

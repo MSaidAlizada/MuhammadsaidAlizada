@@ -20,6 +20,11 @@ nav:
   - name: About
     link: /about
 
+collections:
+  notes:
+    output: true
+    permalink: /notes/:path/
+
 # Exclusions (files and folders Jekyll should ignore)
 exclude:
   - Gemfile

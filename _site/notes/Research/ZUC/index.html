@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Muhammadsaid Alizada</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+  </head>
+
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ZUC</title>
+    <style>
+      :root {
+        --text-color: #333;
+        --accent-color: #2962FF;
+        --background-color: #fff;
+        --card-color: #f8f9fa;
+        --border-color: #e0e0e0;
+        --meta-color: #666;
+        --code-bg: rgba(0,0,0,0.05);
+        --code-border: rgba(0,0,0,0.1);
+        --tag-bg: #e8eeff;
+        --hover-bg: #eef1f8;
+        --shadow-color: rgba(0,0,0,0.12);
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--background-color);
+        margin: 0;
+        padding: 0;
+      }
+
+      .page-wrapper {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      /* ── Nav ─────────────────────────────────────── */
+      .contact-info {
+        margin: 0.8em 0;
+        color: var(--meta-color);
+      }
+      .contact-info a { color: var(--accent-color); text-decoration: none; }
+      .contact-info a:hover { text-decoration: underline; }
+      .contact-info span { margin: 0 8px; color: var(--border-color); }
+
+      nav { margin: 1.8em 0; }
+      nav a {
+        margin-right: 20px;
+        text-decoration: none;
+        color: var(--text-color);
+        font-weight: 500;
+        position: relative;
+      }
+      nav a:hover { color: var(--accent-color); }
+      nav a:after {
+        content: '';
+        position: absolute;
+        width: 0; height: 2px;
+        bottom: -4px; left: 0;
+        background-color: var(--accent-color);
+        transition: width 0.3s ease;
+      }
+      nav a:hover:after { width: 100%; }
+      .header-divider {
+        border: 0; height: 1px;
+        background: var(--border-color);
+        margin: 1.5em 0;
+      }
+
+      /* ── Breadcrumb ──────────────────────────────── */
+      .breadcrumb {
+        font-size: 0.85em;
+        color: var(--meta-color);
+        margin-bottom: 1.5em;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .breadcrumb a { color: var(--accent-color); text-decoration: none; }
+      .breadcrumb a:hover { text-decoration: underline; }
+      .breadcrumb-sep { color: var(--border-color); }
+      .breadcrumb-current { color: var(--text-color); }
+
+      /* ── Search box ──────────────────────────────── */
+      .note-search, .notes-search {
+        position: relative;
+        margin-bottom: 1em;
+      }
+      .note-search input, .notes-search input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 8px 10px;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        background: var(--background-color);
+        color: var(--text-color);
+        font-size: 0.88em;
+        font-family: inherit;
+      }
+      .note-search input:focus, .notes-search input:focus {
+        outline: none;
+        border-color: var(--accent-color);
+      }
+      .search-results {
+        display: none;
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0;
+        right: 0;
+        background: var(--background-color);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        box-shadow: 0 8px 24px var(--shadow-color);
+        max-height: 60vh;
+        overflow-y: auto;
+        z-index: 50;
+      }
+      .search-results.open { display: block; }
+      .search-result {
+        display: block;
+        padding: 10px 12px;
+        text-decoration: none;
+        color: var(--text-color);
+        border-bottom: 1px solid var(--border-color);
+      }
+      .search-result:last-child { border-bottom: none; }
+      .search-result:hover { background: var(--hover-bg); }
+      .search-result-title { font-weight: 600; font-size: 0.92em; margin-bottom: 2px; }
+      .search-result-path {
+        font-size: 0.72em;
+        color: var(--meta-color);
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        margin-bottom: 4px;
+      }
+      .search-result-excerpt { font-size: 0.82em; color: var(--meta-color); line-height: 1.4; }
+      .search-result-tags { margin-top: 6px; display: flex; gap: 4px; flex-wrap: wrap; }
+      .search-result mark { background: rgba(255, 214, 0, 0.4); color: inherit; border-radius: 2px; }
+      .search-empty { padding: 14px; color: var(--meta-color); font-size: 0.88em; text-align: center; }
+
+      /* ── Mobile sidebar drawer ───────────────────── */
+      .mobile-nav-toggle {
+        display: none;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        padding: 10px 14px;
+        margin-bottom: 16px;
+        background: var(--card-color);
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        color: var(--text-color);
+        font-size: 0.9em;
+        font-weight: 500;
+        cursor: pointer;
+      }
+      .sidebar-close {
+        display: none;
+        background: none;
+        border: none;
+        color: var(--meta-color);
+        font-size: 0.85em;
+        cursor: pointer;
+        padding: 4px 0 12px;
+      }
+      .sidebar-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.4);
+        z-index: 999;
+      }
+      .sidebar-backdrop.show { display: block; }
+
+      /* ── Two-column layout ───────────────────────── */
+      .note-layout {
+        display: flex;
+        gap: 32px;
+        align-items: flex-start;
+      }
+
+      /* ── Sidebar ─────────────────────────────────── */
+      .note-sidebar {
+        width: 200px;
+        flex-shrink: 0;
+        position: sticky;
+        top: 24px;
+        max-height: calc(100vh - 48px);
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: var(--border-color) transparent;
+      }
+
+      .sidebar-label {
+        font-size: 0.72em;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--meta-color);
+        margin-bottom: 0.5em;
+      }
+
+      #toc .toc-link {
+        display: block;
+        font-size: 0.84em;
+        color: var(--meta-color);
+        text-decoration: none;
+        padding: 3px 0 3px 10px;
+        border-left: 2px solid transparent;
+        transition: color 0.15s, border-color 0.15s;
+        line-height: 1.4;
+      }
+      #toc .toc-link:hover { color: var(--text-color); border-left-color: var(--border-color); }
+      #toc .toc-link.active { color: var(--accent-color); border-left-color: var(--accent-color); font-weight: 500; }
+      #toc .toc-h3 { padding-left: 20px; }
+
+      .sidebar-divider {
+        border: none;
+        height: 1px;
+        background: var(--border-color);
+        margin: 1em 0;
+        display: none;
+      }
+
+      .sidebar-folder-label {
+        font-size: 0.72em;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--meta-color);
+        margin-bottom: 0.4em;
+      }
+
+      .sidebar-subfolder {
+        font-size: 0.78em;
+        color: var(--meta-color);
+        font-weight: 600;
+        margin: 0.6em 0 0.2em 4px;
+      }
+
+      .sidebar-note {
+        display: block;
+        font-size: 0.84em;
+        color: var(--meta-color);
+        text-decoration: none;
+        padding: 3px 4px 3px 10px;
+        border-left: 2px solid transparent;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transition: color 0.15s, border-color 0.15s;
+        line-height: 1.4;
+      }
+      .sidebar-note.sub { padding-left: 20px; }
+      .sidebar-note:hover { color: var(--text-color); border-left-color: var(--border-color); }
+      .sidebar-note.active {
+        color: var(--accent-color);
+        font-weight: 500;
+        border-left-color: var(--accent-color);
+      }
+
+      /* ── Note content ────────────────────────────── */
+      .note-main { flex: 1; min-width: 0; }
+
+      .note-container {
+        background: var(--card-color);
+        border-radius: 8px;
+        padding: 2.5em;
+        border: 1px solid var(--border-color);
+        border-left: 3px solid var(--accent-color);
+      }
+
+      .note-title { margin: 0 0 0.3em; font-size: 1.8em; }
+
+      .note-meta {
+        color: var(--meta-color);
+        font-size: 0.85em;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .topic-tag {
+        background: var(--tag-bg);
+        color: var(--accent-color);
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.85em;
+        font-weight: 500;
+      }
+
+      .tag-pill {
+        display: inline-block;
+        font-size: 0.78em;
+        color: var(--accent-color);
+        background: var(--tag-bg);
+        padding: 2px 8px;
+        border-radius: 10px;
+      }
+
+      .note-divider { border: none; height: 1px; background: var(--border-color); margin: 1.5em 0; }
+
+      .note-content { line-height: 1.7; }
+      .note-content a { color: var(--accent-color); text-decoration: none; }
+      .note-content a:hover { text-decoration: underline; }
+      .note-content code {
+        font-family: 'Fira Code', monospace;
+        background: var(--code-bg);
+        padding: 0.2em 0.4em;
+        border-radius: 3px;
+        font-size: 0.9em;
+        border: 1px solid var(--code-border);
+      }
+      .note-content pre {
+        background: var(--code-bg);
+        padding: 1em;
+        border-radius: 5px;
+        overflow-x: auto;
+        border: 1px solid var(--code-border);
+      }
+      .note-content pre code { background: none; padding: 0; border: none; }
+
+      /* ── Foldable outline bullets ────────────────── */
+      .note-content ul, .note-content ol { padding-left: 1.4em; }
+      .note-content li { position: relative; }
+      .note-content li.has-children {
+        list-style: none;
+        margin-left: -1.1em;
+        padding-left: 1.1em;
+      }
+      .note-content li.has-children > .fold-toggle {
+        position: absolute;
+        left: -0.35em;
+        top: 0.2em;
+        width: 1.3em;
+        height: 1.3em;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        user-select: none;
+        border-radius: 4px;
+        transition: background 0.15s ease;
+      }
+      .note-content li.has-children > .fold-toggle::before {
+        content: '';
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 6px 5px 0 5px;
+        border-color: var(--meta-color) transparent transparent transparent;
+        transition: transform 0.15s ease, border-color 0.15s ease;
+      }
+      .note-content li.has-children.collapsed > .fold-toggle::before {
+        transform: rotate(-90deg);
+      }
+      .note-content li.has-children > .fold-toggle:hover {
+        background: rgba(41, 98, 255, 0.1);
+      }
+      .note-content li.has-children > .fold-toggle:hover::before {
+        border-top-color: var(--accent-color);
+      }
+      .note-content li.has-children.collapsed > ul,
+      .note-content li.has-children.collapsed > ol { display: none; }
+
+      .pdf-embed-container iframe {
+        width: 100%;
+        height: 80vh;
+        min-height: 500px;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+      }
+      .pdf-fallback { margin-top: 0.6em; font-size: 0.9em; color: var(--meta-color); }
+      .pdf-fallback a { color: var(--accent-color); text-decoration: none; }
+      .pdf-fallback a:hover { text-decoration: underline; }
+
+      .back-link {
+        color: var(--accent-color);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.95em;
+        display: inline-block;
+        margin-top: 0.5em;
+      }
+      .back-link:hover { text-decoration: underline; }
+
+      /* ── Responsive ──────────────────────────────── */
+      @media (max-width: 900px) {
+        .mobile-nav-toggle { display: flex; }
+        .note-sidebar { display: none; }
+        .note-sidebar.mobile-open {
+          display: block;
+          position: fixed;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          width: 82%;
+          max-width: 320px;
+          max-height: none;
+          margin: 0;
+          background: var(--background-color);
+          border-right: 1px solid var(--border-color);
+          padding: 20px;
+          z-index: 1000;
+          box-shadow: 4px 0 20px rgba(0,0,0,0.3);
+        }
+        .note-sidebar.mobile-open .sidebar-close { display: block; }
+      }
+      @media (max-width: 600px) {
+        .page-wrapper { padding: 24px 15px; }
+        .note-container { padding: 1.4em; }
+      }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="page-wrapper">
+    <header>
+  <div class="header-name-container">
+    <img src="http://localhost:4321/assets/i.jpeg" alt="Muhammadsaid Alizada" class="profile-photo">
+    <h1>Muhammadsaid Alizada</h1>
+  </div>
+  
+  <div class="contact-info">
+    <a href="mailto:ma8494@nyu.edu">ma8494@nyu.edu</a>
+    <span>|</span>
+    <a href="https://github.com/MSaidAlizada" target="_blank">GitHub</a>
+    <span>|</span>
+    <a href="https://www.linkedin.com/in/muhammadsaid-alizada/" target="_blank">LinkedIn</a>
+  </div>
+  
+  <nav>
+    <a href="http://localhost:4321/">home</a>
+    <a href="http://localhost:4321/posts">posts</a>
+    <a href="http://localhost:4321/notes">notes</a>
+    <a href="http://localhost:4321/assets/CV.pdf">cv</a>
+    <a href="mailto:ma8494@nyu.edu">contact</a>
+  </nav>
+  
+  <hr class="header-divider">
+</header>
+
+<style>
+  .header-name-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.5em;
+  }
+
+  .profile-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    object-fit: cover;
+    border: 2px solid var(--border-color);
+  }
+
+</style>
+
+    
+    
+    
+    
+    
+
+    <div class="breadcrumb">
+      <a href="http://localhost:4321/notes">Notes</a>
+      <span class="breadcrumb-sep">/</span>
+      <a href="http://localhost:4321/notes#topic-research">Research</a>
+      
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">ZUC</span>
+    </div>
+
+    <button id="mobile-nav-toggle" class="mobile-nav-toggle" aria-label="Open notes menu">&#9776; Notes menu</button>
+
+    <div class="note-layout">
+
+      <!-- ── SIDEBAR ─────────────────────────────── -->
+      <aside class="note-sidebar" id="note-sidebar">
+        <button class="sidebar-close" id="sidebar-close">&times; Close</button>
+
+        <div class="note-search">
+          <input type="search" id="search-input" placeholder="Search notes…" autocomplete="off">
+          <div id="search-results" class="search-results"></div>
+        </div>
+
+        <!-- TOC: populated by JS -->
+        <div id="toc"></div>
+
+        <!-- Divider shown by JS only when TOC has entries -->
+        <hr class="sidebar-divider" id="toc-divider">
+
+        <!-- Folder navigation: server-rendered -->
+        <div class="sidebar-folder-label">Research</div>
+
+        
+        
+        
+        
+
+        
+        
+          
+          
+          
+        
+          
+          
+          
+            <a href="http://localhost:4321/notes/Research/howtoreviewpapers/"
+               class="sidebar-note">Notes on how to review a paper</a>
+          
+        
+          
+          
+          
+        
+          
+          
+          
+            <a href="http://localhost:4321/notes/Research/ZUC/"
+               class="sidebar-note active">ZUC</a>
+          
+        
+
+        
+        
+        
+          
+          
+          
+            
+            
+              
+              <div class="sidebar-subfolder">/ Naist iotmalwaredetector</div>
+              
+                
+                
+                
+                  <a href="http://localhost:4321/notes/Research/NAIST-IotMalwareDetector/DANN/"
+                     class="sidebar-note sub">Domain Adversial Training of Neural Networks</a>
+                
+              
+                
+                
+                
+              
+                
+                
+                
+                  <a href="http://localhost:4321/notes/Research/NAIST-IotMalwareDetector/main/"
+                     class="sidebar-note sub">Project Overview</a>
+                
+              
+                
+                
+                
+              
+            
+          
+        
+          
+          
+          
+        
+          
+          
+          
+            
+            
+          
+        
+          
+          
+          
+        
+
+      </aside>
+
+      <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+      <!-- ── MAIN CONTENT ────────────────────────── -->
+      <div class="note-main">
+        <div class="note-container">
+          <h1 class="note-title">ZUC</h1>
+          <div class="note-meta">
+            <span class="topic-tag">Research</span>
+            
+              
+            
+            <span>August 23, 2026</span>
+          </div>
+
+          <hr class="note-divider">
+
+          
+            <div class="note-content"><h2 id="introduction">Introduction</h2>
+
+<ul>
+  <li>
+    <p>ZUC =&gt; Stream cipher used to encrypt communications in mobile networks</p>
+  </li>
+  <li>Stream cipher
+    <ul>
+      <li>Initial seed is provided which generates a stream of data that is pseudoranom</li>
+      <li>Stream is mixed with plain text for encryption</li>
+      <li>Receiver will have same secret key (seed), thus can generate the same keystream</li>
+    </ul>
+  </li>
+  <li>Symmetric key cryptosystem
+    <ul>
+      <li>If key K is used for encrypting a message then the same key K has to be used for decryption</li>
+      <li>Divided into 2 categories:<br />
+  1) Block cipher : Message is divided into multiple fixed length blocks which are then individualy encrypted with secret key, then decryption is also done block wise.<br />
+  2) Stream cipher : Encryption/Decryption is done characterwise, pseudorandom sequence generated with equal length to the message, it is then bitwise XORed withe the message and the result is transmitted</li>
+      <li>One time Pad : A long sequence of pseudorandom bits where a portion of it can be used each time for encryption/decryption, but needs to be shared with reciever in advance
+        <ul>
+          <li>The distribution of One Time Pads is the issue though</li>
+        </ul>
+      </li>
+      <li>Thus there is a need for a pseudorandom bit generator that also given the initial sequence of generated bits it should not be possible to efficiently guess the next bit with chances of success significantly greater than half</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+  <li>Finite Fields
+    <ul>
+      <li>A field is a nonempty set that has 2 operations, + and ·</li>
+      <li>It must also satisfy the follwing:
+        <ul>
+          <li>(F,+) is commutative</li>
+          <li>If 0 denotes is the identify element in (F,+) then (F\{0},·) is commutative</li>
+          <li>For all a,b,c ∈ F, a · (b + c) = a · b + a · c</li>
+        </ul>
+      </li>
+      <li>If a field has finite elements then it is a Finite Field</li>
+      <li>If the complete multiplicative group (F\{0},·) can be generated by an element of F\{0} then (F\{0},·) is known as a cyclic group and the element is called a primative element of F\{0}</li>
+      <li>Prime fields, also called Galois Field, are fields that are the remainders of a prime p</li>
+      <li>Two Properties hold for fields:
+        <ul>
+          <li>Two finite fields with the same number of elements are isomorphic</li>
+          <li>Every finite field has exactly pⁿ elements for some prime number p and positive integer n</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Field Extension
+    <ul>
+      <li>If F₂ ⊆ F₁, F₂ is closed under both operations, and F₂ is itself a field, then F₂ is a subfield of F₁, and F₁ is a field extension of F₂</li>
+    </ul>
+  </li>
+  <li>Polynomials over a field
+    <ul>
+      <li>To build extensions we need to use polynomials</li>
+      <li>A polynomial over GF(p):
+        <ul>
+          <li>f(x) = c<sub>0</sub> + c<sub>1</sub>x + c<sub>2</sub>x<sup>2</sup>+…+c<sub>m</sub>x<sup>m</sup>  where c<sub>i</sub> ∈ GF(p) and c<sub>m</sub> != 0</li>
+          <li>Degree of f is m (highest power with a nonzero coefficient)</li>
+        </ul>
+      </li>
+      <li>F[x] denotes the set of all polynomials with coefficients from F, but F[x] is a ring not a field</li>
+      <li>Irreducible poylnomial : Polynomial p(x) with degree ≥ 1 ∈ F[x] is irreducible if it can’t be written as p<sub>1</sub>(x) · p<sub>2</sub>(x) where both degree ≥ 1
+        <ul>
+          <li>I = ⟨p(x)⟩ = {p(x)·q(x) : q(x) ∈ F[x]}</li>
+          <li>F[x]/⟨p(x)⟩ is a field</li>
+        </ul>
+      </li>
+      <li>Let p(x) be irreducible with formal root α. If α is a primitive element of the extension field (its powers generate all of F*), then p(x) is called a primitive polynomial.
+        <ul>
+          <li>Every primitive polynomial is irreducible, but not every irreducible polynomial is primitive.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="design-specification-of-zuc-stream-cipher">Design Specification of ZUC Stream Cipher</h2>
+<ul>
+  <li>ZUC has two phases:
+    <ul>
+      <li>Key-IV initialization phase
+        <ul>
+          <li>State of the cipher will be initialized by n 128-bit secret key and a 128-bit initialization vector</li>
+          <li>Also the Key Scheduling Algorithm will run for 32 rounds without generating an output</li>
+        </ul>
+      </li>
+      <li>Key Generation phase
+        <ul>
+          <li>Cipher outputs 32 bits in every round</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>ZUC designed based on three major components:
+    <ul>
+      <li>One Linear Feedback Shift Register</li>
+      <li>One Bit Reorganization Layer</li>
+      <li>One nonlinear function</li>
+    </ul>
+  </li>
+  <li>LFSR
+    <ul>
+      <li>Usually most stream ciphers are built on extensions of GF(2) which means the LFSR will bits, but ZUC insteads is built on GF(2<sup>31</sup>-1) so the LFSR holds integers
+        <ul>
+          <li>GF(2<sup>31</sup>-1) is a prime field since 2<sup>31</sup>-1 is a prime</li>
+          <li>The elements of the field are {1,2,…,2<sup>31</sup>-1} with 0 being represented as 2<sup>31</sup>-1</li>
+        </ul>
+      </li>
+      <li>The LFSR is a 16 word register which each state being 31 bits
+        <ul>
+          <li>In most stream ciphers the LFSR states would be 1 bit each</li>
+        </ul>
+      </li>
+      <li>ZUC uses a primitive polynomial since that guarantees maximum period. One such polynomial is:
+        <ul>
+          <li>f(x) = x¹⁶ − (2¹⁵x¹⁵ + 2¹⁷x¹³ + 2²¹x¹⁰ + 2²⁰x⁴ + (2⁸+1))</li>
+          <li>So its feedback function would be:
+            <ul>
+              <li>s₁₅<sup>t+1</sup> = 2¹⁵s₁₅ + 2¹⁷s₁₃ + 2²¹s₁₀ + 2²⁰s₄ + (2⁸+1)s₀ (mod 2³¹−1)</li>
+            </ul>
+          </li>
+          <li>Thus the state update function would be:
+            <ul>
+              <li>s<sub>i</sub><sup>t+1</sup> = s<sub>i+1</sub><sup>t</sup> for i &lt;= 14</li>
+              <li>s<sub>15</sub> = 2¹⁵s₁₅ + 2¹⁷s₁₃ + 2²¹s₁₀ + 2²⁰s₄ + (2⁸+1)s₀ (mod 2³¹−1)</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>The addition is done using a 31 bit adder and the multiplication is done through shifting</li>
+      <li>In most cases shifting would cause overflow issues however having mod 2<sup>31</sup>-1 fixes this issue:
+        <ul>
+          <li>Multiplying by 2<sup>k</sup> would just be a shift of k however if we are shifting position i (its current weight would be 2<sup>i</sup>) then its new position would be i+k</li>
+          <li>But if i+k is an overflow position then it can also be written as i+k=31+j, and the weight would be 2<sup>31+j</sup> which can be split 2<sup>31+j</sup>=2<sup>31</sup>·2<sup>j</sup></li>
+          <li>But since 2<sup>31</sup> is equal to 1 in mod 2<sup>31</sup>-1 thus 2<sup>31+j</sup>=2<sup>31</sup>·2<sup>j</sup> = 1·2<sup>j</sup></li>
+          <li>So that means the bits new position will be j which isn’t causing an overflow</li>
+        </ul>
+      </li>
+      <li>The LFSR runs in two modes:
+        <ul>
+          <li>First key initialization in which the output from the nonlinear function is fed back into the LFSR and added onto the feedback (XORed in ZUC 1.4)
+            <ul>
+              <li>This is done so that similar keys don’t produce similar keystreams</li>
+            </ul>
+          </li>
+          <li>Once the previous mode is done it switches to key generation where the nonlinear function is the output and not fed into the LFSR anymore</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Bit Reorganization Layer
+    <ul>
+      <li>Bit Reorganization Layer consists of 4 32 bits registers, X<sub>0</sub>,X<sub>1</sub>,X<sub>2</sub>,X<sub>3</sub></li>
+      <li>They are formed through concatentating states of the LFSR
+        <ul>
+          <li>
+            <table>
+              <tbody>
+                <tr>
+                  <td>X<sub>0</sub> = S<sub>15H</sub></td>
+                  <td> </td>
+                  <td>S<sub>14L</sub></td>
+                </tr>
+              </tbody>
+            </table>
+          </li>
+          <li>
+            <table>
+              <tbody>
+                <tr>
+                  <td>X<sub>1</sub> = S<sub>11L</sub></td>
+                  <td> </td>
+                  <td>S<sub>9H</sub></td>
+                </tr>
+              </tbody>
+            </table>
+          </li>
+          <li>
+            <table>
+              <tbody>
+                <tr>
+                  <td>X<sub>2</sub> = S<sub>7L</sub></td>
+                  <td> </td>
+                  <td>S<sub>5H</sub></td>
+                </tr>
+              </tbody>
+            </table>
+          </li>
+          <li>
+            <table>
+              <tbody>
+                <tr>
+                  <td>X<sub>3</sub> = S<sub>2L</sub></td>
+                  <td> </td>
+                  <td>S<sub>0H</sub></td>
+                </tr>
+              </tbody>
+            </table>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Nonlinear Function
+    <ul>
+      <li>Consists of 3 main componenets:
+        <ul>
+          <li>2 32-bit registers, R<sub>1</sub> and R<sub>2</sub></li>
+          <li>2 linear transformation functions, L<sub>1</sub> and L<sub>2</sub></li>
+          <li>2 S-boxes, S<sub>1</sub> and S<sub>2</sub> : {0,1}<sup>8</sup> -&gt; {0,1}<sup>8</sup></li>
+        </ul>
+      </li>
+      <li>L1(X) = X ⊕ (X ⋘ 2) ⊕ (X ⋘ 10) ⊕ (X ⋘ 18) ⊕ (X ⋘ 24)</li>
+      <li>L2(X) = X ⊕ (X ⋘ 8) ⊕ (X ⋘ 14) ⊕ (X ⋘ 22) ⊕ (X ⋘ 30)</li>
+      <li>S-boxes create the nonlinear element and make up the S function:
+        <ul>
+          <li>S(x) = S0(x ≫ 24) ‖ S1((x ≫ 16) &amp; 0xFF) ‖ S0((x ≫ 8) &amp; 0xFF) ‖ S1(x &amp; 0xFF)</li>
+        </ul>
+      </li>
+      <li>Algorithm:
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  X0 ──⊕── R1
+      └──⊞── R2 ──→ W  (→ ⊕ X3 → keystream)
+
+  X1 ──⊞── R1 ──→ W1 ─┐
+                      ├─ split into halves, cross over
+  X2 ──⊕── R2 ──→ W2 ─┘
+                          ↓
+          W1_L‖W2_H → L1 → S → R1 (next)
+          W2_L‖W1_H → L2 → S → R2 (next)
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+</div>
+          
+
+          <hr class="note-divider">
+          <a href="http://localhost:4321/notes" class="back-link">&#8592; All Notes</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>window.NOTES_SEARCH_INDEX_URL = "http://localhost:4321/search-index.json";</script>
+  <script src="http://localhost:4321/assets/js/notes-search.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      buildTOC();
+      initFoldableLists();
+      initMobileDrawer();
+    });
+
+    function initMobileDrawer() {
+      var toggleBtn = document.getElementById('mobile-nav-toggle');
+      var sidebar = document.getElementById('note-sidebar');
+      var backdrop = document.getElementById('sidebar-backdrop');
+      var closeBtn = document.getElementById('sidebar-close');
+      if (!toggleBtn || !sidebar || !backdrop) return;
+
+      function openSidebar() {
+        sidebar.classList.add('mobile-open');
+        backdrop.classList.add('show');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeSidebar() {
+        sidebar.classList.remove('mobile-open');
+        backdrop.classList.remove('show');
+        document.body.style.overflow = '';
+      }
+      toggleBtn.addEventListener('click', openSidebar);
+      backdrop.addEventListener('click', closeSidebar);
+      if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
+    }
+
+    function initFoldableLists() {
+      var content = document.querySelector('.note-content');
+      if (!content) return;
+
+      content.querySelectorAll('li').forEach(function (li) {
+        var childList = li.querySelector(':scope > ul, :scope > ol');
+        if (!childList) return;
+
+        li.classList.add('has-children');
+
+        var toggle = document.createElement('span');
+        toggle.className = 'fold-toggle';
+        toggle.setAttribute('role', 'button');
+        toggle.setAttribute('aria-expanded', 'true');
+        toggle.setAttribute('tabindex', '0');
+        li.insertBefore(toggle, li.firstChild);
+
+        var toggleFold = function () {
+          var collapsed = li.classList.toggle('collapsed');
+          toggle.setAttribute('aria-expanded', String(!collapsed));
+        };
+        toggle.addEventListener('click', function (e) {
+          e.stopPropagation();
+          toggleFold();
+        });
+        toggle.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleFold();
+          }
+        });
+      });
+    }
+
+    function buildTOC() {
+      var headings = document.querySelectorAll('.note-content h2, .note-content h3');
+      var toc = document.getElementById('toc');
+      if (!toc || headings.length === 0) return;
+
+      // show the divider between TOC and folder nav
+      var divider = document.getElementById('toc-divider');
+      if (divider) divider.style.display = 'block';
+
+      var label = document.createElement('div');
+      label.className = 'sidebar-label';
+      label.textContent = 'On this page';
+      toc.appendChild(label);
+
+      headings.forEach(function (h) {
+        if (!h.id) {
+          h.id = h.textContent.trim()
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '');
+        }
+        var a = document.createElement('a');
+        a.href = '#' + h.id;
+        a.className = 'toc-link' + (h.tagName === 'H3' ? ' toc-h3' : '');
+        a.textContent = h.textContent;
+        toc.appendChild(a);
+      });
+
+      // Scroll-spy: highlight active heading
+      var links = toc.querySelectorAll('.toc-link');
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (l) { l.classList.remove('active'); });
+            var active = toc.querySelector('a[href="#' + entry.target.id + '"]');
+            if (active) active.classList.add('active');
+          }
+        });
+      }, { rootMargin: '0px 0px -70% 0px' });
+
+      headings.forEach(function (h) { observer.observe(h); });
+    }
+  </script>
+</body>
+</html>
+
+</body>
+</html>

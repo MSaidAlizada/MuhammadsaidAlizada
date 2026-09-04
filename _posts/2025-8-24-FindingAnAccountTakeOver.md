@@ -2,6 +2,7 @@
 layout: post
 title: "Finding an Account Takeover Vulnerability (CVSS 9.8)"
 pinned: True
+categories: [Bug Bounty]
 ---
 This write-up describes my first bug bounty report, which ended up being classified as critical severity (CVSS 9.8). I found this bug on a international telecom provider's web app within the login functionality.
 <div style="text-align: center;">

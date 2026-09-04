@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Muhammadsaid Alizada</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+  </head>
+
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Access control - Web Sec academy labs</title>
+    <style>
+      :root {
+        --text-color: #333;
+        --accent-color: #2962FF;
+        --background-color: #fff;
+        --card-color: #f8f9fa;
+        --border-color: #e0e0e0;
+        --meta-color: #666;
+      }
+      
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--background-color);
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      header {
+        margin-bottom: 2.5em;
+      }
+
+      h1 {
+        font-size: 2.2em;
+        margin-bottom: 0.3em;
+        font-weight: 600;
+      }
+
+      .contact-info {
+        margin: 0.8em 0;
+        color: var(--meta-color);
+      }
+
+      .contact-info a {
+        color: var(--accent-color);
+        text-decoration: none;
+      }
+
+      .contact-info a:hover {
+        text-decoration: underline;
+      }
+
+      .contact-info span {
+        margin: 0 8px;
+        color: var(--border-color);
+      }
+
+      nav {
+        margin: 1.8em 0;
+      }
+
+      nav a {
+        margin-right: 20px;
+        text-decoration: none;
+        color: var(--text-color);
+        font-weight: 500;
+        position: relative;
+      }
+
+      nav a:hover {
+        color: var(--accent-color);
+      }
+
+      nav a:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -4px;
+        left: 0;
+        background-color: var(--accent-color);
+        transition: width 0.3s ease;
+      }
+
+      nav a:hover:after {
+        width: 100%;
+      }
+
+      .header-divider {
+        border: 0;
+        height: 1px;
+        background: var(--border-color);
+        margin: 1.5em 0;
+      }
+
+      .post-container {
+        background: var(--card-color);
+        border-radius: 8px;
+        padding: 2.5em;
+        margin-bottom: 3em;
+        border: 1px solid var(--border-color);
+      }
+
+      .post-title {
+        margin-top: 0;
+        font-size: 1.8em;
+      }
+
+      .post-meta {
+        color: var(--meta-color);
+        font-size: 0.9em;
+        margin-bottom: 1.5em;
+      }
+
+      .post-divider {
+        border: none;
+        height: 1px;
+        background: var(--border-color);
+        margin: 2em 0;
+      }
+
+      .post-content {
+        line-height: 1.7;
+      }
+
+      .post-content a {
+        color: var(--accent-color);
+        text-decoration: none;
+      }
+
+      .post-content a:hover {
+        text-decoration: underline;
+      }
+
+      .post-content code {
+        font-family: 'Fira Code', monospace;
+        background: rgba(0,0,0,0.05);
+        padding: 0.2em 0.4em;
+        border-radius: 3px;
+        font-size: 0.9em;
+        border: 1px solid rgba(0,0,0,0.1);
+      }
+
+      .post-content pre {
+        background: rgba(0,0,0,0.05);
+        padding: 1em;
+        border-radius: 5px;
+        overflow-x: auto;
+        border: 1px solid rgba(0,0,0,0.1);
+      }
+
+      .post-content pre code {
+        background: none;
+        padding: 0;
+        border: none;
+      }
+
+      .back-link {
+        color: var(--accent-color);
+        text-decoration: none;
+        font-weight: 500;
+        display: inline-block;
+        margin-top: 1em;
+      }
+
+      .back-link:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 30px 15px;
+        }
+        
+        .post-container {
+          padding: 1.5em;
+        }
+        
+        nav a {
+          margin-right: 15px;
+        }
+      }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+  <div class="header-name-container">
+    <img src="http://localhost:4321/assets/i.jpeg" alt="Muhammadsaid Alizada" class="profile-photo">
+    <h1>Muhammadsaid Alizada</h1>
+  </div>
+  
+  <div class="contact-info">
+    <a href="mailto:ma8494@nyu.edu">ma8494@nyu.edu</a>
+    <span>|</span>
+    <a href="https://github.com/MSaidAlizada" target="_blank">GitHub</a>
+    <span>|</span>
+    <a href="https://www.linkedin.com/in/muhammadsaid-alizada/" target="_blank">LinkedIn</a>
+  </div>
+  
+  <nav>
+    <a href="http://localhost:4321/">home</a>
+    <a href="http://localhost:4321/posts">posts</a>
+    <a href="http://localhost:4321/notes">notes</a>
+    <a href="http://localhost:4321/assets/CV.pdf">cv</a>
+    <a href="mailto:ma8494@nyu.edu">contact</a>
+  </nav>
+  
+  <hr class="header-divider">
+</header>
+
+<style>
+  .header-name-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.5em;
+  }
+
+  .profile-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    object-fit: cover;
+    border: 2px solid var(--border-color);
+  }
+
+</style>
+
+    <div class="post-container">
+      <article class="post">
+        <h1 class="post-title">Access control - Web Sec academy labs</h1>
+        <p class="post-meta">Posted on February 2, 2025</p>
+        
+        <div class="post-content">
+          <p>This post will run through the labs on web sec academy by Portswigger related to Access control.<br />
+There are three types of access control:</p>
+<ul>
+  <li>Vertical access controls are mechanisms that restrict access to sensitive functionality to specific types of users.</li>
+  <li>Horizontal access controls are mechanisms that restrict access to resources to specific users.</li>
+  <li>Context-dependent access controls restrict access to functionality and resources based upon the state of the application or the user’s interaction with it.</li>
+</ul>
+
+<h3 id="lab-unprotected-admin-functionality"><u>Lab: Unprotected admin functionality</u></h3>
+<p>To complete this lab we need to delete the user carlos and we are told it has an unprotected admin panel. We first check the robots.txt where we can see the admins panel domain is shown to be /administrator-panel which since it is unprotected we can use to delete carlos.</p>
+
+<h3 id="lab-unprotected-admin-functionality-with-unpredictable-url"><u>Lab: Unprotected admin functionality with unpredictable URL</u></h3>
+<p>This time they tried to stop us from finding the admin panel by giving it a less predictable URL this is called “security by obscurity”. However sometimes this can be ineffecitive if the application contains a link to the admin panel as then it can be found by the user. In the case of this lab by looking through the inspector we find this in one of the script tags:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var isAdmin = false;
+if (isAdmin) {
+   var topLinksTag = document.getElementsByClassName("top-links")[0];
+   var adminPanelTag = document.createElement('a');
+   adminPanelTag.setAttribute('href', '/admin-ezzxpa');
+   adminPanelTag.innerText = 'Admin panel';
+   topLinksTag.append(adminPanelTag);
+   var pTag = document.createElement('p');
+   pTag.innerText = '|';
+   topLinksTag.appendChild(pTag);
+}
+</code></pre></div></div>
+<p>You can see the admin panels url is shown here which you can then use to delete carlos.</p>
+
+<h3 id="lab-user-role-controlled-by-request-parameter"><u>Lab: User role controlled by request parameter</u></h3>
+<p>In some applications the role of the user is stored in a user-controllable location like:</p>
+<ul>
+  <li>Hidden field</li>
+  <li>Cookie</li>
+  <li>A preset query string parameter
+So for this lab once we logged in with the given credientials and try to visit /admin are told:<br />
+Admin interface only available if logged in as an administrator<br />
+Once we look into the storage we see 2 cookies one for the session and the other for the if the user is an admin or not. We can send the request again but changing the cookie to true through Burp. Now when we open the request in browser we get the admin dashboard but once we click delete carlos we get the message so we need to change the cookie again and once we do the lab is solved.</li>
+</ul>
+
+<h3 id="lab-user-role-can-be-modified-in-user-profile"><u>Lab: User role can be modified in user profile</u></h3>
+<p>This lab is similar to the last lab but instead having roleid determines if someone can access the admin dashboard. Once we login we see there is a way to change the email and we can use it and see the response we get in burp:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>HTTP/2 302 Found
+Location: /my-account
+Content-Type: application/json; charset=utf-8
+X-Frame-Options: SAMEORIGIN
+Content-Length: 121
+
+{
+  "username": "wiener",
+  "email": "w@normal-user.net",
+  "apikey": "OaO1WnOPbsybwCsBhZ2HnkaQJBlS7JMD",
+  "roleid": 1
+}
+</code></pre></div></div>
+<p>As we can see our roleid is set to 1 and mabye we can use the change-email request to also change our role id by adding the roleid we want to the http request like this:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST /my-account/change-email HTTP/1.1
+Host: 0a55002b030e453680e85d9b009b006d.web-security-academy.net
+Cookie: session=NHd59pwjjJuw9nepGz3fYeMu4Ife2jw4
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:134.0) Gecko/20100101 Firefox/134.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Content-Type: text/plain;charset=UTF-8
+Content-Length: 29
+Origin: https://0a55002b030e453680e85d9b009b006d.web-security-academy.net
+Referer: https://0a55002b030e453680e85d9b009b006d.web-security-academy.net/my-account?id=wiener
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-origin
+Priority: u=0
+Te: trailers
+Connection: keep-alive
+
+{"email":"w@normal-user.net",
+"roleid": 2
+}
+</code></pre></div></div>
+<p>Now when we go back to our account we see the admin panel on our dashboard which we can use to delete carlos.</p>
+
+<h3 id="lab-url-based-access-control-can-be-circumvented"><u>Lab: URL-based access control can be circumvented</u></h3>
+<p>Some applications might block certain requests based on the user group however this can be circumvented through the use of non-standard headers like X-Original-URL or X-Rewrite-URL. For example for this lab when we try to visit /admin we get “Access denied” but we can go to Burp and change our request to use the non-standard header like this:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET HTTP/2 HTTP/2
+Host: 0a3000bd0350ccea80d3b2cc00d200af.web-security-academy.net
+X-Original-Url: /admin
+Cookie: session=A8G8EHeW09Iuc4ga6YhZArx9GtY26PIw
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:134.0) Gecko/20100101 Firefox/134.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: cross-site
+Priority: u=0, i
+Te: trailers
+</code></pre></div></div>
+<p>Now we see the admin panel and by doing the same to the request to delete carlos we can complete the lab.</p>
+
+<h3 id="lab-method-based-access-control-can-be-circumvented"><u>Lab: Method-based access control can be circumvented</u></h3>
+<p>Other ways we can get past blocks is by using different HTTP methods. We have been given the login for admin account which we can use to see the http request for upgrading a user then we log back into our own account where we just replace the previous the request’s session id with ours. But this time we also can’t use POST method as it is blocked however we can get past this through using GET and adding the body parameters to the url.</p>
+
+<h3 id="lab-user-id-controlled-by-request-parameter"><u>Lab: User ID controlled by request parameter</u></h3>
+<p>This lab has a horizontal privilege escalation vulnerability on the user account page. This is an example of an IDOR vulnerability. We can see our url to see our account is as such:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/my-account?id=wiener
+</code></pre></div></div>
+<p>This shows that the page is showing us based on the query we make using our id and if we change that we can access other user accounts like carlos allowing us to get their API key.</p>
+
+<h3 id="lab-user-id-controlled-by-request-parameter-with-unpredictable-user-ids"><u>Lab: User ID controlled by request parameter, with unpredictable user IDs</u></h3>
+<p>This lab is similar to the last one except it uses GUIDs (globally unique identifiers) to identify users which stops us from guessing the other user’s identifiers. However the user’s GUID might get disclosed in the application like through comments. For this lab going through the posts we find a post made by carlos (our target) and we can even go to his page where it shows all his posts and in the URL we find his GUID disclosed. Now we can exploit the same vulnerability as last lab.</p>
+
+<h3 id="lab-user-id-controlled-by-request-parameter-with-data-leakage-in-redirect"><u>Lab: User ID controlled by request parameter with data leakage in redirect</u></h3>
+<p>Sometimes labs do detect that access is not allowed and redirect back to another page but there can still be a data leak in the response. For this lab we change our id in the URL query and get redirected but through burp we can see the response we got and in the body we find the API key.</p>
+
+<h3 id="lab-user-id-controlled-by-request-parameter-with-password-disclosure"><u>Lab: User ID controlled by request parameter with password disclosure</u></h3>
+<p>For this lab once we login we can use the same vulnerability as previous labs to get into administrator’s account page and by clicking update password and viewing the response in Burp we can see the password is disclosed and then we can login and delete carlos.</p>
+
+<h3 id="lab-insecure-direct-object-references"><u>Lab: Insecure direct object references</u></h3>
+<p>Insecure direct object references (IDORs) are a subcategory of access control vulnerabilities. IDORs occur if an application uses user-supplied input to access objects directly and an attacker can modify the input to obtain unauthorized access. For this lab there is a live chat and we can download the transcript seeing we downloaded chat 2 suggesting there should be a chat 1 and when we change the request from “/download-transcript/2.txt” to “/download-transcript/1.txt” we can get carlos chat and there we find he revealed his password.</p>
+
+<h3 id="lab-multi-step-process-with-no-access-control-on-one-step"><u>Lab: Multi-step process with no access control on one step</u></h3>
+<p>Sometimes in multi-step process some of the steps might have access controls on some steps but not others allowing us to exploit it. Using the admin account we can see there are multiple steps to upgrade a user with the last one sending a confirmed request. Now with our account we will try send just the last request to upgrade ourselves by replacing the session id on the request.</p>
+
+<h3 id="lab-referer-based-access-control"><u>Lab: Referer-based access control</u></h3>
+<p>Some websites base access controls on the Referer header submitted in the HTTP request. The Referer header can be added to requests by browsers to indicate which page initiated a request. Using the admin account we can see the request needed to upgrade users and we can also see the Referrer header is used and should be from /admin. Now by logging into our account we can use the same request to upgrade ourselves.</p>
+
+        </div>
+        
+        <hr class="post-divider">
+        
+        <a href="http://localhost:4321/posts" class="back-link">← All Posts</a>
+      </article>
+    </div>
+  </div>
+</body>
+</html>
+</body>
+</html>

@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Muhammadsaid Alizada</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+  </head>
+
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Notes on how to review a paper</title>
+    <style>
+      :root {
+        --text-color: #333;
+        --accent-color: #2962FF;
+        --background-color: #fff;
+        --card-color: #f8f9fa;
+        --border-color: #e0e0e0;
+        --meta-color: #666;
+        --code-bg: rgba(0,0,0,0.05);
+        --code-border: rgba(0,0,0,0.1);
+        --tag-bg: #e8eeff;
+        --hover-bg: #eef1f8;
+        --shadow-color: rgba(0,0,0,0.12);
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--background-color);
+        margin: 0;
+        padding: 0;
+      }
+
+      .page-wrapper {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      /* ── Nav ─────────────────────────────────────── */
+      .contact-info {
+        margin: 0.8em 0;
+        color: var(--meta-color);
+      }
+      .contact-info a { color: var(--accent-color); text-decoration: none; }
+      .contact-info a:hover { text-decoration: underline; }
+      .contact-info span { margin: 0 8px; color: var(--border-color); }
+
+      nav { margin: 1.8em 0; }
+      nav a {
+        margin-right: 20px;
+        text-decoration: none;
+        color: var(--text-color);
+        font-weight: 500;
+        position: relative;
+      }
+      nav a:hover { color: var(--accent-color); }
+      nav a:after {
+        content: '';
+        position: absolute;
+        width: 0; height: 2px;
+        bottom: -4px; left: 0;
+        background-color: var(--accent-color);
+        transition: width 0.3s ease;
+      }
+      nav a:hover:after { width: 100%; }
+      .header-divider {
+        border: 0; height: 1px;
+        background: var(--border-color);
+        margin: 1.5em 0;
+      }
+
+      /* ── Breadcrumb ──────────────────────────────── */
+      .breadcrumb {
+        font-size: 0.85em;
+        color: var(--meta-color);
+        margin-bottom: 1.5em;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .breadcrumb a { color: var(--accent-color); text-decoration: none; }
+      .breadcrumb a:hover { text-decoration: underline; }
+      .breadcrumb-sep { color: var(--border-color); }
+      .breadcrumb-current { color: var(--text-color); }
+
+      /* ── Search box ──────────────────────────────── */
+      .note-search, .notes-search {
+        position: relative;
+        margin-bottom: 1em;
+      }
+      .note-search input, .notes-search input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 8px 10px;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        background: var(--background-color);
+        color: var(--text-color);
+        font-size: 0.88em;
+        font-family: inherit;
+      }
+      .note-search input:focus, .notes-search input:focus {
+        outline: none;
+        border-color: var(--accent-color);
+      }
+      .search-results {
+        display: none;
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0;
+        right: 0;
+        background: var(--background-color);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        box-shadow: 0 8px 24px var(--shadow-color);
+        max-height: 60vh;
+        overflow-y: auto;
+        z-index: 50;
+      }
+      .search-results.open { display: block; }
+      .search-result {
+        display: block;
+        padding: 10px 12px;
+        text-decoration: none;
+        color: var(--text-color);
+        border-bottom: 1px solid var(--border-color);
+      }
+      .search-result:last-child { border-bottom: none; }
+      .search-result:hover { background: var(--hover-bg); }
+      .search-result-title { font-weight: 600; font-size: 0.92em; margin-bottom: 2px; }
+      .search-result-path {
+        font-size: 0.72em;
+        color: var(--meta-color);
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        margin-bottom: 4px;
+      }
+      .search-result-excerpt { font-size: 0.82em; color: var(--meta-color); line-height: 1.4; }
+      .search-result-tags { margin-top: 6px; display: flex; gap: 4px; flex-wrap: wrap; }
+      .search-result mark { background: rgba(255, 214, 0, 0.4); color: inherit; border-radius: 2px; }
+      .search-empty { padding: 14px; color: var(--meta-color); font-size: 0.88em; text-align: center; }
+
+      /* ── Mobile sidebar drawer ───────────────────── */
+      .mobile-nav-toggle {
+        display: none;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        padding: 10px 14px;
+        margin-bottom: 16px;
+        background: var(--card-color);
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        color: var(--text-color);
+        font-size: 0.9em;
+        font-weight: 500;
+        cursor: pointer;
+      }
+      .sidebar-close {
+        display: none;
+        background: none;
+        border: none;
+        color: var(--meta-color);
+        font-size: 0.85em;
+        cursor: pointer;
+        padding: 4px 0 12px;
+      }
+      .sidebar-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.4);
+        z-index: 999;
+      }
+      .sidebar-backdrop.show { display: block; }
+
+      /* ── Two-column layout ───────────────────────── */
+      .note-layout {
+        display: flex;
+        gap: 32px;
+        align-items: flex-start;
+      }
+
+      /* ── Sidebar ─────────────────────────────────── */
+      .note-sidebar {
+        width: 200px;
+        flex-shrink: 0;
+        position: sticky;
+        top: 24px;
+        max-height: calc(100vh - 48px);
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: var(--border-color) transparent;
+      }
+
+      .sidebar-label {
+        font-size: 0.72em;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--meta-color);
+        margin-bottom: 0.5em;
+      }
+
+      #toc .toc-link {
+        display: block;
+        font-size: 0.84em;
+        color: var(--meta-color);
+        text-decoration: none;
+        padding: 3px 0 3px 10px;
+        border-left: 2px solid transparent;
+        transition: color 0.15s, border-color 0.15s;
+        line-height: 1.4;
+      }
+      #toc .toc-link:hover { color: var(--text-color); border-left-color: var(--border-color); }
+      #toc .toc-link.active { color: var(--accent-color); border-left-color: var(--accent-color); font-weight: 500; }
+      #toc .toc-h3 { padding-left: 20px; }
+
+      .sidebar-divider {
+        border: none;
+        height: 1px;
+        background: var(--border-color);
+        margin: 1em 0;
+        display: none;
+      }
+
+      .sidebar-folder-label {
+        font-size: 0.72em;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--meta-color);
+        margin-bottom: 0.4em;
+      }
+
+      .sidebar-subfolder {
+        font-size: 0.78em;
+        color: var(--meta-color);
+        font-weight: 600;
+        margin: 0.6em 0 0.2em 4px;
+      }
+
+      .sidebar-note {
+        display: block;
+        font-size: 0.84em;
+        color: var(--meta-color);
+        text-decoration: none;
+        padding: 3px 4px 3px 10px;
+        border-left: 2px solid transparent;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transition: color 0.15s, border-color 0.15s;
+        line-height: 1.4;
+      }
+      .sidebar-note.sub { padding-left: 20px; }
+      .sidebar-note:hover { color: var(--text-color); border-left-color: var(--border-color); }
+      .sidebar-note.active {
+        color: var(--accent-color);
+        font-weight: 500;
+        border-left-color: var(--accent-color);
+      }
+
+      /* ── Note content ────────────────────────────── */
+      .note-main { flex: 1; min-width: 0; }
+
+      .note-container {
+        background: var(--card-color);
+        border-radius: 8px;
+        padding: 2.5em;
+        border: 1px solid var(--border-color);
+        border-left: 3px solid var(--accent-color);
+      }
+
+      .note-title { margin: 0 0 0.3em; font-size: 1.8em; }
+
+      .note-meta {
+        color: var(--meta-color);
+        font-size: 0.85em;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .topic-tag {
+        background: var(--tag-bg);
+        color: var(--accent-color);
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.85em;
+        font-weight: 500;
+      }
+
+      .tag-pill {
+        display: inline-block;
+        font-size: 0.78em;
+        color: var(--accent-color);
+        background: var(--tag-bg);
+        padding: 2px 8px;
+        border-radius: 10px;
+      }
+
+      .note-divider { border: none; height: 1px; background: var(--border-color); margin: 1.5em 0; }
+
+      .note-content { line-height: 1.7; }
+      .note-content a { color: var(--accent-color); text-decoration: none; }
+      .note-content a:hover { text-decoration: underline; }
+      .note-content code {
+        font-family: 'Fira Code', monospace;
+        background: var(--code-bg);
+        padding: 0.2em 0.4em;
+        border-radius: 3px;
+        font-size: 0.9em;
+        border: 1px solid var(--code-border);
+      }
+      .note-content pre {
+        background: var(--code-bg);
+        padding: 1em;
+        border-radius: 5px;
+        overflow-x: auto;
+        border: 1px solid var(--code-border);
+      }
+      .note-content pre code { background: none; padding: 0; border: none; }
+
+      /* ── Foldable outline bullets ────────────────── */
+      .note-content ul, .note-content ol { padding-left: 1.4em; }
+      .note-content li { position: relative; }
+      .note-content li.has-children {
+        list-style: none;
+        margin-left: -1.1em;
+        padding-left: 1.1em;
+      }
+      .note-content li.has-children > .fold-toggle {
+        position: absolute;
+        left: -0.35em;
+        top: 0.2em;
+        width: 1.3em;
+        height: 1.3em;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        user-select: none;
+        border-radius: 4px;
+        transition: background 0.15s ease;
+      }
+      .note-content li.has-children > .fold-toggle::before {
+        content: '';
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 6px 5px 0 5px;
+        border-color: var(--meta-color) transparent transparent transparent;
+        transition: transform 0.15s ease, border-color 0.15s ease;
+      }
+      .note-content li.has-children.collapsed > .fold-toggle::before {
+        transform: rotate(-90deg);
+      }
+      .note-content li.has-children > .fold-toggle:hover {
+        background: rgba(41, 98, 255, 0.1);
+      }
+      .note-content li.has-children > .fold-toggle:hover::before {
+        border-top-color: var(--accent-color);
+      }
+      .note-content li.has-children.collapsed > ul,
+      .note-content li.has-children.collapsed > ol { display: none; }
+
+      .pdf-embed-container iframe {
+        width: 100%;
+        height: 80vh;
+        min-height: 500px;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+      }
+      .pdf-fallback { margin-top: 0.6em; font-size: 0.9em; color: var(--meta-color); }
+      .pdf-fallback a { color: var(--accent-color); text-decoration: none; }
+      .pdf-fallback a:hover { text-decoration: underline; }
+
+      .back-link {
+        color: var(--accent-color);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.95em;
+        display: inline-block;
+        margin-top: 0.5em;
+      }
+      .back-link:hover { text-decoration: underline; }
+
+      /* ── Responsive ──────────────────────────────── */
+      @media (max-width: 900px) {
+        .mobile-nav-toggle { display: flex; }
+        .note-sidebar { display: none; }
+        .note-sidebar.mobile-open {
+          display: block;
+          position: fixed;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          width: 82%;
+          max-width: 320px;
+          max-height: none;
+          margin: 0;
+          background: var(--background-color);
+          border-right: 1px solid var(--border-color);
+          padding: 20px;
+          z-index: 1000;
+          box-shadow: 4px 0 20px rgba(0,0,0,0.3);
+        }
+        .note-sidebar.mobile-open .sidebar-close { display: block; }
+      }
+      @media (max-width: 600px) {
+        .page-wrapper { padding: 24px 15px; }
+        .note-container { padding: 1.4em; }
+      }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="page-wrapper">
+    <header>
+  <div class="header-name-container">
+    <img src="http://localhost:4321/assets/i.jpeg" alt="Muhammadsaid Alizada" class="profile-photo">
+    <h1>Muhammadsaid Alizada</h1>
+  </div>
+  
+  <div class="contact-info">
+    <a href="mailto:ma8494@nyu.edu">ma8494@nyu.edu</a>
+    <span>|</span>
+    <a href="https://github.com/MSaidAlizada" target="_blank">GitHub</a>
+    <span>|</span>
+    <a href="https://www.linkedin.com/in/muhammadsaid-alizada/" target="_blank">LinkedIn</a>
+  </div>
+  
+  <nav>
+    <a href="http://localhost:4321/">home</a>
+    <a href="http://localhost:4321/posts">posts</a>
+    <a href="http://localhost:4321/notes">notes</a>
+    <a href="http://localhost:4321/assets/CV.pdf">cv</a>
+    <a href="mailto:ma8494@nyu.edu">contact</a>
+  </nav>
+  
+  <hr class="header-divider">
+</header>
+
+<style>
+  .header-name-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.5em;
+  }
+
+  .profile-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    object-fit: cover;
+    border: 2px solid var(--border-color);
+  }
+
+</style>
+
+    
+    
+    
+    
+    
+
+    <div class="breadcrumb">
+      <a href="http://localhost:4321/notes">Notes</a>
+      <span class="breadcrumb-sep">/</span>
+      <a href="http://localhost:4321/notes#topic-research">Research</a>
+      
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">Notes on how to review a paper</span>
+    </div>
+
+    <button id="mobile-nav-toggle" class="mobile-nav-toggle" aria-label="Open notes menu">&#9776; Notes menu</button>
+
+    <div class="note-layout">
+
+      <!-- ── SIDEBAR ─────────────────────────────── -->
+      <aside class="note-sidebar" id="note-sidebar">
+        <button class="sidebar-close" id="sidebar-close">&times; Close</button>
+
+        <div class="note-search">
+          <input type="search" id="search-input" placeholder="Search notes…" autocomplete="off">
+          <div id="search-results" class="search-results"></div>
+        </div>
+
+        <!-- TOC: populated by JS -->
+        <div id="toc"></div>
+
+        <!-- Divider shown by JS only when TOC has entries -->
+        <hr class="sidebar-divider" id="toc-divider">
+
+        <!-- Folder navigation: server-rendered -->
+        <div class="sidebar-folder-label">Research</div>
+
+        
+        
+        
+        
+
+        
+        
+          
+          
+          
+        
+          
+          
+          
+            <a href="http://localhost:4321/notes/Research/howtoreviewpapers/"
+               class="sidebar-note active">Notes on how to review a paper</a>
+          
+        
+          
+          
+          
+        
+          
+          
+          
+            <a href="http://localhost:4321/notes/Research/ZUC/"
+               class="sidebar-note">ZUC</a>
+          
+        
+
+        
+        
+        
+          
+          
+          
+            
+            
+              
+              <div class="sidebar-subfolder">/ Naist iotmalwaredetector</div>
+              
+                
+                
+                
+                  <a href="http://localhost:4321/notes/Research/NAIST-IotMalwareDetector/DANN/"
+                     class="sidebar-note sub">Domain Adversial Training of Neural Networks</a>
+                
+              
+                
+                
+                
+              
+                
+                
+                
+                  <a href="http://localhost:4321/notes/Research/NAIST-IotMalwareDetector/main/"
+                     class="sidebar-note sub">Project Overview</a>
+                
+              
+                
+                
+                
+              
+            
+          
+        
+          
+          
+          
+        
+          
+          
+          
+            
+            
+          
+        
+          
+          
+          
+        
+
+      </aside>
+
+      <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+      <!-- ── MAIN CONTENT ────────────────────────── -->
+      <div class="note-main">
+        <div class="note-container">
+          <h1 class="note-title">Notes on how to review a paper</h1>
+          <div class="note-meta">
+            <span class="topic-tag">Research</span>
+            
+              
+            
+            <span>August 13, 2026</span>
+          </div>
+
+          <hr class="note-divider">
+
+          
+            <div class="note-content"><p>Notes taken from Onur Mutlu lecture on how to do paper reviews: <a href="https://www.youtube.com/watch?v=tOL6FANAJ8c">link</a></p>
+
+<h3 id="1-brief-summary">1. Brief Summary</h3>
+<ul>
+  <li>What is the problem paper is trying to solve?</li>
+  <li>What are the key insights?</li>
+  <li>What is the key contribution?</li>
+  <li>What is the most important takeaways?</li>
+</ul>
+
+<h3 id="2-strengths">2. Strengths</h3>
+<ul>
+  <li>Order them from the strongest to weakest strengths</li>
+  <li>Does the paper solve the problem well?</li>
+</ul>
+
+<h3 id="3-weaknesses">3. Weaknesses</h3>
+<ul>
+  <li>Again we should order them from biggest weakness to the smallest</li>
+  <li>Should think critically on where there is room for improvement</li>
+</ul>
+
+<h3 id="4-can-you-do-better">4. Can you do better?</h3>
+<ul>
+  <li>Present thoughts/ideas</li>
+</ul>
+
+<h3 id="5-what-have-you-learntenjoyeddisliked-and-why">5. What have you learnt/enjoyed/disliked and why?</h3>
+
+<h3 id="advice">Advice</h3>
+<ul>
+  <li>Be critical</li>
+  <li>Always think of better ways to solve the problem</li>
+  <li>Do background reading</li>
+</ul>
+</div>
+          
+
+          <hr class="note-divider">
+          <a href="http://localhost:4321/notes" class="back-link">&#8592; All Notes</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>window.NOTES_SEARCH_INDEX_URL = "http://localhost:4321/search-index.json";</script>
+  <script src="http://localhost:4321/assets/js/notes-search.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      buildTOC();
+      initFoldableLists();
+      initMobileDrawer();
+    });
+
+    function initMobileDrawer() {
+      var toggleBtn = document.getElementById('mobile-nav-toggle');
+      var sidebar = document.getElementById('note-sidebar');
+      var backdrop = document.getElementById('sidebar-backdrop');
+      var closeBtn = document.getElementById('sidebar-close');
+      if (!toggleBtn || !sidebar || !backdrop) return;
+
+      function openSidebar() {
+        sidebar.classList.add('mobile-open');
+        backdrop.classList.add('show');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeSidebar() {
+        sidebar.classList.remove('mobile-open');
+        backdrop.classList.remove('show');
+        document.body.style.overflow = '';
+      }
+      toggleBtn.addEventListener('click', openSidebar);
+      backdrop.addEventListener('click', closeSidebar);
+      if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
+    }
+
+    function initFoldableLists() {
+      var content = document.querySelector('.note-content');
+      if (!content) return;
+
+      content.querySelectorAll('li').forEach(function (li) {
+        var childList = li.querySelector(':scope > ul, :scope > ol');
+        if (!childList) return;
+
+        li.classList.add('has-children');
+
+        var toggle = document.createElement('span');
+        toggle.className = 'fold-toggle';
+        toggle.setAttribute('role', 'button');
+        toggle.setAttribute('aria-expanded', 'true');
+        toggle.setAttribute('tabindex', '0');
+        li.insertBefore(toggle, li.firstChild);
+
+        var toggleFold = function () {
+          var collapsed = li.classList.toggle('collapsed');
+          toggle.setAttribute('aria-expanded', String(!collapsed));
+        };
+        toggle.addEventListener('click', function (e) {
+          e.stopPropagation();
+          toggleFold();
+        });
+        toggle.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleFold();
+          }
+        });
+      });
+    }
+
+    function buildTOC() {
+      var headings = document.querySelectorAll('.note-content h2, .note-content h3');
+      var toc = document.getElementById('toc');
+      if (!toc || headings.length === 0) return;
+
+      // show the divider between TOC and folder nav
+      var divider = document.getElementById('toc-divider');
+      if (divider) divider.style.display = 'block';
+
+      var label = document.createElement('div');
+      label.className = 'sidebar-label';
+      label.textContent = 'On this page';
+      toc.appendChild(label);
+
+      headings.forEach(function (h) {
+        if (!h.id) {
+          h.id = h.textContent.trim()
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '');
+        }
+        var a = document.createElement('a');
+        a.href = '#' + h.id;
+        a.className = 'toc-link' + (h.tagName === 'H3' ? ' toc-h3' : '');
+        a.textContent = h.textContent;
+        toc.appendChild(a);
+      });
+
+      // Scroll-spy: highlight active heading
+      var links = toc.querySelectorAll('.toc-link');
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (l) { l.classList.remove('active'); });
+            var active = toc.querySelector('a[href="#' + entry.target.id + '"]');
+            if (active) active.classList.add('active');
+          }
+        });
+      }, { rootMargin: '0px 0px -70% 0px' });
+
+      headings.forEach(function (h) { observer.observe(h); });
+    }
+  </script>
+</body>
+</html>
+
+</body>
+</html>

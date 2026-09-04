@@ -225,6 +225,7 @@ title: Blog Posts
 
       <ul id="post-list">
         {% for post in site.posts %}
+          {% unless post.show == false %}
           <li class="post-item" data-categories="{% for category in post.categories %}{{ category | slugify }} {% endfor %}">
             <a href="{{ post.url | prepend: site.url }}">
               <h2>{{ post.title }}</h2>
@@ -232,6 +233,7 @@ title: Blog Posts
               <small>Published on: {{ post.date | date: "%B %-d, %Y" }}</small>
             </a>
           </li>
+          {% endunless %}
         {% endfor %}
       </ul>
     </div>

